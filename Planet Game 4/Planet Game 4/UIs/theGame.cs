@@ -27,7 +27,7 @@ namespace Planet_Game_4
         // Do physics and calculations
         public void update()
         {
-            foreach (Planet P in universe.planets)
+            foreach (SpaceBody P in universe.planets)
             {
                 P.update();
                 if (P.orbit!=null)
@@ -44,7 +44,7 @@ namespace Planet_Game_4
 
             for(int i = universe.planets.Count-1; i >= 0; i--)
             {
-                Planet.show(graphics, universe.planets[i]);
+                universe.planets[i].show(graphics);
             }
 
         }

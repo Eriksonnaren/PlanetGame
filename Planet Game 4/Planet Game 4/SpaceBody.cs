@@ -7,18 +7,19 @@ using System.Threading.Tasks;
 
 namespace Planet_Game_4
 {
-    public class Planet : ISpace_bodies
+    public class SpaceBody
     {
 
-        public enum planet_type
+        public enum Body_type
         {
+            sun,
             life,
             gas,
             rock,
             ice
         }
 
-        public planet_type type;
+        public Body_type type;
 
         public Orbit orbit;
         public Vector position { get; set; }
@@ -28,22 +29,22 @@ namespace Planet_Game_4
         public double mass { get; set; }
         public double rotation { get; set; }
 
-        public body_shape shape;
+        public body_shape shape { get; set; }
 
-        public Planet(Vector pos, double radius, int layers, planet_type type)
+        public SpaceBody(Vector pos, double radius, int layers, Body_type type,double Mass)
         {
             position = pos;
             this.type = type;
             this.radius = radius;
-            mass = 10000;
+            mass = Mass;
             shape = new body_shape(layers);
         }
-        public Planet(Orbit orbit, double radius, int layers, planet_type type)
+        public SpaceBody(Orbit orbit, double radius, int layers, Body_type type,double Mass)
         {
             this.orbit = orbit;
             this.type = type;
             this.radius = radius;
-            mass = 10000;
+            mass = Mass;
             shape = new body_shape(layers);
         }
 
@@ -61,13 +62,13 @@ namespace Planet_Game_4
             }
         }
 
-        public static void show(Graphics g, Planet p)
+        public void show(Graphics g)
         {
-            if (p.orbit != null)
+            if (orbit != null)
             {
-                p.orbit.Show(g);
+                orbit.Show(g);
             }
-            p.shape.render(g, (int)p.position.X, (int)p.position.Y, (int)p.radius, p.rotation);
+            shape.render(g, (int)position.X, (int)position.Y, (int)radius, rotation);
 
         }
 
