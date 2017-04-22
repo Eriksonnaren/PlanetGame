@@ -52,6 +52,7 @@ namespace Planet_Game_4
         /// </summary>
         public void update()
         {
+            rotation += 0.01;
             if (orbit != null)
             {
                 orbit.update(50);
@@ -66,7 +67,6 @@ namespace Planet_Game_4
             {
                 p.orbit.Show(g);
             }
-            p.rotation += 0.01;
             p.shape.render(g, (int)p.position.X, (int)p.position.Y, (int)p.radius, p.rotation);
 
         }

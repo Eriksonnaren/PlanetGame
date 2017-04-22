@@ -29,9 +29,9 @@ namespace Planet_Game_4
         {
             foreach (Planet P in universe.planets)
             {
-                if(P.orbit!=null)
+                P.update();
+                if (P.orbit!=null)
                 {
-                    P.update();
                     P.position = P.orbit.getPos();
                 }
             }

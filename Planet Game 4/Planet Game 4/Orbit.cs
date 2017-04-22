@@ -84,7 +84,8 @@ namespace Planet_Game_4
         }
         public void update(double dt)
         {
-            Mean_Anomoly += MeanMotion * dt;
+            //Mean_Anomoly -= MeanMotion * dt;
+            Mean_Anomoly -= 0.01;
             Eccentric_Anomoly = getEccFromMean();
             True_Anomoly = getTrueFromEcc();
         }
