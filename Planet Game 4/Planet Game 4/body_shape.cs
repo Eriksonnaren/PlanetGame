@@ -20,7 +20,7 @@ namespace Planet_Game_4
 
             for(int i = 0; i < root.Length; i++)
             {
-                root[i] = new body_shape_recursive(new body_shape_piece(Color.FromArgb(200, 0, 0)), 4, 3);
+                root[i] = new body_shape_recursive(new body_shape_piece(Color.FromArgb(200, 0, 0)), 5);
             }
         }
 
@@ -34,7 +34,7 @@ namespace Planet_Game_4
             {
                 angle += angleChange;
 
-                root[i].render(g, x, y, 0, radius, angle, angle + angleChange);
+                root[i].render(g, x, y, 0, radius, angle, angle + angleChange, (int)Math.Log(levels, 2));
             }
 
         }

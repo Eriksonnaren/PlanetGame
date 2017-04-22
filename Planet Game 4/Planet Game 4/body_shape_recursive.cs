@@ -10,65 +10,57 @@ namespace Planet_Game_4
     public class body_shape_recursive
     {
 
-        public List<body_shape_recursive> pieces;
-        public body_shape_piece piece;
-
+        public body_shape_recursive head1 = null;
+        public body_shape_recursive head2 = null;
+        public body_shape_recursive tail = null;
+       
         public Color average;
 
-        double count;
-
-        public body_shape_recursive(body_shape_piece piece, double count, int req)
+        public body_shape_recursive(body_shape_piece piece)
         {
             this.average = Color.FromArgb(piece.c.R + Form1.rnd.Next(-55, 55), 0, 0);
-            this.piece = piece;
-
-            this.count = count;
-
-            pieces = new List<body_shape_recursive>();
-
-            if(req == 1)
-            {
-                Console.WriteLine("Something happened somewhere!");
-            }
-
-            if(req > 0)
-            {
-                pieces.Add(new body_shape_recursive(piece, count, req - 1));
-                //pieces.Add(new body_shape_recursive(piece, count, req - 1));
-            }
         }
 
-        public void render(Graphics g, int x, int y, double startR, double endR, double startAngle, double endAngle)
+        public body_shape_recursive(body_shape_piece piece, int req)
         {
-            if (pieces.Count == 0)
+            this.average = Color.FromArgb(piece.c.R + Form1.rnd.Next(-55, 55), 0, 0);
+
+            if (req > 0)
+            {
+                head1 = (new body_shape_recursive(piece, req - 1));
+                head2 = (new body_shape_recursive(piece, req - 1));
+                tail = (new body_shape_recursive(piece, req - 1));
+            }
+            else
+            {
+
+            }
+
+        }
+
+        public void render(Graphics g, int x, int y, double startR, double endR, double startAngle, double endAngle, int req)
+        {
+            if (head1 == null || head2 == null || tail == null || req <= 0)
             {
                 g.FillPolygon(new SolidBrush(average), new Point[] {
                     new Point((int)(x + Math.Cos(startAngle) * startR), (int)(y + Math.Sin(startAngle) * startR)),
                     new Point((int)(x + Math.Cos(startAngle) * endR), (int)(y + Math.Sin(startAngle) * endR)),
+                    new Point((int)(x + Math.Cos(endAngle / 2 + startAngle / 2) * endR), (int)(y + Math.Sin(endAngle / 2 + startAngle / 2) * endR)),
                     new Point((int)(x + Math.Cos(endAngle) * endR), (int)(y + Math.Sin(endAngle) * endR)),
                     new Point((int)(x + Math.Cos(endAngle) * startR), (int)(y + Math.Sin(endAngle) * startR))
                 });
             }
             else
             {
-                Point[] points = new Point[4 + pieces.Count];
-                points[0] = new Point((int)(x + Math.Cos(startAngle) * startR), (int)(y + Math.Sin(startAngle) * startR));
-                points[1] = new Point((int)(x + Math.Cos(startAngle) * endR), (int)(y + Math.Sin(startAngle) * endR));
-                points[points.Length - 2] = new Point((int)(x + Math.Cos(endAngle) * endR), (int)(y + Math.Sin(endAngle) * endR));
-                points[points.Length - 1] = new Point((int)(x + Math.Cos(endAngle) * startR), (int)(y + Math.Sin(endAngle) * startR));
+                
+                double angleMovement = (endAngle - startAngle) / (2);
 
-                double angleMovement = (endAngle - startAngle) / (pieces.Count);
-                double angle = startAngle;
+                double halfR = startR / 2 + endR / 2;
 
-                for (int i = 0; i < pieces.Count; i++)
-                {
-                    pieces[i].render(g, x, y, endR, endR * 2 - startR, angle, angle + angleMovement);
+                head1.render(g, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1);
+                head2.render(g, x, y, halfR, endR, Form1.lerp(startAngle, endAngle, 0.5), startAngle + angleMovement * 2, req - 1);
 
-                    angle += angleMovement;
-                    points[i+2] = new Point((int)(x + Math.Cos(angle) * endR), (int)(y + Math.Sin(angle) * endR));
-                }
-
-                g.FillPolygon(new SolidBrush(piece.c), points);
+                tail.render(g, x, y, startR, halfR, startAngle, endAngle, req - 1);
                 
             }
         }
