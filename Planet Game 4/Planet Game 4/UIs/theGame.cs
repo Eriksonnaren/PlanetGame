@@ -18,6 +18,7 @@ namespace Planet_Game_4
 
         public double camRot = 0;
         public double zoom = 1;
+        public double toZoom = 1;
 
         Vector camPos = new Vector(0, 0);
         Vector camOrigin = new Vector(400, 300);
@@ -44,6 +45,11 @@ namespace Planet_Game_4
         // Do physics and calculations
         public void update()
         {
+<<<<<<< HEAD
+=======
+            //zoom += 0.01;
+
+>>>>>>> fdf13cc1831fd276f1ead3da97d7224b096f365c
             if (Control.MouseButtons!=MouseButtons.None)//it is pressed
             {
                 if(mouseDown==MouseButtons.None)//it has been pressed this tick
@@ -135,7 +141,21 @@ namespace Planet_Game_4
 
         public void mouseWheel(object sender,MouseEventArgs e)
         {
-            
+            Vector OldPos = pixelToWorld(parent.MousePos);
+            if(e.Delta<0)
+            {
+                
+                zoom /= 2;
+            }
+            else if(e.Delta>0)
+            {
+                zoom *= 2;
+            }else
+            {
+                return;
+            }
+            Vector NewPos = pixelToWorld(parent.MousePos);
+            camPos += NewPos - OldPos;
         }
 
         // end mouseStuff

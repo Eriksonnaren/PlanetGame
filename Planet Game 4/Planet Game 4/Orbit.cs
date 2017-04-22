@@ -118,7 +118,7 @@ namespace Planet_Game_4
         }
         public void Show(Graphics G,Pen Pen)
         {
-            int OrbitLines = 50;
+            int OrbitLines = 200;
             PointF[] Points = new PointF[OrbitLines+1];
             for (int i = 0; i < OrbitLines; i++)
             {

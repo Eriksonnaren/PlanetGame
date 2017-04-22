@@ -70,7 +70,7 @@ namespace Planet_Game_4
             rotation += 0.01;
             if (orbit != null)
             {
-                orbit.update(50);
+                orbit.update(5);
                 position = orbit.getPos();
                 
             }
