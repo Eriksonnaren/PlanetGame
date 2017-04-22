@@ -26,6 +26,7 @@ namespace Planet_Game_4
 
         public double radius { get; set; }
         public double mass { get; set; }
+        public double rotation { get; set; }
 
         public body_shape shape;
 
@@ -50,7 +51,8 @@ namespace Planet_Game_4
         public static void show(Graphics g, Planet p)
         {
 
-            p.shape.render(g, (int)p.position.X, (int)p.position.Y, (int)p.radius);
+            p.rotation += 0.01;
+            p.shape.render(g, (int)p.position.X, (int)p.position.Y, (int)p.radius, p.rotation);
 
         }
 
