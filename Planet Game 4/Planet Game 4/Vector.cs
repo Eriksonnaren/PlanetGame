@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Planet_Game_4
 {
-    class Vector
+    public class Vector
     {
         double X;
         double Y;

@@ -57,6 +57,7 @@
     <Compile Include="Orbit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIs\Planet.cs" />
     <Compile Include="UIs\theGame.cs" />
     <Compile Include="UIs\ui.cs" />
     <Compile Include="Vector.cs" />

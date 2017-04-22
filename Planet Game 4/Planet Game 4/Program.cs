@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace Planet_Game_4
 {
-    static class Program
+    public static class Program
     {
         /// <summary>
         /// The main entry point for the application.

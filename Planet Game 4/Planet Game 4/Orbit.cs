@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Planet_Game_4
 {
-    class Orbit
+    public class Orbit
     {
         
     }
