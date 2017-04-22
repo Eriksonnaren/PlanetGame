@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace Planet_Game_4
 {
-    public class Vector
+    class Vector
     {
         double X;
         double Y;
-        Vector()
+        public Vector()
         {
 
         }
-        Vector(double X,double Y)
+        public Vector(double X,double Y)
         {
             this.X = X;
             this.Y = Y;
         }
-        Vector(Vector V)
+        public Vector(Vector V)
         {
             X = V.X;
             Y = V.Y;
@@ -39,6 +39,26 @@ namespace Planet_Game_4
         static public Vector operator /(Vector V, double M)
         {
             return new Vector(V.X / M, V.Y / M);
+        }
+        public double MagSq()
+        {
+            return X * X + Y * Y;
+        }
+        public double Mag()
+        {
+            return Math.Sqrt(MagSq());
+        }
+        public Vector Norm()
+        {
+            return this / Mag();
+        }
+        public double Dot(Vector V)
+        {
+            return X * V.X + Y * V.Y;
+        }
+        public double Angle()
+        {
+            return Math.Atan2(Y,X);
         }
     }
 }

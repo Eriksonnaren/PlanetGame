@@ -57,15 +57,12 @@
     <Compile Include="Orbit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UIs\Planet.cs" />
-    <Compile Include="UIs\theGame.cs" />
-    <Compile Include="UIs\ui.cs" />
+    <Compile Include="theGame.cs" />
+    <Compile Include="ui.cs" />
     <Compile Include="Vector.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="obj\Debug\Planet_Game_4.Form1.resources" />
-    <EmbeddedResource Include="obj\Debug\Planet_Game_4.Properties.Resources.resources" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -75,12 +72,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="bin\Debug\Planet Game 4.exe.config" />
     <None Include="obj\Debug\CoreCompileInputs.cache" />
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferences.cache" />
     <None Include="obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
-    <None Include="obj\Debug\Planet Game 4.csproj.GenerateResource.Cache" />
-    <None Include="obj\Debug\Planet Game 4.csprojResolveAssemblyReference.cache" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -95,13 +89,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="bin\Debug\Planet Game 4.exe" />
-    <Content Include="bin\Debug\Planet Game 4.pdb" />
-    <Content Include="obj\Debug\Planet Game 4.csproj.FileListAbsolute.txt" />
-    <Content Include="obj\Debug\Planet Game 4.exe" />
-    <Content Include="obj\Debug\Planet Game 4.pdb" />
-  </ItemGroup>
-  <ItemGroup>
+    <Folder Include="bin\Debug\" />
     <Folder Include="bin\Release\" />
     <Folder Include="obj\Debug\TempPE\" />
   </ItemGroup>
