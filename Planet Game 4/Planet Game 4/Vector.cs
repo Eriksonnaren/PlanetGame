@@ -82,6 +82,10 @@ namespace Planet_Game_4
         {
             return new Vector(X*V.X - Y * V.Y, Y * V.X + X * V.Y);
         }
+        public Vector lerp(Vector V,double t)
+        {
+            return new Vector(Form1.lerp(X,V.X,t), Form1.lerp(Y, V.Y, t));
+        }
         public PointF toPoint()
         {
             return new PointF((float)X, (float)Y);

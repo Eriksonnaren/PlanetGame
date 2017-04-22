@@ -18,7 +18,7 @@ namespace Planet_Game_4
         {
 
             //this.planets = new List<SpaceBody>();
-            bodies = Generate(new Vector(0,0),3,20,100000);
+            bodies = Generate(new Vector(0,0),3,250000000,Math.Pow(10,26));
             /*SpaceBody P1 = new SpaceBody(new Vector(500, 300), 50, 10,SpaceBody.Body_type.sun);
             Orbit O = new Orbit(P1);
             O.Generate(0.5,0,200,1);
@@ -40,23 +40,23 @@ namespace Planet_Game_4
         }
         public List<SpaceBody> Generate(Vector Pos,int PlanetAmount,double SunSize,double SunMass)
         {
-            SpaceBody Sun = new SpaceBody(Pos, SunSize, 30, SpaceBody.Body_type.sun,SunMass);
+            SpaceBody Sun = new SpaceBody(Pos, SunSize, 10, SpaceBody.Body_type.sun,SunMass);
             List<SpaceBody> Bodys=new List<SpaceBody> { Sun };
-            double Dist = 100;
+            double Dist = 5*Math.Pow(10,9);
             for (int i = 0; i < PlanetAmount; i++)
             {
-                int MoonAmount = i;
-                SpaceBody Planet = getPlanet(Sun, i, Dist, 10);
+                int MoonAmount = 0;
+                SpaceBody Planet = getPlanet(Sun, i, Dist, 600000);
                 double MoonDist = 30;
                 Bodys.Add(Planet);
                 for (int j = 0; j < MoonAmount; j++)
                 {
                     Bodys.Add(getPlanet(Planet,j,MoonDist,6));
-                    MoonDist += 20;
+                    MoonDist *= 2.2;
                 }
                 
                 
-                Dist += 150;
+                Dist *= 2.2;
             }
             return Bodys;
         }
@@ -64,8 +64,8 @@ namespace Planet_Game_4
         {
             Orbit O = new Orbit(Parent);
             int MoonAmount = id;
-            O.Generate(Form1.rnd.NextDouble() * (0.1 / Math.Sqrt(id + 1)), Form1.rnd.NextDouble() * Math.PI * 2, Dist, Form1.rnd.NextDouble() * Math.PI * 2);
-            SpaceBody Planet = new SpaceBody(O, Size, (int)(Size / 2), SpaceBody.Body_type.rock, 1000);
+            O.Generate(Form1.rnd.NextDouble() * (0.1 / Math.Sqrt(id + 1)), Form1.rnd.NextDouble() * Math.PI * 2, Dist, Form1.rnd.NextDouble() * Math.PI * 2,true);
+            SpaceBody Planet = new SpaceBody(O, Size, 5, SpaceBody.Body_type.rock, 5*Math.Pow(10,22));
             return Planet;
         }
 

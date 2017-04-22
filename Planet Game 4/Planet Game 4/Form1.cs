@@ -69,7 +69,14 @@ namespace Planet_Game_4
         {
             return (int)(a+(b-a)*t);
         }
-
+        public static double lerp(double a, double b, double t)
+        {
+            return (a + (b - a) * t);
+        }
+        public static Color lerpC(Color C1,Color C2,double t)
+        {
+            return Color.FromArgb(lerp(C1.A,C2.A,t), lerp(C1.R, C2.R, t), lerp(C1.G, C2.G, t), lerp(C1.B, C2.B, t));
+        }
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
             PB.Dock = DockStyle.Fill;

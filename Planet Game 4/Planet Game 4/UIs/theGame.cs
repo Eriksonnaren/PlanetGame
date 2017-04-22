@@ -10,15 +10,20 @@ namespace Planet_Game_4
 {
     public class theGame : ui
     {
-        public static double Gravity = 0.0001;
+        public static double Gravity = Math.Pow(10,-11);
         public static double TileMinimumSize = 10;
 
         public Graphics graphics;
         public Form1 parent;
 
         public double camRot = 0;
-        public double zoom = 1;
-        public double toZoom = 1;
+        public double zoom = 0.0000001;
+        public double toZoom;
+        public double startZoom;
+        public Vector toZoomPos = new Vector(0,0);
+        public Vector startZoomPos = new Vector(0,0);
+        public Vector MousePos1 = new Vector(0,0);
+        public Vector MousePos2 = new Vector(0,0);
 
         Vector camPos = new Vector(0, 0);
         Vector camOrigin = new Vector(400, 300);
@@ -30,6 +35,7 @@ namespace Planet_Game_4
 
         public theGame(Graphics graphics, Form1 parent)
         {
+            toZoom = zoom;
             // You do need an object to display all the stuff to the screen, do you not?
             this.graphics = graphics;
             this.parent = parent;
@@ -45,8 +51,9 @@ namespace Planet_Game_4
         // Do physics and calculations
         public void update()
         {
-            //zoom += 0.01;
-
+            zoom += (toZoom-zoom)*0.3;
+            double T=(zoom - startZoom)/ (toZoom - startZoom);
+            camPos =startZoomPos.lerp(toZoomPos,T);
             if (Control.MouseButtons!=MouseButtons.None)//it is pressed
             {
                 if(mouseDown==MouseButtons.None)//it has been pressed this tick
@@ -120,7 +127,7 @@ namespace Planet_Game_4
         {
             if (mouseDown == MouseButtons.Left)
             {
-                camPos += (parent.MousePos - parent.MousePosPrev).Rot(negCamRotation)/zoom;
+                toZoomPos += (parent.MousePos - parent.MousePosPrev).Rot(negCamRotation)/zoom;
             }else if(mouseDown == MouseButtons.Right)
             {
                 camRot += (parent.MousePos - camOrigin).Angle() - (parent.MousePosPrev - camOrigin).Angle();
@@ -138,21 +145,27 @@ namespace Planet_Game_4
 
         public void mouseWheel(object sender,MouseEventArgs e)
         {
-            Vector OldPos = pixelToWorld(parent.MousePos);
+            Vector OldPos = pixelToWorld(parent.MousePos,toZoom);
+            MousePos1 = OldPos;
+            double zoomAmount=1.5;
+            
             if(e.Delta<0)
             {
                 
-                zoom /= 2;
+                toZoom /= zoomAmount;
             }
             else if(e.Delta>0)
             {
-                zoom *= 2;
+                toZoom *= zoomAmount;
             }else
             {
                 return;
             }
-            Vector NewPos = pixelToWorld(parent.MousePos);
-            camPos += NewPos - OldPos;
+            startZoom = zoom;
+            startZoomPos = camPos;
+            Vector NewPos = pixelToWorld(parent.MousePos,toZoom);
+            MousePos2 = NewPos;
+            toZoomPos =camPos+ NewPos - OldPos;
         }
 
         // end mouseStuff
@@ -167,11 +180,17 @@ namespace Planet_Game_4
         {
             return (w + camPos).Rot(camRotation) * zoom + camOrigin;
         }
-
+        public Vector worldToPixel(Vector w,double zoom)
+        {
+            return (w + camPos).Rot(camRotation) * zoom + camOrigin;
+        }
         public Vector pixelToWorld(Vector p)
         {
             return ((p - camOrigin) / zoom).Rot(negCamRotation) - camPos;
         }
-
+        public Vector pixelToWorld(Vector p,double zoom)
+        {
+            return ((p - camOrigin) / zoom).Rot(negCamRotation) - camPos;
+        }
     }
 }

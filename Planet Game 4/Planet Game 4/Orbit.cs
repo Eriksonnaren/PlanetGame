@@ -64,8 +64,9 @@ namespace Planet_Game_4
             Period = 2 * Math.PI * Math.Sqrt(SemiMajor*SemiMajor*SemiMajor/GM);
             MeanMotion = Math.Sqrt(GM/(SemiMajor * SemiMajor * SemiMajor));
         }
-        public void Generate(double Eccentricity,double OrbitAngle,double SemiMajor,double PlanetAngle)
+        public void Generate(double Eccentricity,double OrbitAngle,double SemiMajor,double PlanetAngle,bool Prograde)
         {
+            this.Prograde = Prograde;
             this.Eccentricity = Eccentricity;
             EccentrcityVector = new Vector(Eccentricity*Math.Cos(OrbitAngle), Eccentricity * Math.Sin(OrbitAngle));
             this.SemiMajor = SemiMajor;
@@ -84,12 +85,15 @@ namespace Planet_Game_4
         }
         public Vector getPos(double Angle)
         {
+            Angle += True_Anomoly;
             double Rad = SemiMajor * (1 - Sq(Eccentricity)) / (1 + Eccentricity * Math.Cos(Angle));
             return (new Vector(Rad * Math.Cos(Angle), Rad * Math.Sin(Angle)).Rot(EccentrcityVector.Norm())) + Parent.position;
         }
         public void update(double dt)
         {
-            Mean_Anomoly -= MeanMotion * dt;
+            if (Prograde)
+                dt = -dt;
+            Mean_Anomoly += MeanMotion * dt;
             //Mean_Anomoly -= 0.01;
             Eccentric_Anomoly = getEccFromMean();
             True_Anomoly = getTrueFromEcc();
@@ -116,7 +120,7 @@ namespace Planet_Game_4
         {
             return Eccentric_Anomoly - Eccentricity * Math.Sin(Eccentric_Anomoly);
         }
-        public void Show(Graphics G,Pen Pen)
+        public void Show(Graphics G,Pen Pen,bool Fade)
         {
             int OrbitLines = 200;
             PointF[] Points = new PointF[OrbitLines+1];
@@ -126,7 +130,20 @@ namespace Planet_Game_4
                 Points[i] = Form1.ui.worldToPixel(getPos(Angle)).toPoint();
             }
             Points[OrbitLines] = Points[0];
-            G.DrawLines(Pen,Points);
+            if (Fade)
+            {
+                Color Col = Pen.Color;
+                Color B = Color.Black;
+                double FadeMin = 0.2;
+                for (int i = 1; i < OrbitLines + 1; i++)
+                {
+                    Pen.Color = Form1.lerpC(B, Col, (1 - FadeMin) * (1 - ((i - 1) / (double)OrbitLines)) + FadeMin);
+                    G.DrawLine(Pen, Points[i], Points[i - 1]);
+                }
+            }else
+            {
+                G.DrawLines(Pen,Points);
+            }
         }
         double Sq(double A)
         {

@@ -70,7 +70,7 @@ namespace Planet_Game_4
             rotation += 0.01;
             if (orbit != null)
             {
-                orbit.update(5);
+                orbit.update(1);
                 position = orbit.getPos();
                 
             }
@@ -81,7 +81,7 @@ namespace Planet_Game_4
             if (orbit != null)
             {
                 // TODO ERIK: Fixa så orbits också blir affectade av kamerans position och rotation
-                orbit.Show(g,new Pen(Color.Blue,2));
+                orbit.Show(g,new Pen(Color.Blue,2),true);
             }
 
             Vector pixelPos = parent.worldToPixel(position);
