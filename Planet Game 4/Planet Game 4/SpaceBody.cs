@@ -62,13 +62,17 @@ namespace Planet_Game_4
             }
         }
 
-        public void show(Graphics g)
+        public void show(Graphics g, theGame parent)
         {
             if (orbit != null)
             {
-                orbit.Show(g);
+                // TODO ERIK: Fixa så orbits också blir affectade av kamerans position och rotation
+                //orbit.Show(g);
             }
-            shape.render(g, (int)position.X, (int)position.Y, (int)radius, rotation);
+
+            Vector pixelPos = parent.worldToPixel(position);
+
+            shape.render(g, (int)pixelPos.X, (int)pixelPos.Y, (int)(radius * parent.zoom), rotation + parent.camRot);
 
         }
 

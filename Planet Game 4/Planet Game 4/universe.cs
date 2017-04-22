@@ -18,7 +18,7 @@ namespace Planet_Game_4
         {
 
             //this.planets = new List<SpaceBody>();
-            planets = Generate(new Vector(500,500),3,20,100000);
+            planets = Generate(new Vector(10,0),3,20,100000);
             /*SpaceBody P1 = new SpaceBody(new Vector(500, 300), 50, 10,SpaceBody.Body_type.sun);
             Orbit O = new Orbit(P1);
             O.Generate(0.5,0,200,1);
@@ -65,7 +65,7 @@ namespace Planet_Game_4
             Orbit O = new Orbit(Parent);
             int MoonAmount = id;
             O.Generate(Form1.rnd.NextDouble() * (0.1 / Math.Sqrt(id + 1)), Form1.rnd.NextDouble() * Math.PI * 2, Dist, Form1.rnd.NextDouble() * Math.PI * 2);
-            SpaceBody Planet = new SpaceBody(O, Size, 4, SpaceBody.Body_type.rock, 1000);
+            SpaceBody Planet = new SpaceBody(O, Size, (int)(Size / 0.1), SpaceBody.Body_type.rock, 1000);
             return Planet;
         }
 

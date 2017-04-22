@@ -55,8 +55,6 @@ namespace Planet_Game_4
             ui.update();
             ui.show();
 
-            theGame.TileMinimumSize *= 1.01;
-
             BG.Render();
         }
 

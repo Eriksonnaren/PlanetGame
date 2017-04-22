@@ -14,6 +14,13 @@ namespace Planet_Game_4
 
         Graphics graphics;
 
+        Vector camPos = new Vector(0, 0);
+        Vector camOrigin = new Vector(400, 300);
+        Vector camRotation = new Vector(1, 0);
+
+        public double camRot = 0;
+        public double zoom = 1;
+
         // The universe that you are playing inside. Isn't that cool?
         public universe universe;
 
@@ -37,6 +44,18 @@ namespace Planet_Game_4
                     P.position = P.orbit.getPos();
                 }
             }
+
+            setRotation(camRot + 0.01);
+        }
+
+        /// <summary>
+        /// Rotate the camera
+        /// </summary>
+        public void setRotation(double rotation)
+        {
+            camRot = rotation;
+            camRotation.X = Math.Cos(rotation);
+            camRotation.Y = Math.Sin(rotation);
         }
 
         // Do visual calculations and display all the things
@@ -46,9 +65,14 @@ namespace Planet_Game_4
 
             for(int i = universe.planets.Count-1; i >= 0; i--)
             {
-                universe.planets[i].show(graphics);
+                universe.planets[i].show(graphics, this);
             }
 
+        }
+
+        public Vector worldToPixel(Vector v)
+        {
+            return (new Vector(v)).Rot(camRotation + camPos) * zoom + camOrigin;
         }
 
     }
