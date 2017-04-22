@@ -14,12 +14,13 @@ namespace Planet_Game_4
 
         Graphics graphics;
 
-        Vector camPos = new Vector(0, 0);
-        Vector camOrigin = new Vector(400, 300);
-        Vector camRotation = new Vector(1, 0);
-
         public double camRot = 0;
         public double zoom = 1;
+
+        Vector camPos = new Vector(0, 0);
+        Vector camOrigin = new Vector(400, 300);
+        Vector camRotation;
+        Vector negCamRotation;
 
         // The universe that you are playing inside. Isn't that cool?
         public universe universe;
@@ -45,8 +46,9 @@ namespace Planet_Game_4
                 }
             }
 
-            setRotation(camRot + 0.1);
-            //camPos.X += 1;
+            setRotation(camRot + 0.01);
+            camPos.X += 1;
+            camOrigin.X += 1;
         }
 
         /// <summary>
@@ -55,8 +57,8 @@ namespace Planet_Game_4
         public void setRotation(double rotation)
         {
             camRot = rotation;
-            camRotation.X = Math.Cos(rotation);
-            camRotation.Y = Math.Sin(rotation);
+            camRotation = getRotationVector(rotation);
+            negCamRotation = getRotationVector(-rotation);
         }
 
         public Vector getRotationVector(double rotation)
@@ -87,7 +89,7 @@ namespace Planet_Game_4
 
         public Vector pixelToWorld(Vector p)
         {
-            return ((p - camOrigin) / zoom).Rot(-camRotation) - camPos;
+            return ((p - camOrigin) / zoom).Rot(negCamRotation) - camPos;
         }
 
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Planet_Game_4
 {
@@ -75,6 +76,10 @@ namespace Planet_Game_4
         public Vector Rot(Vector V)
         {
             return new Vector(X*V.X - Y * V.Y, Y * V.X + X * V.Y);
+        }
+        public PointF toPoint()
+        {
+            return new PointF((float)X, (float)Y);
         }
     }
 }
