@@ -27,6 +27,11 @@ namespace Planet_Game_4
             X = V.X;
             Y = V.Y;
         }
+        public Vector(Point V)
+        {
+            X = V.X;
+            Y = V.Y;
+        }
         static public Vector operator +(Vector V1,Vector V2)
         {
             return new Vector(V1.X + V2.X, V1.Y+V2.Y);

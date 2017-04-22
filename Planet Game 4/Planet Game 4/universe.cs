@@ -9,7 +9,7 @@ namespace Planet_Game_4
     public class universe
     {
 
-        public List<SpaceBody> planets;
+        public List<SpaceBody> bodies;
 
         /// <summary>
         /// The universe will generate without any specific seed and stuff
@@ -18,7 +18,7 @@ namespace Planet_Game_4
         {
 
             //this.planets = new List<SpaceBody>();
-            planets = Generate(new Vector(0,0),3,20,100000);
+            bodies = Generate(new Vector(0,0),3,20,100000);
             /*SpaceBody P1 = new SpaceBody(new Vector(500, 300), 50, 10,SpaceBody.Body_type.sun);
             Orbit O = new Orbit(P1);
             O.Generate(0.5,0,200,1);
@@ -36,7 +36,7 @@ namespace Planet_Game_4
         /// <param name="planets"></param>
         public universe(List<SpaceBody> planets)
         {
-            this.planets = planets;
+            this.bodies = planets;
         }
         public List<SpaceBody> Generate(Vector Pos,int PlanetAmount,double SunSize,double SunMass)
         {

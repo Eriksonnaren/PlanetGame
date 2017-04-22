@@ -62,7 +62,7 @@ namespace Planet_Game_4
                 }
             }
 
-            foreach (SpaceBody P in universe.planets)
+            foreach (SpaceBody P in universe.bodies)
             {
                 P.update();
                 if (P.orbit != null)
@@ -99,9 +99,9 @@ namespace Planet_Game_4
 
             if (true)
             {
-                for (int i = universe.planets.Count - 1; i >= 0; i--)
+                for (int i = universe.bodies.Count - 1; i >= 0; i--)
                 {
-                    universe.planets[i].show(graphics, this);
+                    universe.bodies[i].show(graphics, this);
                 }
             }
         }
@@ -115,7 +115,13 @@ namespace Planet_Game_4
         public MouseButtons mouseDown{ get; set; }
         public void mouseHold(MouseButtons Button)
         {
-
+            if (mouseDown == MouseButtons.Left)
+            {
+                camPos += (parent.MousePos - parent.MousePosPrev).Rot(negCamRotation);
+            }else if(mouseDown == MouseButtons.Right)
+            {
+                camRot += (parent.MousePos - camOrigin).Angle() - (parent.MousePosPrev - camOrigin).Angle();
+            }
         }
         public void mousePressed(MouseButtons Button)
         {

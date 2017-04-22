@@ -15,6 +15,9 @@ namespace Planet_Game_4
         public BufferedGraphics BG;
         public PictureBox PB;
         static public theGame ui;
+
+        public Vector MousePos;
+        public Vector MousePosPrev;
         
         Timer T = new Timer();
 
@@ -52,6 +55,10 @@ namespace Planet_Game_4
 
         private void T_Tick(object sender, EventArgs e)//main loop
         {
+            // Set the mouse position
+            MousePosPrev = MousePos;
+            MousePos = new Vector(PointToClient(MousePosition));
+
             ui.update();
             ui.show();
 
