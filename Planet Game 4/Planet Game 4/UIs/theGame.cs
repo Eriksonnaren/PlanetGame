@@ -11,7 +11,7 @@ namespace Planet_Game_4
     public class theGame : ui
     {
         public static double Gravity = 0.0001;
-        public static double TileMinimumSize = 3;
+        public static double TileMinimumSize = 10;
 
         public Graphics graphics;
         public Form1 parent;
@@ -44,6 +44,8 @@ namespace Planet_Game_4
         // Do physics and calculations
         public void update()
         {
+            zoom += 0.01;
+
             if (Control.MouseButtons!=MouseButtons.None)//it is pressed
             {
                 if(mouseDown==MouseButtons.None)//it has been pressed this tick
@@ -133,7 +135,10 @@ namespace Planet_Game_4
             
         }
 
-        public void mouseWheel(object sender,MouseEventArgs e) { }
+        public void mouseWheel(object sender,MouseEventArgs e)
+        {
+            
+        }
 
         // end mouseStuff
         public void keyPressed(char key)

@@ -68,7 +68,7 @@ namespace Planet_Game_4
 
                 rings = rings << 1;
 
-                for (int j = 0; j < initialDivisions * (rings >> 1); j++)
+                for (int j = 0; j < shape[i].slices; j++)
                 {
                     double si1 = Math.Sin(angle);
                     double co1 = Math.Cos(angle);
@@ -103,10 +103,8 @@ namespace Planet_Game_4
                             new PointF((float)(si2 * radii + x), (float)(co2 * radii + y)),
                         };
                     }
-
-                    int _i = Form1.lerp(0, shape.Length - 1, i / (double)(levels - 1));
-                    int _j = Form1.lerp(0, shape[_i].slices - 1, (double)(j) / ((rings>>1) * initialDivisions));
-                    g.FillPolygon(new SolidBrush(shape[_i].pieces[_j].c), points);
+                    
+                    g.FillPolygon(new SolidBrush(shape[i].pieces[j].c), points);
 
                     angle += angleMovement;
                 }
@@ -120,7 +118,7 @@ namespace Planet_Game_4
         public void render(Graphics g, int x, int y, int radius, double rotation)
         {
 
-            render(g, x, y, (int)Math.Max((radius / theGame.TileMinimumSize), 2), radius, rotation);
+            render(g, x, y, (int)Math.Max((radius / theGame.TileMinimumSize), 6), radius, rotation);
 
         }
 
