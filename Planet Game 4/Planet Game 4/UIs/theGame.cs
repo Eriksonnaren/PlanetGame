@@ -19,7 +19,7 @@ namespace Planet_Game_4
             this.graphics = graphics;
 
             planets = new List<Planet>();
-            planets.Add(new Planet(new Vector(300, 300), 1000, Planet.planet_type.life));
+            planets.Add(new Planet(new Vector(300, 300), 100, Planet.planet_type.life));
         }
 
         // Do physics and calculations

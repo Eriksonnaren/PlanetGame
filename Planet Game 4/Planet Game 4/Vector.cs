@@ -66,5 +66,9 @@ namespace Planet_Game_4
         {
             return Math.Atan2(Y,X);
         }
+        public Vector Rot(Vector V)
+        {
+            return new Vector(X*V.X - Y * V.Y, Y * V.X + X * V.Y);
+        }
     }
 }

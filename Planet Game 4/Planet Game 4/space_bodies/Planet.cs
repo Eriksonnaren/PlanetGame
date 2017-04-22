@@ -38,7 +38,7 @@ namespace Planet_Game_4
             this.radius = radius;
 
             mass = 10000;
-            shape = new body_shape(200);
+            shape = new body_shape(20);
         }
 
         /// <summary>
