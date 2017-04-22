@@ -44,8 +44,6 @@ namespace Planet_Game_4
         // Do physics and calculations
         public void update()
         {
-            zoom += 0.01;
-
             if (Control.MouseButtons!=MouseButtons.None)//it is pressed
             {
                 if(mouseDown==MouseButtons.None)//it has been pressed this tick
@@ -119,7 +117,7 @@ namespace Planet_Game_4
         {
             if (mouseDown == MouseButtons.Left)
             {
-                camPos += (parent.MousePos - parent.MousePosPrev).Rot(negCamRotation);
+                camPos += (parent.MousePos - parent.MousePosPrev).Rot(negCamRotation) / zoom;
             }else if(mouseDown == MouseButtons.Right)
             {
                 camRot += (parent.MousePos - camOrigin).Angle() - (parent.MousePosPrev - camOrigin).Angle();
