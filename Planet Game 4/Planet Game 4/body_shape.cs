@@ -77,10 +77,10 @@ namespace Planet_Game_4
                     {
                         points = new PointF[]
                         {
-                        new PointF((float)(si1 * (radii) + x), (float)(co1 * (radii) + y)),
-                        new PointF((float)(si1 * (r+(radii+1)) + x), (float)(co1 * (r+(radii+1)) + y)),
-                        new PointF((float)(si2 * (r+(radii+1)) + x), (float)(co2 * (r+(radii+1)) + y)),
-                        new PointF((float)(si2 * (radii) + x), (float)(co2 * (radii) + y)),
+                            new PointF((float)(si1 * (radii) + x), (float)(co1 * (radii) + y)),
+                            new PointF((float)(si1 * (r+(radii+1)) + x), (float)(co1 * (r+(radii+1)) + y)),
+                            new PointF((float)(si2 * (r+(radii+1)) + x), (float)(co2 * (r+(radii+1)) + y)),
+                            new PointF((float)(si2 * (radii) + x), (float)(co2 * (radii) + y)),
                         };
                     }
                     else
@@ -90,11 +90,11 @@ namespace Planet_Game_4
 
                         points = new PointF[]
                         {
-                        new PointF((float)(si1 * radii + x), (float)(co1 * radii + y)),
-                        new PointF((float)(si1 * (r+radii+1) + x), (float)(co1 * (r+radii+1) + y)),
-                        new PointF((float)(si3 * (r+radii+1) + x), (float)(co3 * (r+radii+1) + y)),
-                        new PointF((float)(si2 * (r+radii+1) + x), (float)(co2 * (r+radii+1) + y)),
-                        new PointF((float)(si2 * radii + x), (float)(co2 * radii + y)),
+                            new PointF((float)(si1 * radii + x), (float)(co1 * radii + y)),
+                            new PointF((float)(si1 * (r+radii+1) + x), (float)(co1 * (r+radii+1) + y)),
+                            new PointF((float)(si3 * (r+radii+1) + x), (float)(co3 * (r+radii+1) + y)),
+                            new PointF((float)(si2 * (r+radii+1) + x), (float)(co2 * (r+radii+1) + y)),
+                            new PointF((float)(si2 * radii + x), (float)(co2 * radii + y)),
                         };
                     }
 
