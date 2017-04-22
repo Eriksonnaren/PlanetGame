@@ -56,7 +56,7 @@ namespace Planet_Game_4
             rotation += 0.01;
             if (orbit != null)
             {
-                orbit.update(50);
+                //orbit.update(50);
                 position = orbit.getPos();
                 
             }
@@ -72,7 +72,7 @@ namespace Planet_Game_4
 
             Vector pixelPos = parent.worldToPixel(position);
 
-            shape.render(g, (int)pixelPos.X, (int)pixelPos.Y, (int)(radius * parent.zoom), rotation + parent.camRot);
+            shape.render(g, (int)pixelPos.X, (int)pixelPos.Y, (int)(radius * parent.zoom), rotation - parent.camRot);
 
         }
 

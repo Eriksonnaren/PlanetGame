@@ -18,7 +18,7 @@ namespace Planet_Game_4
         {
 
             //this.planets = new List<SpaceBody>();
-            planets = Generate(new Vector(10,0),3,20,100000);
+            planets = Generate(new Vector(0,0),3,20,100000);
             /*SpaceBody P1 = new SpaceBody(new Vector(500, 300), 50, 10,SpaceBody.Body_type.sun);
             Orbit O = new Orbit(P1);
             O.Generate(0.5,0,200,1);
