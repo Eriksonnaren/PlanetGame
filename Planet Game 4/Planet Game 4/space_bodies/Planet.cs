@@ -34,9 +34,15 @@ namespace Planet_Game_4
         {
             position = pos;
             this.type = type;
-
             this.radius = radius;
-
+            mass = 10000;
+            shape = new body_shape(layers);
+        }
+        public Planet(Orbit orbit, double radius, int layers, planet_type type)
+        {
+            this.orbit = orbit;
+            this.type = type;
+            this.radius = radius;
             mass = 10000;
             shape = new body_shape(layers);
         }
@@ -46,12 +52,20 @@ namespace Planet_Game_4
         /// </summary>
         public void update()
         {
-            
+            if (orbit != null)
+            {
+                orbit.update(50);
+                position = orbit.getPos();
+                
+            }
         }
 
         public static void show(Graphics g, Planet p)
         {
-
+            if (p.orbit != null)
+            {
+                p.orbit.Show(g);
+            }
             p.rotation += 0.01;
             p.shape.render(g, (int)p.position.X, (int)p.position.Y, (int)p.radius, p.rotation);
 
