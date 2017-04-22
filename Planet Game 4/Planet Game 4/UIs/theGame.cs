@@ -45,7 +45,7 @@ namespace Planet_Game_4
                 }
             }
 
-            setRotation(camRot + 0.01);
+            //setRotation(camRot + 0.01);
             //camPos.X += 1;
         }
 

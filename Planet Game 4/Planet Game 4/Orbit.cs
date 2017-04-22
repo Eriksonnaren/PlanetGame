@@ -90,7 +90,7 @@ namespace Planet_Game_4
         public void update(double dt)
         {
             Mean_Anomoly -= MeanMotion * dt;
-            Mean_Anomoly -= 0.01;
+            //Mean_Anomoly -= 0.01;
             Eccentric_Anomoly = getEccFromMean();
             True_Anomoly = getTrueFromEcc();
         }
@@ -116,14 +116,17 @@ namespace Planet_Game_4
         {
             return Eccentric_Anomoly - Eccentricity * Math.Sin(Eccentric_Anomoly);
         }
-        public void Show(Graphics G)
+        public void Show(Graphics G,Pen Pen)
         {
-            int OrbitLines = 10;
+            int OrbitLines = 50;
+            PointF[] Points = new PointF[OrbitLines+1];
             for (int i = 0; i < OrbitLines; i++)
             {
-                double Angle = i / (double)OrbitLines;
-
+                double Angle = 2*Math.PI*i / OrbitLines;
+                Points[i] = Form1.ui.worldToPixel(getPos(Angle)).toPoint();
             }
+            Points[OrbitLines] = Points[0];
+            G.DrawLines(Pen,Points);
         }
         double Sq(double A)
         {

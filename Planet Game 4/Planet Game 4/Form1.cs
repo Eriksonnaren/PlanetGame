@@ -14,7 +14,7 @@ namespace Planet_Game_4
     {
         BufferedGraphics BG;
         PictureBox PB;
-        public theGame ui;
+        static public theGame ui;
         
         Timer T = new Timer();
 
