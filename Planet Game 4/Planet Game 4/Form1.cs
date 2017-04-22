@@ -38,7 +38,7 @@ namespace Planet_Game_4
             // Initiate the ui
             theGame temp = new theGame(BG.Graphics);
             ui=temp;
-            O = new Orbit(temp.planets[0]);
+            O = new Orbit(temp.universe.planets[0]);
             O.Generate(new Vector(200,0),new Vector(0,0.08));
 
             //start the timer

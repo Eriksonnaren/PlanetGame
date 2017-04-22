@@ -63,6 +63,7 @@
     <Compile Include="space_bodies\space_bodies.cs" />
     <Compile Include="UIs\theGame.cs" />
     <Compile Include="UIs\ui.cs" />
+    <Compile Include="universe.cs" />
     <Compile Include="Vector.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

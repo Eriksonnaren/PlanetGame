@@ -11,15 +11,16 @@ namespace Planet_Game_4
     {
         public static double Gravity = 0.0001;
         Graphics graphics;
-        public List<Planet> planets { get; set; }
+
+        // The universe that you are playing inside. Isn't that cool?
+        public universe universe;
 
         public theGame(Graphics graphics)
         {
             // You do need an object to display all the stuff to the screen, do you not?
             this.graphics = graphics;
 
-            planets = new List<Planet>();
-            planets.Add(new Planet(new Vector(300, 300), 1000, Planet.planet_type.life));
+            universe = new universe();
         }
 
         // Do physics and calculations
@@ -33,9 +34,9 @@ namespace Planet_Game_4
         {
             graphics.Clear(Color.Black);
 
-            for(int i = planets.Count-1; i >= 0; i--)
+            for(int i = universe.planets.Count-1; i >= 0; i--)
             {
-                Planet.show(graphics, planets[i]);
+                Planet.show(graphics, universe.planets[i]);
             }
 
         }
