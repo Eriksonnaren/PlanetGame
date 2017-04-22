@@ -57,17 +57,48 @@ namespace Planet_Game_4
                 if (shape[i] == null) continue;
                 int r = (int)(shape[i].size * radius);
                 
-                g.DrawEllipse(new Pen(Color.FromArgb(255, 255, 255)), x - (r+radii), y - (r+radii), (r+radii) * 2, (r+radii) * 2);
+                //g.DrawEllipse(new Pen(Color.FromArgb(255, 255, 255)), x - (r+radii), y - (r+radii), (r+radii) * 2, (r+radii) * 2);
 
                 double angle = rotation;
                 double angleMovement = Math.PI * 2 / shape[i].slices;
 
                 for(int j = 0; j < shape[i].slices; j++)
                 {
-                    double si = Math.Sin(angle);
-                    double co = Math.Cos(angle);
+                    double si1 = Math.Sin(angle);
+                    double co1 = Math.Cos(angle);
+                    double si2 = Math.Sin(angle + angleMovement);
+                    double co2 = Math.Cos(angle + angleMovement);
 
-                    g.DrawLine(new Pen(Color.White), (float)(si * radii + x), (float)(co * radii + y), (float)(si * (r+radii) + x), (float)(co * (r+radii) + y));
+                    //g.DrawLine(new Pen(Color.White), (float)(si1 * radii + x), (float)(co1 * radii + y), (float)(si1 * (r+radii) + x), (float)(co1 * (r+radii) + y));
+
+                    PointF[] points;
+
+                    if (i + 1 < shape.Length && shape[i].slices == shape[i + 1].slices)
+                    {
+                        points = new PointF[]
+                        {
+                            new PointF((float)(si1 * (radii) + x), (float)(co1 * (radii) + y)),
+                            new PointF((float)(si1 * (r+(radii+1)) + x), (float)(co1 * (r+(radii+1)) + y)),
+                            new PointF((float)(si2 * (r+(radii+1)) + x), (float)(co2 * (r+(radii+1)) + y)),
+                            new PointF((float)(si2 * (radii) + x), (float)(co2 * (radii) + y)),
+                        };
+                    }
+                    else
+                    {
+                        double si3 = Math.Sin(angle + angleMovement / 2.0);
+                        double co3 = Math.Cos(angle + angleMovement / 2.0);
+
+                        points = new PointF[]
+                        {
+                            new PointF((float)(si1 * radii + x), (float)(co1 * radii + y)),
+                            new PointF((float)(si1 * (r+radii+1) + x), (float)(co1 * (r+radii+1) + y)),
+                            new PointF((float)(si3 * (r+radii+1) + x), (float)(co3 * (r+radii+1) + y)),
+                            new PointF((float)(si2 * (r+radii+1) + x), (float)(co2 * (r+radii+1) + y)),
+                            new PointF((float)(si2 * radii + x), (float)(co2 * radii + y)),
+                        };
+                    }
+
+                    g.FillPolygon(new SolidBrush(shape[i].pieces[j].c), points);
 
                     angle += angleMovement;
                 }

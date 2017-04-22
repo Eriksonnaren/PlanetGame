@@ -17,6 +17,7 @@ namespace Planet_Game_4
         public universe()
         {
             this.planets = new List<Planet>();
+
             Planet P1 = new Planet(new Vector(500, 300), 50, 10, Planet.planet_type.rock);
             Orbit O = new Orbit(P1);
             O.Generate(0,1,200,1);
@@ -24,6 +25,7 @@ namespace Planet_Game_4
             this.planets.Add(P1);
             this.planets.Add(P2);
             
+
         }
 
         /// <summary>

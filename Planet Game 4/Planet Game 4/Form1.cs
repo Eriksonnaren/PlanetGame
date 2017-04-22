@@ -18,6 +18,8 @@ namespace Planet_Game_4
         
         Timer T = new Timer();
 
+        public static Random rnd;
+
         public Form1()
         {
             InitializeComponent();
@@ -34,6 +36,9 @@ namespace Planet_Game_4
             BufferedGraphicsContext Context = BufferedGraphicsManager.Current;
             BG = Context.Allocate(PB.CreateGraphics(),PB.DisplayRectangle);
 
+            // Make a new random object
+            rnd = new Random();
+
             // Initiate the ui
             theGame temp = new theGame(BG.Graphics);
             ui=temp;
@@ -49,8 +54,9 @@ namespace Planet_Game_4
         {
             ui.update();
             ui.show();
-            BG.Render();
 
+
+            BG.Render();
         }
     }
 }
