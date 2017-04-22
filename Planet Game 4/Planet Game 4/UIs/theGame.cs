@@ -54,6 +54,7 @@ namespace Planet_Game_4
             zoom += (toZoom-zoom)*0.3;
             double T=(zoom - startZoom)/ (toZoom - startZoom);
             camPos =startZoomPos.lerp(toZoomPos,T);
+
             if (Control.MouseButtons!=MouseButtons.None)//it is pressed
             {
                 if(mouseDown==MouseButtons.None)//it has been pressed this tick
@@ -127,7 +128,9 @@ namespace Planet_Game_4
         {
             if (mouseDown == MouseButtons.Left)
             {
-                toZoomPos += (parent.MousePos - parent.MousePosPrev).Rot(negCamRotation)/zoom;
+              toZoomPos += (parent.MousePos - parent.MousePosPrev).Rot(negCamRotation)/zoom;
+
+
             }else if(mouseDown == MouseButtons.Right)
             {
                 camRot += (parent.MousePos - camOrigin).Angle() - (parent.MousePosPrev - camOrigin).Angle();
