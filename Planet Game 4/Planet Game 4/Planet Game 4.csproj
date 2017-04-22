@@ -46,7 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="body_shape_piece.cs" />
-    <Compile Include="body_shape_layer.cs" />
+    <Compile Include="body_shape_recursive.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
