@@ -16,5 +16,12 @@ namespace Planet_Game_4
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+            Console.WriteLine("Hello World!");
+
+        }
     }
 }
