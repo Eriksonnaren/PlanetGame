@@ -70,6 +70,11 @@ namespace Planet_Game_4
             return (int)(a+(b-a)*t);
         }
 
+        public static double lerp(double a, double b, double t)
+        {
+            return (a + (b - a) * t);
+        }
+
         private void Form1_SizeChanged(object sender, EventArgs e)
         {
             PB.Dock = DockStyle.Fill;

@@ -45,11 +45,6 @@ namespace Planet_Game_4
         // Do physics and calculations
         public void update()
         {
-<<<<<<< HEAD
-=======
-            //zoom += 0.01;
-
->>>>>>> fdf13cc1831fd276f1ead3da97d7224b096f365c
             if (Control.MouseButtons!=MouseButtons.None)//it is pressed
             {
                 if(mouseDown==MouseButtons.None)//it has been pressed this tick
