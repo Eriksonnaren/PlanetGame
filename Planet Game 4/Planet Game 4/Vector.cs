@@ -34,6 +34,10 @@ namespace Planet_Game_4
         {
             return new Vector(V1.X - V2.X, V1.Y - V2.Y);
         }
+        static public Vector operator -(Vector V1)
+        {
+            return new Vector(-V1.X, -V1.Y);
+        }
         static public Vector operator *(Vector V, double M)
         {
             return new Vector(V.X*M,V.Y*M);

@@ -46,7 +46,7 @@ namespace Planet_Game_4
             }
 
             setRotation(camRot + 0.1);
-            camPos.X += 1;
+            //camPos.X += 1;
         }
 
         /// <summary>
@@ -59,6 +59,11 @@ namespace Planet_Game_4
             camRotation.Y = Math.Sin(rotation);
         }
 
+        public Vector getRotationVector(double rotation)
+        {
+            return new Vector(Math.Cos(rotation), Math.Sin(rotation));
+        }
+
         // Do visual calculations and display all the things
         public void show()
         {
@@ -69,11 +74,20 @@ namespace Planet_Game_4
                 universe.planets[i].show(graphics, this);
             }
 
+            Vector whereItShouldBe = new Vector(300, 300);
+            Vector point = worldToPixel(pixelToWorld(whereItShouldBe));
+            graphics.FillEllipse(new SolidBrush(Color.White), (float)point.X, (float)point.Y, 20, 20);
+            graphics.FillEllipse(new SolidBrush(Color.White), (float)whereItShouldBe.X, (float)whereItShouldBe.Y, 20, 20);
         }
 
-        public Vector worldToPixel(Vector v)
+        public Vector worldToPixel(Vector w)
         {
-            return (new Vector(v + camPos)).Rot(camRotation) * zoom + camOrigin;
+            return (w + camPos).Rot(camRotation) * zoom + camOrigin;
+        }
+
+        public Vector pixelToWorld(Vector p)
+        {
+            return ((p - camOrigin) / zoom).Rot(-camRotation) - camPos;
         }
 
     }
