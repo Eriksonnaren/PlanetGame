@@ -71,13 +71,32 @@ namespace Planet_Game_4
 
                     //g.DrawLine(new Pen(Color.White), (float)(si1 * radii + x), (float)(co1 * radii + y), (float)(si1 * (r+radii) + x), (float)(co1 * (r+radii) + y));
 
-                    PointF[] points = new PointF[]
+                    PointF[] points;
+
+                    if (i + 1 < shape.Length && shape[i].slices == shape[i + 1].slices)
                     {
+                        points = new PointF[]
+                        {
+                        new PointF((float)(si1 * (radii) + x), (float)(co1 * (radii) + y)),
+                        new PointF((float)(si1 * (r+(radii+1)) + x), (float)(co1 * (r+(radii+1)) + y)),
+                        new PointF((float)(si2 * (r+(radii+1)) + x), (float)(co2 * (r+(radii+1)) + y)),
+                        new PointF((float)(si2 * (radii) + x), (float)(co2 * (radii) + y)),
+                        };
+                    }
+                    else
+                    {
+                        double si3 = Math.Sin(angle + angleMovement / 2.0);
+                        double co3 = Math.Cos(angle + angleMovement / 2.0);
+
+                        points = new PointF[]
+                        {
                         new PointF((float)(si1 * radii + x), (float)(co1 * radii + y)),
-                        new PointF((float)(si1 * (r+radii) + x), (float)(co1 * (r+radii) + y)),
-                        new PointF((float)(si2 * (r+radii) + x), (float)(co2 * (r+radii) + y)),
+                        new PointF((float)(si1 * (r+radii+1) + x), (float)(co1 * (r+radii+1) + y)),
+                        new PointF((float)(si3 * (r+radii+1) + x), (float)(co3 * (r+radii+1) + y)),
+                        new PointF((float)(si2 * (r+radii+1) + x), (float)(co2 * (r+radii+1) + y)),
                         new PointF((float)(si2 * radii + x), (float)(co2 * radii + y)),
-                    };
+                        };
+                    }
 
                     g.FillPolygon(new SolidBrush(shape[i].pieces[j].c), points);
 
