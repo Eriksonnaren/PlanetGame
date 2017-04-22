@@ -14,24 +14,34 @@ namespace Planet_Game_4
 
         public body_shape(int shapeLayers)
         {
-            shape = new body_shape_layer[shapeLayers];
+            //shapeLayers = shapeLayers;
+            shape = new body_shape_layer[shapeLayers << 1];
 
             int rings = 1;
             int prevRings = 0;
 
             double sizeSum = 0;
 
+            int index = 0;
+
             for(int i = 0; i < shapeLayers; i++)
             {
                 rings = rings << 1;
-                double size = 1.0 / shapeLayers * (rings - prevRings);
-                shape[i] = new body_shape_layer(rings * 4, size);
-                sizeSum += size;
+                //double size = 1.0 / shapeLayers * (rings - prevRings);
+                double size = 1.0 / shapeLayers;
+                for (int j = 0; j < (rings - prevRings) >> 1; j++)
+                {
+                    shape[index] = new body_shape_layer(rings * 4, size);
+                    sizeSum += size;
+                    index++;
+                }
                 prevRings = rings;
             }
 
+            Console.WriteLine(index);
+
             // Normalize
-            for(int i = 0; i < shapeLayers; i++)
+            for(int i = 0; i < shapeLayers << 1; i++)
             {
                 shape[i].size *= 1 / sizeSum;
             }
