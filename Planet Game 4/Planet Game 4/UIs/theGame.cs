@@ -18,8 +18,6 @@ namespace Planet_Game_4
         public double camRot = 0;
         public double zoom = 1;
 
-        public bool cameraDrag = false;
-
         Vector camPos = new Vector(0, 0);
         Vector camOrigin = new Vector(400, 300);
         Vector camRotation;
@@ -76,7 +74,7 @@ namespace Planet_Game_4
         {
             graphics.Clear(Color.Black);
 
-            if (!cameraDrag)
+            if (true)
             {
                 for (int i = universe.planets.Count - 1; i >= 0; i--)
                 {
@@ -92,12 +90,12 @@ namespace Planet_Game_4
 
         public void mousePressed()
         {
-            cameraDrag = true;
+            
         }
 
         public void mouseReleased()
         {
-            cameraDrag = false;
+            
         }
 
         public void mouseWheel(double delta) { }

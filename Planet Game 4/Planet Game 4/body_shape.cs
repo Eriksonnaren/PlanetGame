@@ -14,7 +14,7 @@ namespace Planet_Game_4
 
         public body_shape_layer[] shape;
 
-        public body_shape(int shapeLayers)
+        public body_shape(int shapeLayers, int r, int g, int b, int rv, int gv, int bv)
         {
 
             shape = new body_shape_layer[shapeLayers];
@@ -33,7 +33,7 @@ namespace Planet_Game_4
                 double size = 1.0 / shapeLayers;
                 for (int j = 0; j < (rings - prevRings) >> 1 && index < shapeLayers; j++)
                 {
-                    shape[index] = new body_shape_layer((rings >> 1) * initialDivisions, size);
+                    shape[index] = new body_shape_layer((rings >> 1) * initialDivisions, size, r, g, b, rv, gv, bv);
                     sizeSum += size;
                     index++;
                 }
