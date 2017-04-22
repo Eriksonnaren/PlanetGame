@@ -16,11 +16,8 @@ namespace Planet_Game_4
        
         public Color average;
 
-        public body_shape_recursive(body_shape_piece piece)
-        {
-            this.average = Color.FromArgb(piece.c.R + Form1.rnd.Next(-55, 55), 0, 0);
-        }
-
+        int level;
+        
         public body_shape_recursive(body_shape_piece piece, int req)
         {
             this.average = Color.FromArgb(piece.c.R + Form1.rnd.Next(-55, 55), 0, 0);
@@ -35,6 +32,8 @@ namespace Planet_Game_4
             {
 
             }
+
+            level = req;
 
         }
 
