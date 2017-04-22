@@ -11,7 +11,7 @@ namespace Planet_Game_4
     public class theGame : ui
     {
         public static double Gravity = 0.0001;
-        public static double TileMinimumSize = 10;
+        public static double TileMinimumSize = 80;
 
         public Graphics graphics;
         public Form1 parent;
@@ -140,11 +140,11 @@ namespace Planet_Game_4
             if(e.Delta<0)
             {
                 
-                zoom /= 2;
+                zoom /= 1.1;
             }
             else if(e.Delta>0)
             {
-                zoom *= 2;
+                zoom *= 1.1;
             }else
             {
                 return;
