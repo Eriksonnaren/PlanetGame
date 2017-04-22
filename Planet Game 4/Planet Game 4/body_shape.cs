@@ -10,6 +10,8 @@ namespace Planet_Game_4
     public class body_shape
     {
 
+        public int initialDivisions = 4;
+
         public body_shape_layer[] shape;
 
         public body_shape(int shapeLayers)
@@ -31,7 +33,7 @@ namespace Planet_Game_4
                 double size = 1.0 / shapeLayers;
                 for (int j = 0; j < (rings - prevRings) >> 1 && index < shapeLayers; j++)
                 {
-                    shape[index] = new body_shape_layer((rings >> 1) * 4, size);
+                    shape[index] = new body_shape_layer((rings >> 1) * initialDivisions, size);
                     sizeSum += size;
                     index++;
                 }
@@ -53,19 +55,23 @@ namespace Planet_Game_4
 
             levels = Math.Min(levels, shape.Length);
 
-            int radii = 0;
+            double radii = 0;
+
+            int rings = 1;
 
             for (int i = 0; i < levels; i++)
             {
                 if (shape[i] == null) continue;
-                int r = (int)((1.0 / levels) * radius);
+                double r = ((1.0 / levels) * radius);
 
                 //g.DrawEllipse(new Pen(Color.FromArgb(255, 255, 255)), x - (r+radii), y - (r+radii), (r+radii) * 2, (r+radii) * 2);
 
                 double angle = rotation;
                 double angleMovement = Math.PI * 2 / shape[i].slices;
 
-                for (int j = 0; j < shape[i].slices; j++)
+                rings = rings << 1;
+
+                for (int j = 0; j < initialDivisions * (rings >> 1); j++)
                 {
                     double si1 = Math.Sin(angle);
                     double co1 = Math.Cos(angle);
@@ -101,7 +107,9 @@ namespace Planet_Game_4
                         };
                     }
 
-                    g.FillPolygon(new SolidBrush(shape[i].pieces[j].c), points);
+                    int _i = Form1.lerp(0, shape.Length - 1, i / (double)(levels - 1));
+                    int _j = Form1.lerp(0, shape[_i].slices - 1, (double)(j) / ((rings>>1) * initialDivisions));
+                    g.FillPolygon(new SolidBrush(shape[_i].pieces[_j].c), points);
 
                     angle += angleMovement;
                 }
@@ -115,7 +123,7 @@ namespace Planet_Game_4
         public void render(Graphics g, int x, int y, int radius, double rotation)
         {
 
-            render(g, x, y, radius / 10, radius, rotation);
+            render(g, x, y, (int)Math.Max((radius / theGame.TileMinimumSize), 2), radius, rotation);
 
         }
 
