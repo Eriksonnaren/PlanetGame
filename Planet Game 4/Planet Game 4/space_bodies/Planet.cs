@@ -30,7 +30,7 @@ namespace Planet_Game_4
 
         public body_shape shape;
 
-        public Planet(Vector pos, double radius, planet_type type)
+        public Planet(Vector pos, double radius, int layers, planet_type type)
         {
             position = pos;
             this.type = type;
@@ -38,7 +38,7 @@ namespace Planet_Game_4
             this.radius = radius;
 
             mass = 10000;
-            shape = new body_shape(20);
+            shape = new body_shape(layers);
         }
 
         /// <summary>
