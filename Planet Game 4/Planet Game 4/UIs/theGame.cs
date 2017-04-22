@@ -12,10 +12,13 @@ namespace Planet_Game_4
         public static double Gravity = 0.0001;
         public static double TileMinimumSize = 3;
 
-        Graphics graphics;
+        public Graphics graphics;
+        public Form1 parent;
 
         public double camRot = 0;
         public double zoom = 1;
+
+        public bool cameraDrag = false;
 
         Vector camPos = new Vector(0, 0);
         Vector camOrigin = new Vector(400, 300);
@@ -25,13 +28,18 @@ namespace Planet_Game_4
         // The universe that you are playing inside. Isn't that cool?
         public universe universe;
 
-        public theGame(Graphics graphics)
+        public theGame(Graphics graphics, Form1 parent)
         {
             // You do need an object to display all the stuff to the screen, do you not?
             this.graphics = graphics;
+            this.parent = parent;
+
+            camOrigin = new Vector(parent.PB.Width / 2.0, parent.PB.Height / 2.0);
 
             universe = new universe();
 
+            // Make sure that the camera rotation is not null
+            setRotation(0);
         }
 
         // Do physics and calculations
@@ -45,10 +53,7 @@ namespace Planet_Game_4
                     P.position = P.orbit.getPos();
                 }
             }
-
-            setRotation(camRot + 0.01);
-            camPos.X += 1;
-            camOrigin.X += 1;
+            
         }
 
         /// <summary>
@@ -71,16 +76,37 @@ namespace Planet_Game_4
         {
             graphics.Clear(Color.Black);
 
-            for(int i = universe.planets.Count-1; i >= 0; i--)
+            if (!cameraDrag)
             {
-                universe.planets[i].show(graphics, this);
+                for (int i = universe.planets.Count - 1; i >= 0; i--)
+                {
+                    universe.planets[i].show(graphics, this);
+                }
             }
-
-            Vector whereItShouldBe = new Vector(300, 300);
-            Vector point = worldToPixel(pixelToWorld(whereItShouldBe));
-            graphics.FillEllipse(new SolidBrush(Color.White), (float)point.X, (float)point.Y, 20, 20);
-            graphics.FillEllipse(new SolidBrush(Color.White), (float)whereItShouldBe.X, (float)whereItShouldBe.Y, 20, 20);
         }
+
+        public void resize()
+        {
+            camOrigin = new Vector(parent.PB.Width / 2.0, parent.PB.Height / 2.0);
+        }
+
+        public void mousePressed()
+        {
+            cameraDrag = true;
+        }
+
+        public void mouseReleased()
+        {
+            cameraDrag = false;
+        }
+
+        public void mouseWheel(double delta) { }
+        public void keyPressed(char key)
+        {
+
+        }
+
+        public void keyReleased(char key) { }
 
         public Vector worldToPixel(Vector w)
         {

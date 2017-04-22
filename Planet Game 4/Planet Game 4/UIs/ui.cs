@@ -14,5 +14,13 @@ namespace Planet_Game_4
         // Displays the menu
         void show();
 
+        // Some functions that can be useful when updating the menu
+        void resize();
+        void mousePressed();
+        void mouseReleased();
+        void mouseWheel(double delta);
+        void keyPressed(char key);
+        void keyReleased(char key);
+
     }
 }

@@ -12,8 +12,8 @@ namespace Planet_Game_4
 {
     public partial class Form1 : Form
     {
-        BufferedGraphics BG;
-        PictureBox PB;
+        public BufferedGraphics BG;
+        public PictureBox PB;
         static public theGame ui;
         
         Timer T = new Timer();
@@ -40,8 +40,7 @@ namespace Planet_Game_4
             rnd = new Random();
 
             // Initiate the ui
-            theGame temp = new theGame(BG.Graphics);
-            ui=temp;
+            ui = new theGame(BG.Graphics, this);
 
 
             //start the timer
@@ -61,6 +60,36 @@ namespace Planet_Game_4
         public static int lerp(int a, int b, double t)
         {
             return (int)(a+(b-a)*t);
+        }
+
+        private void Form1_SizeChanged(object sender, EventArgs e)
+        {
+            PB.Dock = DockStyle.Fill;
+            BufferedGraphicsContext Context = BufferedGraphicsManager.Current;
+            BG = Context.Allocate(PB.CreateGraphics(), PB.DisplayRectangle);
+
+            if (ui != null)
+            {
+                ui.resize();
+                
+                ui.graphics = BG.Graphics;
+            }
+            
+        }
+
+        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        {
+            ui.mousePressed();
+        }
+
+        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        {
+            ui.mouseReleased();
+        }
+
+        private void Form1_MouseLeave(object sender, EventArgs e)
+        {
+            ui.mouseReleased();
         }
     }
 }
