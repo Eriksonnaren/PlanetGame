@@ -57,8 +57,10 @@
     <Compile Include="Orbit.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="theGame.cs" />
-    <Compile Include="ui.cs" />
+    <Compile Include="space_bodies\Planet.cs" />
+    <Compile Include="space_bodies\space_bodies.cs" />
+    <Compile Include="UIs\theGame.cs" />
+    <Compile Include="UIs\ui.cs" />
     <Compile Include="Vector.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
