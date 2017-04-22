@@ -17,7 +17,7 @@ namespace Planet_Game_4
         public universe()
         {
             this.planets = new List<Planet>();
-            this.planets.Add(new Planet(new Vector(500, 300), 150, 20, Planet.planet_type.rock));
+            this.planets.Add(new Planet(new Vector(500, 300), 150, 2, Planet.planet_type.rock));
         }
 
         /// <summary>
