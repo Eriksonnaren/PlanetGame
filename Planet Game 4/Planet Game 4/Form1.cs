@@ -19,8 +19,13 @@ namespace Planet_Game_4
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            display_text();
+        }
+
+        public void display_text()
+        {
             Console.WriteLine("Hello World!");
-            
+
             Console.WriteLine("Eriksonn");
         }
     }
