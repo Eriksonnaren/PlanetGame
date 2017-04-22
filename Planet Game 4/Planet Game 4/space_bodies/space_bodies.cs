@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Planet_Game_4
 {
-    public interface space_bodies
+    public interface ISpace_bodies
     {
         
         Vector position { get; set; }
