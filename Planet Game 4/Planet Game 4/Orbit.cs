@@ -9,7 +9,7 @@ namespace Planet_Game_4
 {
     public class Orbit
     {
-        ISpace_bodies Parent;
+        SpaceBody Parent;
         /// <summary>
         /// Points from parent to apoapsis
         /// </summary>
@@ -43,7 +43,7 @@ namespace Planet_Game_4
         double MeanMotion;
         double Latus;
 
-        public Orbit(ISpace_bodies Parent)
+        public Orbit(SpaceBody Parent)
         {
             this.Parent = Parent;
             GM = Parent.mass * theGame.Gravity;
@@ -84,8 +84,8 @@ namespace Planet_Game_4
         }
         public void update(double dt)
         {
-            //Mean_Anomoly -= MeanMotion * dt;
-            Mean_Anomoly -= 0.01;
+            Mean_Anomoly -= MeanMotion * dt;
+            //Mean_Anomoly -= 0.01;
             Eccentric_Anomoly = getEccFromMean();
             True_Anomoly = getTrueFromEcc();
         }
