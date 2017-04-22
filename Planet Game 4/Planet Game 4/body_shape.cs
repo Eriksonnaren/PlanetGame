@@ -14,8 +14,8 @@ namespace Planet_Game_4
 
         public body_shape(int shapeLayers)
         {
-            //shapeLayers = shapeLayers;
-            shape = new body_shape_layer[shapeLayers << 1];
+
+            shape = new body_shape_layer[shapeLayers];
 
             int rings = 1;
             int prevRings = 0;
@@ -29,9 +29,9 @@ namespace Planet_Game_4
                 rings = rings << 1;
                 //double size = 1.0 / shapeLayers * (rings - prevRings);
                 double size = 1.0 / shapeLayers;
-                for (int j = 0; j < (rings - prevRings) >> 1; j++)
+                for (int j = 0; j < (rings - prevRings) >> 1 && index < shapeLayers; j++)
                 {
-                    shape[index] = new body_shape_layer(rings * 4, size);
+                    shape[index] = new body_shape_layer((rings >> 1) * 3, size);
                     sizeSum += size;
                     index++;
                 }
@@ -41,7 +41,7 @@ namespace Planet_Game_4
             Console.WriteLine(index);
 
             // Normalize
-            for(int i = 0; i < shapeLayers << 1; i++)
+            for(int i = 0; i < shapeLayers; i++)
             {
                 shape[i].size *= 1 / sizeSum;
             }
@@ -54,6 +54,7 @@ namespace Planet_Game_4
 
             for (int i = 0; i < shape.Length; i++)
             {
+                if (shape[i] == null) continue;
                 int r = (int)(shape[i].size * radius);
                 
                 g.DrawEllipse(new Pen(Color.FromArgb(255, 255, 255)), x - (r+radii), y - (r+radii), (r+radii) * 2, (r+radii) * 2);
