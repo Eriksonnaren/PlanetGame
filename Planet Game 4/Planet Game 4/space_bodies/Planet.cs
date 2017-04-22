@@ -33,6 +33,7 @@ namespace Planet_Game_4
             this.type = type;
 
             this.radius = radius;
+            mass = 10000;
         }
 
         public void update(double dt)

@@ -14,7 +14,7 @@ namespace Planet_Game_4
     {
         BufferedGraphics BG;
         PictureBox PB;
-
+        Orbit O;
         public ui ui;
 
         Timer T = new Timer();
@@ -36,7 +36,10 @@ namespace Planet_Game_4
             BG = Context.Allocate(PB.CreateGraphics(),PB.DisplayRectangle);
 
             // Initiate the ui
-            ui = new theGame(BG.Graphics);
+            theGame temp = new theGame(BG.Graphics);
+            ui=temp;
+            O = new Orbit(temp.planets[0]);
+            O.Generate(new Vector(500,300),new Vector(0,0.000001));
 
             //start the timer
             T.Interval = 20;

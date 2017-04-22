@@ -9,7 +9,7 @@ namespace Planet_Game_4
 {
     public class theGame : ui
     {
-
+        public static double Gravity = 0.0001;
         Graphics graphics;
         public List<Planet> planets { get; set; }
 
@@ -19,7 +19,7 @@ namespace Planet_Game_4
             this.graphics = graphics;
 
             planets = new List<Planet>();
-            planets.Add(new Planet(new Vector(100, 100), 100, Planet.planet_type.life));
+            planets.Add(new Planet(new Vector(300, 300), 100, Planet.planet_type.life));
         }
 
         // Do physics and calculations
