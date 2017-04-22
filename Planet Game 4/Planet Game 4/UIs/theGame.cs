@@ -10,6 +10,8 @@ namespace Planet_Game_4
     public class theGame : ui
     {
         public static double Gravity = 0.0001;
+        public static double TileMinimumSize = 3;
+
         Graphics graphics;
 
         // The universe that you are playing inside. Isn't that cool?

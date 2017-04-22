@@ -16,12 +16,14 @@ namespace Planet_Game_4
         /// </summary>
         public universe()
         {
+
             //this.planets = new List<SpaceBody>();
             planets = Generate(new Vector(500,500),3,20,100000);
             /*SpaceBody P1 = new SpaceBody(new Vector(500, 300), 50, 10,SpaceBody.Body_type.sun);
             Orbit O = new Orbit(P1);
             O.Generate(0.5,0,200,1);
             SpaceBody P2 = new SpaceBody(O, 25, 5, SpaceBody.Body_type.rock);
+
             this.planets.Add(P1);
             this.planets.Add(P2);*/
             

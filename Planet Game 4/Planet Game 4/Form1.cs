@@ -55,8 +55,14 @@ namespace Planet_Game_4
             ui.update();
             ui.show();
 
+            theGame.TileMinimumSize *= 1.01;
 
             BG.Render();
+        }
+
+        public static int lerp(int a, int b, double t)
+        {
+            return (int)(a+(b-a)*t);
         }
     }
 }
