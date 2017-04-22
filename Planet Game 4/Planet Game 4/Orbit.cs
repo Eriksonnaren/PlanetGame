@@ -82,10 +82,15 @@ namespace Planet_Game_4
             double Rad = SemiMajor*(1 - Sq(Eccentricity))/(1+Eccentricity*Math.Cos(True_Anomoly));
             return (new Vector(Rad*Math.Cos(True_Anomoly), Rad*Math.Sin(True_Anomoly)).Rot(EccentrcityVector.Norm()))+Parent.position;
         }
+        public Vector getPos(double Angle)
+        {
+            double Rad = SemiMajor * (1 - Sq(Eccentricity)) / (1 + Eccentricity * Math.Cos(Angle));
+            return (new Vector(Rad * Math.Cos(Angle), Rad * Math.Sin(Angle)).Rot(EccentrcityVector.Norm())) + Parent.position;
+        }
         public void update(double dt)
         {
             Mean_Anomoly -= MeanMotion * dt;
-            //Mean_Anomoly -= 0.01;
+            Mean_Anomoly -= 0.01;
             Eccentric_Anomoly = getEccFromMean();
             True_Anomoly = getTrueFromEcc();
         }
@@ -113,10 +118,12 @@ namespace Planet_Game_4
         }
         public void Show(Graphics G)
         {
-            G.TranslateTransform((float)Parent.position.X, (float)Parent.position.Y);
-            G.RotateTransform((float)(EccentrcityVector.Angle() * 180 /Math.PI));
-            G.DrawEllipse(new Pen(Color.Blue,2),(float)(-FocalDist-SemiMajor),(float)(-SemiMinor),(float)SemiMajor*2,(float)SemiMinor*2);
-            G.ResetTransform();
+            int OrbitLines = 10;
+            for (int i = 0; i < OrbitLines; i++)
+            {
+                double Angle = i / (double)OrbitLines;
+
+            }
         }
         double Sq(double A)
         {
