@@ -65,7 +65,7 @@ namespace Planet_Game_4
             Orbit O = new Orbit(Parent);
             int MoonAmount = id;
             O.Generate(Form1.rnd.NextDouble() * (0.1 / Math.Sqrt(id + 1)), Form1.rnd.NextDouble() * Math.PI * 2, Dist, Form1.rnd.NextDouble() * Math.PI * 2);
-            SpaceBody Planet = new SpaceBody(O, Size, (int)(Size / 10), SpaceBody.Body_type.rock, 1000);
+            SpaceBody Planet = new SpaceBody(O, Size, (int)(Size / 2), SpaceBody.Body_type.rock, 1000);
             return Planet;
         }
 
