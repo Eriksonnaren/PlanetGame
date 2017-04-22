@@ -21,6 +21,7 @@ namespace Planet_Game_4
             this.graphics = graphics;
 
             universe = new universe();
+
         }
 
         // Do physics and calculations

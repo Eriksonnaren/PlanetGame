@@ -15,8 +15,8 @@ namespace Planet_Game_4
         BufferedGraphics BG;
         PictureBox PB;
         Orbit O;
-        public ui ui;
-
+        public theGame ui;
+        
         Timer T = new Timer();
 
         public static Random rnd;
@@ -44,7 +44,8 @@ namespace Planet_Game_4
             theGame temp = new theGame(BG.Graphics);
             ui=temp;
             O = new Orbit(temp.universe.planets[0]);
-            O.Generate(new Vector(200,0),new Vector(0,0.08));
+            O.Generate(new Vector(200,0),new Vector(0,0.02));
+
 
             //start the timer
             T.Interval = 20;
@@ -55,8 +56,14 @@ namespace Planet_Game_4
         private void T_Tick(object sender, EventArgs e)//main loop
         {
             ui.show();
+            Point M = PointToClient(MousePosition);
+            O.Generate(new Vector(200, 0), (new Vector(M.X,M.Y)-(ui.universe.planets[0].position+new Vector(200,0)))/2000);
+            O.update(200);
             O.Show(BG.Graphics);
+            Vector P = O.getPos();
+            BG.Graphics.FillEllipse(Brushes.Green,(float)(P.X+ ui.universe.planets[0].position.X)-10,(float)(P.Y + ui.universe.planets[0].position.Y - 10),20,20);
             BG.Render();
+
         }
     }
 }
