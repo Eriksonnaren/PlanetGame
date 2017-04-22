@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Planet_Game_4
 {
-    public class Planet : space_bodies
+    public class Planet : ISpace_bodies
     {
 
         public enum planet_type
@@ -27,25 +27,31 @@ namespace Planet_Game_4
         public double radius { get; set; }
         public double mass { get; set; }
 
+        public body_shape shape;
+
         public Planet(Vector pos, double radius, planet_type type)
         {
             position = pos;
             this.type = type;
 
             this.radius = radius;
+
             mass = 10000;
+            shape = new body_shape(4);
         }
 
-        public void update(double dt)
+        /// <summary>
+        /// PLANET PHYSICS and other stuff too
+        /// </summary>
+        public void update()
         {
             
         }
 
         public static void show(Graphics g, Planet p)
         {
-            
-            // Temporary fill thing
-            g.FillEllipse(new SolidBrush(Color.DarkCyan), (int)(p.position.X - p.radius), (int)(p.position.Y - p.radius), (int)p.radius*2, (int)p.radius*2);
+
+            p.shape.render(g, (int)p.position.X, (int)p.position.Y, (int)p.radius);
 
         }
 

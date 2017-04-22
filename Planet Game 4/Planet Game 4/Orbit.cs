@@ -9,12 +9,13 @@ namespace Planet_Game_4
 {
     public class Orbit
     {
-        space_bodies Parent;
+        ISpace_bodies Parent;
         /// <summary>
         /// Points from parent to apoapsis
         /// </summary>
         Vector EccentrcityVector;
         Vector Center;
+        double FocalDist;
         double Eccentrcity;
         /// <summary>
         /// Longest distance
@@ -36,7 +37,7 @@ namespace Planet_Game_4
         double GM;
         double Energy;
 
-        public Orbit(space_bodies Parent)
+        public Orbit(ISpace_bodies Parent)
         {
             this.Parent = Parent;
             GM = Parent.mass * theGame.Gravity;
@@ -50,11 +51,16 @@ namespace Planet_Game_4
             Energy = VelSq / 2 - GM / Rad;
             SemiMajor = -GM / (2 * Energy);
             SemiMinor = SemiMajor * Math.Sqrt(1-Eccentrcity*Eccentrcity);
+            FocalDist = Math.Sqrt(SemiMajor*SemiMajor-SemiMinor*SemiMinor);
+            Center = EccentrcityVector.setMag(FocalDist);
 
         }
         public void Show(Graphics G)
         {
-            
+            G.TranslateTransform((float)Parent.position.X, (float)Parent.position.Y);
+            G.RotateTransform((float)(EccentrcityVector.Angle() * 180 /Math.PI+180));
+            G.DrawEllipse(new Pen(Color.Blue,2),(float)(FocalDist-SemiMajor),(float)(-SemiMinor),(float)SemiMajor*2,(float)SemiMinor*2);
+            G.ResetTransform();
         }
 
     }

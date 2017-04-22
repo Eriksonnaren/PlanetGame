@@ -37,6 +37,7 @@ namespace Planet_Game_4
             {
                 Planet.show(graphics, planets[i]);
             }
+
         }
 
     }

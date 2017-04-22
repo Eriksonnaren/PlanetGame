@@ -39,7 +39,7 @@ namespace Planet_Game_4
             theGame temp = new theGame(BG.Graphics);
             ui=temp;
             O = new Orbit(temp.planets[0]);
-            O.Generate(new Vector(500,300),new Vector(0,0.000001));
+            O.Generate(new Vector(200,0),new Vector(0,0.08));
 
             //start the timer
             T.Interval = 20;
@@ -50,7 +50,7 @@ namespace Planet_Game_4
         private void T_Tick(object sender, EventArgs e)//main loop
         {
             ui.show();
-
+            O.Show(BG.Graphics);
             BG.Render();
         }
     }

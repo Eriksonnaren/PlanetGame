@@ -54,6 +54,10 @@ namespace Planet_Game_4
         {
             return this / Mag();
         }
+        public Vector setMag(double M)
+        {
+            return Norm() * M;
+        }
         public double Dot(Vector V)
         {
             return X * V.X + Y * V.Y;
