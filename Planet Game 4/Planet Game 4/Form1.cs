@@ -14,7 +14,11 @@ namespace Planet_Game_4
     {
         BufferedGraphics BG;
         PictureBox PB;
+
+        public ui ui;
+
         Timer T = new Timer();
+
         public Form1()
         {
             InitializeComponent();
@@ -29,6 +33,10 @@ namespace Planet_Game_4
             WindowState = FormWindowState.Maximized;
             PB.Dock = DockStyle.Fill;
             BufferedGraphicsContext Context = BufferedGraphicsManager.Current;
+            BG = Context.Allocate(PB.CreateGraphics(),PB.DisplayRectangle);
+
+            // Initiate the ui
+            ui = new theGame(BG.Graphics);
 
             //start the timer
             T.Interval = 20;
@@ -38,7 +46,9 @@ namespace Planet_Game_4
 
         private void T_Tick(object sender, EventArgs e)//main loop
         {
-            
+            ui.show();
+
+            BG.Render();
         }
     }
 }

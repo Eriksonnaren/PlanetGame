@@ -11,11 +11,15 @@ namespace Planet_Game_4
     {
 
         Graphics graphics;
+        public List<Planet> planets { get; set; }
 
         public theGame(Graphics graphics)
         {
             // You do need an object to display all the stuff to the screen, do you not?
             this.graphics = graphics;
+
+            planets = new List<Planet>();
+            planets.Add(new Planet(new Vector(100, 100), 100, Planet.planet_type.life));
         }
 
         // Do physics and calculations
@@ -27,7 +31,12 @@ namespace Planet_Game_4
         // Do visual calculations and display all the things
         public void show()
         {
+            graphics.Clear(Color.Black);
 
+            for(int i = planets.Count-1; i >= 0; i--)
+            {
+                Planet.show(graphics, planets[i]);
+            }
         }
 
     }

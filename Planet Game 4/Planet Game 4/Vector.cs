@@ -8,12 +8,14 @@ namespace Planet_Game_4
 {
     public class Vector
     {
-        double X;
-        double Y;
+        public double X;
+        public double Y;
+
         public Vector()
         {
-
+         
         }
+
         public Vector(double X,double Y)
         {
             this.X = X;
