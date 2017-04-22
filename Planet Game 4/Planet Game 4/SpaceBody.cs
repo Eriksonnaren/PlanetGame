@@ -72,7 +72,7 @@ namespace Planet_Game_4
 
             Vector pixelPos = parent.worldToPixel(position);
 
-            shape.render(g, (int)pixelPos.X, (int)pixelPos.Y, (int)(radius * parent.zoom), rotation + parent.camRot);
+            shape.render(g, (int)pixelPos.X, (int)pixelPos.Y, (int)(radius * parent.zoom), rotation - parent.camRot);
 
         }
 

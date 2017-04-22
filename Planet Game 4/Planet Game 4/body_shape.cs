@@ -40,8 +40,6 @@ namespace Planet_Game_4
                 prevRings = rings;
             }
 
-            Console.WriteLine(index);
-
             // Normalize
             for(int i = 0; i < shapeLayers; i++)
             {
@@ -51,8 +49,7 @@ namespace Planet_Game_4
 
         public void render(Graphics g, int x, int y, int levels, int radius, double rotation)
         {
-
-
+            
             levels = Math.Min(levels, shape.Length);
 
             double radii = 0;

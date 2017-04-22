@@ -73,7 +73,7 @@ namespace Planet_Game_4
 
         public Vector worldToPixel(Vector v)
         {
-            return (new Vector(v)).Rot(camRotation) * zoom + camOrigin + camPos;
+            return (new Vector(v + camPos)).Rot(camRotation) * zoom + camOrigin;
         }
 
     }
