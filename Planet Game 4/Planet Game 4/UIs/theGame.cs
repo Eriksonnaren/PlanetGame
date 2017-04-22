@@ -10,8 +10,13 @@ namespace Planet_Game_4
 {
     public class theGame : ui
     {
+<<<<<<< HEAD
         public static double Gravity = Math.Pow(10,-11);
         public static double TileMinimumSize = 10;
+=======
+        public static double Gravity = 0.0001;
+        public static double TileMinimumSize = 80;
+>>>>>>> 17cfdc243347ec464f081ac3189120fb707e0cd7
 
         public Graphics graphics;
         public Form1 parent;
@@ -155,11 +160,19 @@ namespace Planet_Game_4
             if(e.Delta<0)
             {
                 
+<<<<<<< HEAD
                 toZoom /= zoomAmount;
             }
             else if(e.Delta>0)
             {
                 toZoom *= zoomAmount;
+=======
+                zoom /= 1.1;
+            }
+            else if(e.Delta>0)
+            {
+                zoom *= 1.1;
+>>>>>>> 17cfdc243347ec464f081ac3189120fb707e0cd7
             }else
             {
                 return;
