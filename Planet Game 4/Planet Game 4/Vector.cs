@@ -52,6 +52,8 @@ namespace Planet_Game_4
         }
         public Vector Norm()
         {
+            if (X == 0 && Y == 0)
+                return new Vector(1, 0);
             return this / Mag();
         }
         public Vector setMag(double M)

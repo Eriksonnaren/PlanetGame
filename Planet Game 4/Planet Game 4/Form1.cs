@@ -14,7 +14,6 @@ namespace Planet_Game_4
     {
         BufferedGraphics BG;
         PictureBox PB;
-        Orbit O;
         public theGame ui;
         
         Timer T = new Timer();
@@ -55,6 +54,7 @@ namespace Planet_Game_4
         {
             ui.update();
             ui.show();
+
 
             BG.Render();
         }

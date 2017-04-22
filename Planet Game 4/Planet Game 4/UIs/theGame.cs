@@ -27,7 +27,14 @@ namespace Planet_Game_4
         // Do physics and calculations
         public void update()
         {
-
+            foreach (Planet P in universe.planets)
+            {
+                if(P.orbit!=null)
+                {
+                    P.update();
+                    P.position = P.orbit.getPos();
+                }
+            }
         }
 
         // Do visual calculations and display all the things
