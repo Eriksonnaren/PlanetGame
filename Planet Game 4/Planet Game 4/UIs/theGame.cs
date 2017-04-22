@@ -45,7 +45,8 @@ namespace Planet_Game_4
                 }
             }
 
-            setRotation(camRot + 0.01);
+            setRotation(camRot + 0.1);
+            camPos.X += 1;
         }
 
         /// <summary>
@@ -72,7 +73,7 @@ namespace Planet_Game_4
 
         public Vector worldToPixel(Vector v)
         {
-            return (new Vector(v)).Rot(camRotation + camPos) * zoom + camOrigin;
+            return (new Vector(v)).Rot(camRotation) * zoom + camOrigin + camPos;
         }
 
     }

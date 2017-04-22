@@ -40,7 +40,7 @@ namespace Planet_Game_4
         }
         public List<SpaceBody> Generate(Vector Pos,int PlanetAmount,double SunSize,double SunMass)
         {
-            SpaceBody Sun = new SpaceBody(Pos, SunSize, 10, SpaceBody.Body_type.sun,SunMass);
+            SpaceBody Sun = new SpaceBody(Pos, SunSize, 30, SpaceBody.Body_type.sun,SunMass);
             List<SpaceBody> Bodys=new List<SpaceBody> { Sun };
             double Dist = 100;
             for (int i = 0; i < PlanetAmount; i++)
