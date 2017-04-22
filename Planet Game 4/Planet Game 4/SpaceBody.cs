@@ -37,7 +37,8 @@ namespace Planet_Game_4
             this.type = type;
             this.radius = radius;
             mass = Mass;
-            shape = new body_shape(layers);
+
+            setShape(layers, type);
         }
         public SpaceBody(Orbit orbit, double radius, int layers, Body_type type,double Mass)
         {
@@ -45,7 +46,20 @@ namespace Planet_Game_4
             this.type = type;
             this.radius = radius;
             mass = Mass;
-            shape = new body_shape(layers);
+
+            setShape(layers, type);
+        }
+
+        public void setShape(int layers, Body_type type)
+        {
+            if (type == Body_type.sun)
+            {
+                shape = new body_shape(layers, 200, 200, 0, 55, 55, 0);
+            }
+            else
+            {
+                shape = new body_shape(layers, 200, 0, 0, 55, 0, 0);
+            }
         }
 
         /// <summary>
