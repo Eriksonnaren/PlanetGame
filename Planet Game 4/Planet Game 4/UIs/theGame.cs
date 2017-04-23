@@ -10,13 +10,8 @@ namespace Planet_Game_4
 {
     public class theGame : ui
     {
-<<<<<<< HEAD
         public static double Gravity = Math.Pow(10,-11);
-        public static double TileMinimumSize = 10;
-=======
-        public static double Gravity = 0.0001;
-        public static double TileMinimumSize = 80;
->>>>>>> 17cfdc243347ec464f081ac3189120fb707e0cd7
+        public static double TileMinimumSize = 50;
 
         public Graphics graphics;
         public Form1 parent;
@@ -30,8 +25,8 @@ namespace Planet_Game_4
         public Vector MousePos1 = new Vector(0,0);
         public Vector MousePos2 = new Vector(0,0);
 
-        Vector camPos = new Vector(0, 0);
-        Vector camOrigin = new Vector(400, 300);
+        public Vector camPos = new Vector(0, 0);
+        public Vector camOrigin = new Vector(400, 300);
         Vector camRotation;
         Vector negCamRotation;
 
@@ -117,7 +112,7 @@ namespace Planet_Game_4
             {
                 for (int i = universe.bodies.Count - 1; i >= 0; i--)
                 {
-                    universe.bodies[i].show(graphics, this);
+                    universe.bodies[i].show(graphics, parent, this);
                 }
             }
         }
@@ -159,20 +154,11 @@ namespace Planet_Game_4
             
             if(e.Delta<0)
             {
-                
-<<<<<<< HEAD
                 toZoom /= zoomAmount;
             }
             else if(e.Delta>0)
             {
                 toZoom *= zoomAmount;
-=======
-                zoom /= 1.1;
-            }
-            else if(e.Delta>0)
-            {
-                zoom *= 1.1;
->>>>>>> 17cfdc243347ec464f081ac3189120fb707e0cd7
             }else
             {
                 return;

@@ -120,8 +120,14 @@ namespace Planet_Game_4
         {
             return Eccentric_Anomoly - Eccentricity * Math.Sin(Eccentric_Anomoly);
         }
-        public void Show(Graphics G,Pen Pen,bool Fade)
+        public void Show(Graphics G, theGame parent, Pen Pen,bool Fade)
         {
+            // If you do not need to show the orbit, don't show it!
+            if(Periapsis * parent.zoom > parent.camOrigin.Mag() / 2)
+            {
+                return;
+            }
+
             int OrbitLines = 200;
             PointF[] Points = new PointF[OrbitLines+1];
             for (int i = 0; i < OrbitLines; i++)

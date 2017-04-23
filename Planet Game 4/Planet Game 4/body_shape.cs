@@ -14,13 +14,13 @@ namespace Planet_Game_4
 
         public body_shape_recursive[] root;
 
-        public body_shape(int shapeLayers, int r, int g, int b, int rv, int gv, int bv)
+        public body_shape(int r, int g, int b, int rv, int gv, int bv, bool realAverage)
         {
             root = new body_shape_recursive[4];
 
             for(int i = 0; i < root.Length; i++)
             {
-                root[i] = new body_shape_recursive(new body_shape_piece(Color.FromArgb(200, 0, 0)), 5);
+                root[i] = new body_shape_recursive(Color.FromArgb(r, g, b), rv, gv, bv, realAverage, 10);
                 root[i].calculateAverages();
             }
         }
@@ -43,7 +43,7 @@ namespace Planet_Game_4
         public void render(Graphics g, int x, int y, int radius, double rotation)
         {
 
-            render(g, x, y, (int)Math.Max((radius / theGame.TileMinimumSize), 6), radius, rotation);
+            render(g, x, y, (int)Math.Max((radius / theGame.TileMinimumSize), 2), radius, rotation);
 
         }
 

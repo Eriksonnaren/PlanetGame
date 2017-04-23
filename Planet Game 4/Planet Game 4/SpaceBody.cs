@@ -54,11 +54,11 @@ namespace Planet_Game_4
         {
             if (type == Body_type.sun)
             {
-                shape = new body_shape(layers, 200, 200, 0, 55, 55, 0);
+                shape = new body_shape(200, 200, 0, 55, 55, 0, false);
             }
             else
             {
-                shape = new body_shape(layers, 200, 0, 0, 55, 0, 0);
+                shape = new body_shape(200, 200, 200, 20, 20, 20, true);
             }
         }
 
@@ -76,17 +76,20 @@ namespace Planet_Game_4
             }
         }
 
-        public void show(Graphics g, theGame parent)
+        public void show(Graphics g, Form1 form, theGame parent)
         {
             if (orbit != null)
             {
                 // TODO ERIK: Fixa så orbits också blir affectade av kamerans position och rotation
-                orbit.Show(g,new Pen(Color.Blue,2),true);
+                orbit.Show(g, parent, new Pen(Color.Blue,2),true);
             }
 
             Vector pixelPos = parent.worldToPixel(position);
 
-            shape.render(g, (int)pixelPos.X, (int)pixelPos.Y, (int)(radius * parent.zoom), rotation - parent.camRot);
+            if (pixelPos.X >= -radius * parent.zoom && pixelPos.X <= form.PB.Width + radius * parent.zoom && pixelPos.Y >= -radius * parent.zoom && pixelPos.Y <= form.PB.Height + radius * parent.zoom)
+            {
+                shape.render(g, (int)pixelPos.X, (int)pixelPos.Y, (int)(radius * parent.zoom), rotation - parent.camRot);
+            }
 
         }
 

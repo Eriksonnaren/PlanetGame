@@ -97,5 +97,18 @@ namespace Planet_Game_4
             
         }
 
+        public static double constrain(double num, double min, double max)
+        {
+            if(num < min)
+            {
+                num = min;
+            }else if(num > max)
+            {
+                num = max;
+            }
+
+            return num;
+        }
+
     }
 }
