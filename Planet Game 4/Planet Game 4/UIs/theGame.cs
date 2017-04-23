@@ -15,12 +15,12 @@ namespace Planet_Game_4
 
         public Graphics graphics;
         public Form1 parent;
-
+        public Size Size;
         public double camRot = 0;
         public double zoom = 0.0001;
         public double toZoom;
         public double startZoom;
-        public double gameSpeed = 5;
+        public double gameSpeed = 2;
 
         public Vector toZoomPos = new Vector(0,0);
         public Vector startZoomPos = new Vector(0,0);
@@ -37,6 +37,7 @@ namespace Planet_Game_4
 
         public theGame(Graphics graphics, Form1 parent)
         {
+            Size = parent.Size;
             toZoom = zoom;
             // You do need an object to display all the stuff to the screen, do you not?
             this.graphics = graphics;
@@ -114,7 +115,15 @@ namespace Planet_Game_4
             {
                 for (int i = universe.bodies.Count - 1; i >= 0; i--)
                 {
-                    universe.bodies[i].show(graphics, parent, this);
+                    universe.bodies[i].showOrbit(graphics, this);
+                }
+                for (int i = universe.bodies.Count - 1; i >= 0; i--)
+                {
+                    universe.bodies[i].showRings(graphics);
+                }
+                for (int i = universe.bodies.Count - 1; i >= 0; i--)
+                {
+                    universe.bodies[i].showBody(graphics, parent, this);
                 }
             }
         }

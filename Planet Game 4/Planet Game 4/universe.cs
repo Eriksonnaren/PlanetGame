@@ -17,17 +17,15 @@ namespace Planet_Game_4
         public universe()
         {
 
-            //this.planets = new List<SpaceBody>();
-            bodies = Generate(new Vector(0,0),3,250000000,Math.Pow(10,26));
-            /*SpaceBody P1 = new SpaceBody(new Vector(500, 300), 50, 10,SpaceBody.Body_type.sun);
-            Orbit O = new Orbit(P1);
-            O.Generate(0.5,0,200,1);
-            SpaceBody P2 = new SpaceBody(O, 25, 5, SpaceBody.Body_type.rock);
-
-            this.planets.Add(P1);
-            this.planets.Add(P2);*/
-            
-
+            bodies = Generate(new Vector(0,0),1,250000000,Math.Pow(10,26));
+            Orbit O = new Orbit(bodies[1]);
+            O.Generate(0,0,O.Parent.radius*7,0,true);
+            bodies.Add(new SpaceBody(O,bodies[1].radius/2,5,SpaceBody.Body_type.rock, Math.Pow(10, 22)));
+            O = new Orbit(bodies[2]);
+            O.Generate(0, 0, O.Parent.radius * 5, 3, true);
+            bodies.Add(new SpaceBody(O, bodies[2].radius / 2, 5, SpaceBody.Body_type.rock, Math.Pow(10, 21)));
+            bodies[2].rings.refresh(RingSystem.RingType.Rock);
+            bodies[3].rings.refresh(RingSystem.RingType.Ice);
         }
 
         /// <summary>
@@ -41,7 +39,7 @@ namespace Planet_Game_4
         public List<SpaceBody> Generate(Vector Pos,int PlanetAmount,double SunSize,double SunMass)
         {
             SpaceBody Sun = new SpaceBody(Pos, SunSize, 10, SpaceBody.Body_type.sun,SunMass);
-            double Dist = 5 * Math.Pow(10, 9);
+            double Dist = 10 * Math.Pow(10, 9);
             List<SpaceBody> Bodys=new List<SpaceBody> { Sun };
             
             for (int i = 0; i < PlanetAmount; i++)

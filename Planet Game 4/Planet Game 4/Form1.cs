@@ -111,5 +111,9 @@ namespace Planet_Game_4
         }
         public static double Sq(double A)
         { return A * A; }
+        public static bool isInsideWindow(Vector V,double offset)
+        {
+            return V.X >= -offset && V.X < ui.Size.Width+offset && V.Y >= -offset && V.Y < ui.Size.Height+offset;
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace Planet_Game_4
 {
     public class Orbit
     {
-        SpaceBody Parent;
+        public SpaceBody Parent;
         /// <summary>
         /// Points from parent to apoapsis
         /// </summary>
@@ -74,7 +74,7 @@ namespace Planet_Game_4
             Latus = SemiMajor * (1 - Sq(Eccentricity));
             FocalDist = Math.Sqrt(Sq(SemiMajor) - Sq(SemiMinor));
             Center = EccentrcityVector.setMag(FocalDist);
-            True_Anomoly = PlanetAngle;
+            Mean_Anomoly = PlanetAngle;
             Period = 2 * Math.PI * Math.Sqrt(SemiMajor * SemiMajor * SemiMajor / GM);
             MeanMotion = Math.Sqrt(GM / (SemiMajor * SemiMajor * SemiMajor));
         }
@@ -130,12 +130,16 @@ namespace Planet_Game_4
 
             int OrbitLines = 200;
             PointF[] Points = new PointF[OrbitLines+1];
+            bool[] canSee = new bool[OrbitLines + 1];
             for (int i = 0; i < OrbitLines; i++)
             {
                 double Angle = 2*Math.PI*i / OrbitLines;
-                Points[i] = Form1.ui.worldToPixel(getPos(Angle)).toPoint();
+                Vector V = Form1.ui.worldToPixel(getPos(Angle));
+                canSee[i] = Form1.isInsideWindow(V,0);
+                Points[i] = V.toPoint();
             }
             Points[OrbitLines] = Points[0];
+            canSee[OrbitLines] = canSee[0];
             if (Fade)
             {
                 Color Col = Pen.Color;
@@ -143,12 +147,14 @@ namespace Planet_Game_4
                 double FadeMin = 0.2;
                 for (int i = 1; i < OrbitLines + 1; i++)
                 {
+
                     Pen.Color = Form1.lerpC(B, Col, (1 - FadeMin) * (1 - ((i - 1) / (double)OrbitLines)) + FadeMin);
-                    G.DrawLine(Pen, Points[i], Points[i - 1]);
+                    if(canSee[i]|| canSee[i-1])
+                        G.DrawLine(Pen, Points[i], Points[i - 1]);
                 }
             }else
             {
-                G.DrawLines(Pen,Points);
+                //G.DrawLines(Pen,Points);
             }
         }
         double Sq(double A)

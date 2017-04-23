@@ -82,17 +82,22 @@ namespace Planet_Game_4
                 rings.update(Form1.ui.gameSpeed);
             }
         }
-
-        public void show(Graphics g, Form1 form, theGame parent)
+        public void showOrbit(Graphics g,theGame parent)
         {
             if (orbit != null)
             {
-                orbit.Show(g, parent, new Pen(Color.Blue,2),true);
+                orbit.Show(g, parent, new Pen(Color.Blue, 2), true);
             }
-            if(rings !=null)
+        }
+        public void showRings(Graphics g)
+        {
+            if (rings != null)
             {
                 rings.show(g);
             }
+        }
+        public void showBody(Graphics g, Form1 form, theGame parent)
+        {
             Vector pixelPos = parent.worldToPixel(position);
 
             if (pixelPos.X >= -radius * parent.zoom && pixelPos.X <= form.PB.Width + radius * parent.zoom && pixelPos.Y >= -radius * parent.zoom && pixelPos.Y <= form.PB.Height + radius * parent.zoom)
