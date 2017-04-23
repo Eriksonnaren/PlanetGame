@@ -109,6 +109,7 @@ namespace Planet_Game_4
 
             return num;
         }
-
+        public static double Sq(double A)
+        { return A * A; }
     }
 }

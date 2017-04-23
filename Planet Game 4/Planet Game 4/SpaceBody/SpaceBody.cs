@@ -28,6 +28,7 @@ namespace Planet_Game_4
         public double radius;
         public double mass;
         public double rotation;
+        public double rotationSpeed = 0.001;
         public double dayTime;
         public body_shape shape;
         public RingSystem rings;
@@ -48,7 +49,7 @@ namespace Planet_Game_4
             this.radius = radius;
             mass = Mass;
             setShape(layers, type);
-            rings = new RingSystem(this,RingSystem.RingType.ice);
+            rings = new RingSystem(this,RingSystem.RingType.Lava,15,200,radius*1.5,radius*2);
             orbit.update(0);
         }
 
@@ -69,16 +70,16 @@ namespace Planet_Game_4
         /// </summary>
         public void update()
         {
-            rotation += 0.01;
+            rotation += rotationSpeed* Form1.ui.gameSpeed;
             if (orbit != null)
             {
-                orbit.update(1);
+                orbit.update(Form1.ui.gameSpeed);
                 position = orbit.getPos();
                 
             }
             if(rings !=null)
             {
-                rings.update();
+                rings.update(Form1.ui.gameSpeed);
             }
         }
 

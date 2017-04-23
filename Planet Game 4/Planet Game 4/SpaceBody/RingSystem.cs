@@ -12,32 +12,57 @@ namespace Planet_Game_4
         public SpaceBody Parent;
         public enum RingType
         {
-            ice,
-            rock
+            Ice,
+            Rock,
+            Lava
         }
         RingType Type;
         List<RingLayer> Layers=new List<RingLayer>();
         public int Diversity;
-        public RingSystem(SpaceBody Parent,RingType Type)
+        public int LayerDiversity;
+        bool visible = true;
+        public RingSystem(SpaceBody Parent,RingType Type,int LayerAmount,int PieceAmount,double InnerRadius,double OuterRadius)
         {
-            Diversity = 4;
+            this.Parent = Parent;
+            Diversity = 5;
+            LayerDiversity = 20;
             this.Type = Type;
-            double Dist = Parent.radius * 2;
-            double Thickness = Parent.radius * 0.5;
-            int amount = 15;
-            Thickness /= amount;
-            for (int i = 0; i < amount; i++)
+            double Thickness = (OuterRadius-InnerRadius)/2;
+            Thickness /= LayerAmount;
+            Color C;
+            switch (Type)
             {
-                Layers.Add(new RingLayer(Dist,Color.SkyBlue,Parent,this,Thickness));
-                Dist += Thickness * (1.75);// +Form1.rnd.NextDouble()*0.5);
+                case RingType.Ice:
+                    C = Color.SkyBlue;
+                    break;
+                case RingType.Rock:
+                    C = Color.SandyBrown;
+                    break;
+                case RingType.Lava:
+                    C = Color.OrangeRed;
+                    break;
+                default:
+                    C = Color.Black;
+                    break;
+            }
+            for (int i = 0; i < LayerAmount; i++)
+            {
+                double Dist = InnerRadius + 2 * i * Thickness;
+                Layers.Add(new RingLayer(Dist,C,Parent,this,Thickness*1.1,PieceAmount));
             }
         }
-        public void update()
+        public void update(double dt)
         {
-            foreach (RingLayer L in Layers)
+            if ((-Parent.position - Form1.ui.camPos).MagSq()*Form1.ui.zoom < Form1.Sq(Form1.ui.parent.Height + Form1.ui.parent.Width))
             {
-                L.update(50);
+                visible = true;
+                foreach (RingLayer L in Layers)
+                {
+                    L.update(dt);
+                }
             }
+            else
+                visible = false;
         }
         public void refresh(Color C)
         {
@@ -48,6 +73,7 @@ namespace Planet_Game_4
         }
         public void show(Graphics g)
         {
+            if(visible)
             foreach (RingLayer L in Layers)
             {
                 L.show(g);
@@ -67,21 +93,25 @@ namespace Planet_Game_4
         double Angle;
         double Radius;
         double Thickness;
-        public RingLayer(double Radius, Color Color, SpaceBody ParentBody, RingSystem ParentSystem, double Thickness)
+        Color Color;
+        int ColorOffset;
+        public RingLayer(double Radius, Color Color, SpaceBody ParentBody, RingSystem ParentSystem, double Thickness,int PieceAmount)
         {
+            RingAmount = PieceAmount;
+            ColorOffset = Form1.rnd.Next(-ParentSystem.LayerDiversity, ParentSystem.LayerDiversity);
+            this.Color = Color;
             this.Thickness = Thickness;
-            RingAmount = 100;
             this.Radius = Radius;
             this.ParentBody = ParentBody;
             double GM = ParentBody.mass * theGame.Gravity;
-            double Period = 2 * Math.PI * Math.Sqrt(Radius * Radius * Radius / GM);
-            OrbitSpeed = 1 / Period;
+            OrbitSpeed = 1/ Math.Sqrt(Radius * Radius * Radius / GM);
+            Angle = Form1.rnd.NextDouble();
             Pieces = new RingPiece[RingAmount];
             PosInside = new Vector[RingAmount + 1];
             PosOutside = new Vector[RingAmount + 1];
             for (int i = 0; i < RingAmount; i++)
             {
-                Pieces[i] = new RingPiece(Color,ParentSystem.Diversity);
+                Pieces[i] = new RingPiece(Color.FromArgb(newC(Color.A), newC(Color.R), newC(Color.G), newC(Color.B)),ParentSystem.Diversity);
             }
         }
         
@@ -118,6 +148,10 @@ namespace Planet_Game_4
                 };
                 g.FillPolygon(new SolidBrush(Pieces[i].Color),P);
             }
+        }
+        int newC(int C)
+        {
+            return Math.Min(Math.Max(C + ColorOffset, 0), 255);
         }
     }
     class RingPiece
