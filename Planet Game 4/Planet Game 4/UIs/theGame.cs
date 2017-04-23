@@ -10,14 +10,14 @@ namespace Planet_Game_4
 {
     public class theGame : ui
     {
-        public static double Gravity = Math.Pow(10,-11);
+        public static double Gravity = 6*Math.Pow(10,-11);
         public static double TileMinimumSize = 50;
 
         public Graphics graphics;
         public Form1 parent;
 
         public double camRot = 0;
-        public double zoom = 0.0000001;
+        public double zoom = 0.0001;
         public double toZoom;
         public double startZoom;
         public Vector toZoomPos = new Vector(0,0);
@@ -46,6 +46,7 @@ namespace Planet_Game_4
 
             // Make sure that the camera rotation is not null
             setRotation(0);
+            toZoomPos=camPos = -universe.bodies[1].orbit.getPos();
         }
 
         // Do physics and calculations
@@ -81,13 +82,12 @@ namespace Planet_Game_4
                     P.position = P.orbit.getPos();
                 }
             }
-
+            
             setRotation(camRot);
             //camPos.X += 1;
             //camOrigin.X += 1;
 
         }
-
         /// <summary>
         /// Rotate the camera
         /// </summary>
@@ -107,7 +107,7 @@ namespace Planet_Game_4
         public void show()
         {
             graphics.Clear(Color.Black);
-
+            
             if (true)
             {
                 for (int i = universe.bodies.Count - 1; i >= 0; i--)

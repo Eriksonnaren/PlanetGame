@@ -148,7 +148,7 @@ namespace Planet_Game_4
             if (head1 == null || head2 == null || tail == null || req <= 0)
             {
                 Color c = Color.FromArgb(Form1.lerp(lerpTo.R, average.R, lerp), Form1.lerp(lerpTo.G, average.G, lerp), Form1.lerp(lerpTo.B, average.B, lerp));
-
+                
                 g.FillPolygon(new SolidBrush(c), new Point[] {
                     new Point((int)(x + Math.Cos(startAngle) * startR), (int)(y + Math.Sin(startAngle) * startR)),
                     new Point((int)(x + Math.Cos(startAngle) * (endR+2)), (int)(y + Math.Sin(startAngle) * (endR+2))),

@@ -22,14 +22,15 @@ namespace Planet_Game_4
         public Body_type type;
 
         public Orbit orbit;
-        public Vector position { get; set; }
+        public Vector position;
         public Vector velocity;
 
-        public double radius { get; set; }
-        public double mass { get; set; }
-        public double rotation { get; set; }
-
-        public body_shape shape { get; set; }
+        public double radius;
+        public double mass;
+        public double rotation;
+        public double dayTime;
+        public body_shape shape;
+        public RingSystem rings;
 
         public SpaceBody(Vector pos, double radius, int layers, Body_type type,double Mass)
         {
@@ -46,8 +47,9 @@ namespace Planet_Game_4
             this.type = type;
             this.radius = radius;
             mass = Mass;
-
             setShape(layers, type);
+            rings = new RingSystem(this,RingSystem.RingType.ice);
+            orbit.update(0);
         }
 
         public void setShape(int layers, Body_type type)
@@ -74,16 +76,22 @@ namespace Planet_Game_4
                 position = orbit.getPos();
                 
             }
+            if(rings !=null)
+            {
+                rings.update();
+            }
         }
 
         public void show(Graphics g, Form1 form, theGame parent)
         {
             if (orbit != null)
             {
-                // TODO ERIK: Fixa så orbits också blir affectade av kamerans position och rotation
                 orbit.Show(g, parent, new Pen(Color.Blue,2),true);
             }
-
+            if(rings !=null)
+            {
+                rings.show(g);
+            }
             Vector pixelPos = parent.worldToPixel(position);
 
             if (pixelPos.X >= -radius * parent.zoom && pixelPos.X <= form.PB.Width + radius * parent.zoom && pixelPos.Y >= -radius * parent.zoom && pixelPos.Y <= form.PB.Height + radius * parent.zoom)
