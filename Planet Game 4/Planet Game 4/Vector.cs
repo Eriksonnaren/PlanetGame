@@ -51,42 +51,54 @@ namespace Planet_Game_4
             Y = V.Y;
         }
         
-        // This is what happens when you add two vectors together.
+        ///<summary>
+        /// This is what happens when you add two vectors together.
+        ///</summary>
         static public Vector operator +(Vector V1,Vector V2)
         {
             // It just returns the sum of the two vectors. Straight-forward!
             return new Vector(V1.X + V2.X, V1.Y+V2.Y);
         }
         
-        // This is what happens when you subtract two vector
+        ///<summary>
+        /// This is what happens when you subtract two vector
+        ///</summary>
         static public Vector operator -(Vector V1, Vector V2)
         {
             // It just returns the difference of the two vectors. Again, straight-forward
             return new Vector(V1.X - V2.X, V1.Y - V2.Y);
         }
         
-        // This is what happens when you invert the sign of a vector
+        ///<summary>
+        /// This is what happens when you invert the sign of a vector
+        ///</summary>
         static public Vector operator -(Vector V1)
         {
             // It literally just inverts the x and y property. This is too straight-forward!
             return new Vector(-V1.X, -V1.Y);
         }
         
-        // This scales a vector by a M
+        ///<summary>
+        /// This scales a vector by a M
+        ///</summary>
         static public Vector operator *(Vector V, double M)
         {
             // The x and y values get multiplied by M
             return new Vector(V.X*M,V.Y*M);
         }
         
-        // This scales a vector by 1/M
+        ///<summary>
+        /// This scales a vector by 1/M
+        ///</summary>
         static public Vector operator /(Vector V, double M)
         {
             // Just divides the x and y values of the vector by M
             return new Vector(V.X / M, V.Y / M);
         }
         
-        // Returns the magnitude^2. This is more efficient than just the magnitude, since it doesn't need a sqrt()
+        ///<summary>
+        /// Returns the magnitude^2. This is more efficient than just the magnitude, since it doesn't need a sqrt()
+        ///</summary>
         public double MagSq()
         {
             // Using phytagoras without the sqrt to make it squared
@@ -124,23 +136,49 @@ namespace Planet_Game_4
             return Norm() * M;
         }
         
-        
+        /// <summary>
+        /// Returns the dot product of the Vector
+        /// </summary>
         public double Dot(Vector V)
         {
             return X * V.X + Y * V.Y;
         }
+        
+        /// <summary>
+        /// Returns the angle of the vector
+        /// </summary>
         public double Angle()
         {
             return Math.Atan2(Y,X);
         }
+        
+        /// <summary>
+        /// Rotates the vector (The input is a vector with the x being cos(angle) and the y being sin(angle))
+        /// </summary>
         public Vector Rot(Vector V)
         {
             return new Vector(X*V.X - Y * V.Y, Y * V.X + X * V.Y);
         }
+        
+        /// <summary>
+        /// Rotates the vector with an angle as paramater
+        /// </summary>
+        public Vector Rot(double rotation)
+        {
+            Rot(new Vector(Math.Cos(rotation), Math.Sin(rotation)));
+        }
+        
+        /// <summary>
+        /// Gives a vector that is lerped between this and the paramater vector
+        /// </summary>
         public Vector lerp(Vector V,double t)
         {
             return new Vector(Form1.lerp(X,V.X,t), Form1.lerp(Y, V.Y, t));
         }
+        
+        /// <summary>
+        /// Returns a pointF point with the same x and y values as the vector
+        /// </summary>
         public PointF toPoint()
         {
             return new PointF((float)X, (float)Y);
