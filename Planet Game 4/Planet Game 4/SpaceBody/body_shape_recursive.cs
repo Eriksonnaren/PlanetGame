@@ -139,7 +139,7 @@ namespace Planet_Game_4
                     //new Vector(x + Math.Cos(endAngle) * endR, y + Math.Sin(endAngle) * endR),
                     new Vector(x + Math.Cos(startAngle) * startR, y + Math.Sin(startAngle) * startR),
                     new Vector(x + Math.Cos(startAngle) * (endR+2), y + Math.Sin(startAngle) * (endR+2)),
-                    new Vector(x + Math.Cos(startAngle/2+endAngle/2) * (endR+2), y + Math.Sin(startAngle/2+endAngle/2) * (endR+2)),
+                    new Vector(x + Math.Cos(startAngle/2+endAngle/2) * endR * 1.5, y + Math.Sin(startAngle/2+endAngle/2) * endR * 1.5),
                     new Vector(x + Math.Cos(endAngle) * (endR+2), y + Math.Sin(endAngle) * (endR+2)),
                     new Vector(x + Math.Cos(endAngle) * startR, y + Math.Sin(endAngle) * startR)
                 };
@@ -259,7 +259,7 @@ namespace Planet_Game_4
                     //new Vector(x + Math.Cos(endAngle) * endR, y + Math.Sin(endAngle) * endR),
                     new Vector(x + Math.Cos(startAngle) * startR, y + Math.Sin(startAngle) * startR),
                     new Vector(x + Math.Cos(startAngle) * endR, y + Math.Sin(startAngle) * endR),
-                    new Vector(x + Math.Cos(startAngle/2+endAngle/2) * endR, y + Math.Sin(startAngle/2+endAngle/2) * endR),
+                    new Vector(x + Math.Cos(startAngle/2+endAngle/2) * endR * 1.5, y + Math.Sin(startAngle/2+endAngle/2) * endR * 1.5),
                     new Vector(x + Math.Cos(endAngle) * endR, y + Math.Sin(endAngle) * endR),
                     new Vector(x + Math.Cos(endAngle) * startR, y + Math.Sin(endAngle) * startR)
                 };
