@@ -11,7 +11,7 @@ namespace Planet_Game_4
     public class theGame : ui
     {
         public static double Gravity = 6*Math.Pow(10,-11);
-        public static double TileMinimumSize = 50;
+        public static double TileMinimumSize = 75;
 
         public Graphics graphics;
         public Form1 parent;

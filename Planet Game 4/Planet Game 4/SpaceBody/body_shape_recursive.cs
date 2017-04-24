@@ -128,8 +128,57 @@ namespace Planet_Game_4
             return max;
         }
 
-        public void render(Graphics g, int x, int y, double startR, double endR, double startAngle, double endAngle, bool doTip, double req)
+        public void render(Graphics g, theGame parent, int x, int y, double startR, double endR, double startAngle, double endAngle, bool doTip, double req)
         {
+
+            // Make sure that this part is inside the screen. Otherwise don't render it
+            if(true)
+            {
+                Vector[] corners = new Vector[]
+                {
+                    //new Vector(x + Math.Cos(endAngle) * endR, y + Math.Sin(endAngle) * endR),
+                    new Vector(x + Math.Cos(startAngle) * startR, y + Math.Sin(startAngle) * startR),
+                    new Vector(x + Math.Cos(startAngle) * (endR+2), y + Math.Sin(startAngle) * (endR+2)),
+                    new Vector(x + Math.Cos(startAngle/2+endAngle/2) * (endR+2), y + Math.Sin(startAngle/2+endAngle/2) * (endR+2)),
+                    new Vector(x + Math.Cos(endAngle) * (endR+2), y + Math.Sin(endAngle) * (endR+2)),
+                    new Vector(x + Math.Cos(endAngle) * startR, y + Math.Sin(endAngle) * startR)
+                };
+
+                Vector min = new Vector(corners[0]);
+
+                if (corners[1].X < min.X) { min.X = corners[1].X; }
+                if (corners[2].X < min.X) { min.X = corners[2].X; }
+                if (corners[3].X < min.X) { min.X = corners[3].X; }
+                if (corners[4].X < min.X) { min.X = corners[4].X; }
+                //if (corners[5].X < min.X) { min.X = corners[5].X; }
+
+                if (corners[1].Y < min.Y) { min.Y = corners[1].Y; }
+                if (corners[2].Y < min.Y) { min.Y = corners[2].Y; }
+                if (corners[3].Y < min.Y) { min.Y = corners[3].Y; }
+                if (corners[4].Y < min.Y) { min.Y = corners[4].Y; }
+                //if (corners[5].Y < min.Y) { min.Y = corners[5].Y; }
+
+                Vector max = new Vector(corners[0]);
+
+                if (corners[1].X > max.X) { max.X = corners[1].X; }
+                if (corners[2].X > max.X) { max.X = corners[2].X; }
+                if (corners[3].X > max.X) { max.X = corners[3].X; }
+                if (corners[4].X > max.X) { max.X = corners[4].X; }
+                //if (corners[5].X > max.X) { max.X = corners[5].X; }
+
+                if (corners[1].Y > max.Y) { max.Y = corners[1].Y; }
+                if (corners[2].Y > max.Y) { max.Y = corners[2].Y; }
+                if (corners[3].Y > max.Y) { max.Y = corners[3].Y; }
+                if (corners[4].Y > max.Y) { max.Y = corners[4].Y; }
+                //if (corners[5].Y > max.Y) { max.Y = corners[5].Y; }
+
+                if (!(min.X <= parent.parent.PB.Width && max.X >= 0 && min.Y <= parent.parent.PB.Height && max.Y >= 0))
+                {
+                    return;
+                }
+
+            }
+
             if (head1 == null || head2 == null || tail1 == null || req <= 0)
             {
 
@@ -137,9 +186,9 @@ namespace Planet_Game_4
                 {
                     g.FillPolygon(new SolidBrush(average), new Point[] {
                         new Point((int)(x + Math.Cos(startAngle) * startR), (int)(y + Math.Sin(startAngle) * startR)),
-                        new Point((int)(x + Math.Cos(startAngle) * endR), (int)(y + Math.Sin(startAngle) * endR)),
-                        new Point((int)(x + Math.Cos(endAngle / 2 + startAngle / 2) * endR), (int)(y + Math.Sin(endAngle / 2 + startAngle / 2) * endR)),
-                        new Point((int)(x + Math.Cos(endAngle) * endR), (int)(y + Math.Sin(endAngle) * endR)),
+                        new Point((int)(x + Math.Cos(startAngle) * (endR+2)), (int)(y + Math.Sin(startAngle) * (endR+2))),
+                        new Point((int)(x + Math.Cos(endAngle / 2 + startAngle / 2) * (endR+2)), (int)(y + Math.Sin(endAngle / 2 + startAngle / 2) * (endR+2))),
+                        new Point((int)(x + Math.Cos(endAngle) * (endR+2)), (int)(y + Math.Sin(endAngle) * (endR+2))),
                         new Point((int)(x + Math.Cos(endAngle) * startR), (int)(y + Math.Sin(endAngle) * startR))
                     });
                 }
@@ -147,8 +196,8 @@ namespace Planet_Game_4
                 {
                     g.FillPolygon(new SolidBrush(average), new Point[] {
                         new Point((int)(x + Math.Cos(startAngle) * startR), (int)(y + Math.Sin(startAngle) * startR)),
-                        new Point((int)(x + Math.Cos(startAngle) * endR), (int)(y + Math.Sin(startAngle) * endR)),
-                        new Point((int)(x + Math.Cos(endAngle) * endR), (int)(y + Math.Sin(endAngle) * endR)),
+                        new Point((int)(x + Math.Cos(startAngle) * (endR+2)), (int)(y + Math.Sin(startAngle) * (endR+2))),
+                        new Point((int)(x + Math.Cos(endAngle) * (endR+2)), (int)(y + Math.Sin(endAngle) * (endR+2))),
                         new Point((int)(x + Math.Cos(endAngle) * startR), (int)(y + Math.Sin(endAngle) * startR))
                     });
                 }
@@ -165,43 +214,91 @@ namespace Planet_Game_4
                 {
                     if (type == tile_type.center)
                     {
-                        head1.render(g, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        head2.render(g, x, y, halfR, endR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
+                        head1.render(g, parent, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        head2.render(g, parent, x, y, halfR, endR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
 
-                        tail1.render(g, x, y, startR, halfR, startAngle, endAngle, req - 1, req, true, average);
+                        tail1.render(g, parent, x, y, startR, halfR, startAngle, endAngle, req - 1, req, true, average);
                     }
                     else
                     {
-                        head1.render(g, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        head2.render(g, x, y, halfR, endR, (startAngle + endAngle) / 2, startAngle + angleMovement * 2, req - 1, req, true, average);
+                        head1.render(g, parent, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        head2.render(g, parent, x, y, halfR, endR, (startAngle + endAngle) / 2, startAngle + angleMovement * 2, req - 1, req, true, average);
 
-                        tail1.render(g, x, y, startR, halfR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        tail2.render(g, x, y, startR, halfR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
+                        tail1.render(g, parent, x, y, startR, halfR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        tail2.render(g, parent, x, y, startR, halfR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
                     }
                 }
                 else {
                     if (type == tile_type.center)
                     {
-                        head1.render(g, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        head2.render(g, x, y, halfR, endR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
+                        head1.render(g, parent, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        head2.render(g, parent, x, y, halfR, endR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
 
-                        tail1.render(g, x, y, startR, halfR, startAngle, endAngle, req - 1, req, true, average);
+                        tail1.render(g, parent, x, y, startR, halfR, startAngle, endAngle, req - 1, req, true, average);
                     }
                     else
                     {
-                        head1.render(g, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        head2.render(g, x, y, halfR, endR, (startAngle + endAngle) / 2, startAngle + angleMovement * 2, req - 1, req, true, average);
+                        head1.render(g, parent, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        head2.render(g, parent, x, y, halfR, endR, (startAngle + endAngle) / 2, startAngle + angleMovement * 2, req - 1, req, true, average);
 
-                        tail1.render(g, x, y, startR, halfR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        tail2.render(g, x, y, startR, halfR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
+                        tail1.render(g, parent, x, y, startR, halfR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        tail2.render(g, parent, x, y, startR, halfR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
                     }
                 }
                 
             }
         }
 
-        public void render(Graphics g, int x, int y, double startR, double endR, double startAngle, double endAngle, double req, double lerp, bool doTip, HSLColor lerpTo)
+        public void render(Graphics g, theGame parent, int x, int y, double startR, double endR, double startAngle, double endAngle, double req, double lerp, bool doTip, HSLColor lerpTo)
         {
+            // Make sure that this part is inside the screen. Otherwise don't render it
+            if (true)
+            {
+                Vector[] corners = new Vector[]
+                {
+                    //new Vector(x + Math.Cos(endAngle) * endR, y + Math.Sin(endAngle) * endR),
+                    new Vector(x + Math.Cos(startAngle) * startR, y + Math.Sin(startAngle) * startR),
+                    new Vector(x + Math.Cos(startAngle) * endR, y + Math.Sin(startAngle) * endR),
+                    new Vector(x + Math.Cos(startAngle/2+endAngle/2) * endR, y + Math.Sin(startAngle/2+endAngle/2) * endR),
+                    new Vector(x + Math.Cos(endAngle) * endR, y + Math.Sin(endAngle) * endR),
+                    new Vector(x + Math.Cos(endAngle) * startR, y + Math.Sin(endAngle) * startR)
+                };
+
+                Vector min = new Vector(corners[0]);
+
+                if (corners[1].X < min.X) { min.X = corners[1].X; }
+                if (corners[2].X < min.X) { min.X = corners[2].X; }
+                if (corners[3].X < min.X) { min.X = corners[3].X; }
+                if (corners[4].X < min.X) { min.X = corners[4].X; }
+                //if (corners[5].X < min.X) { min.X = corners[5].X; }
+
+                if (corners[1].Y < min.Y) { min.Y = corners[1].Y; }
+                if (corners[2].Y < min.Y) { min.Y = corners[2].Y; }
+                if (corners[3].Y < min.Y) { min.Y = corners[3].Y; }
+                if (corners[4].Y < min.Y) { min.Y = corners[4].Y; }
+                //if (corners[5].Y < min.Y) { min.Y = corners[5].Y; }
+
+                Vector max = new Vector(corners[0]);
+
+                if (corners[1].X > max.X) { max.X = corners[1].X; }
+                if (corners[2].X > max.X) { max.X = corners[2].X; }
+                if (corners[3].X > max.X) { max.X = corners[3].X; }
+                if (corners[4].X > max.X) { max.X = corners[4].X; }
+                //if (corners[5].X > max.X) { max.X = corners[5].X; }
+
+                if (corners[1].Y > max.Y) { max.Y = corners[1].Y; }
+                if (corners[2].Y > max.Y) { max.Y = corners[2].Y; }
+                if (corners[3].Y > max.Y) { max.Y = corners[3].Y; }
+                if (corners[4].Y > max.Y) { max.Y = corners[4].Y; }
+                //if (corners[5].Y > max.Y) { max.Y = corners[5].Y; }
+
+                if (!(min.X <= parent.parent.PB.Width && max.X >= 0 && min.Y <= parent.parent.PB.Height && max.Y >= 0))
+                {
+                    return;
+                }
+
+            }
+
             lerp = Form1.constrain(lerp, 0, 1);
 
             if (head1 == null || head2 == null || tail1 == null || req <= 0)
@@ -212,9 +309,9 @@ namespace Planet_Game_4
                 {
                     g.FillPolygon(new SolidBrush(c), new Point[] {
                         new Point((int)(x + Math.Cos(startAngle) * startR), (int)(y + Math.Sin(startAngle) * startR)),
-                        new Point((int)(x + Math.Cos(startAngle) * endR), (int)(y + Math.Sin(startAngle) * endR)),
-                        new Point((int)(x + Math.Cos(endAngle / 2 + startAngle / 2) * endR), (int)(y + Math.Sin(endAngle / 2 + startAngle / 2) * endR)),
-                        new Point((int)(x + Math.Cos(endAngle) * endR), (int)(y + Math.Sin(endAngle) * endR)),
+                        new Point((int)(x + Math.Cos(startAngle) * (endR+2)), (int)(y + Math.Sin(startAngle) * (endR+2))),
+                        new Point((int)(x + Math.Cos(endAngle / 2 + startAngle / 2) * (endR+2)), (int)(y + Math.Sin(endAngle / 2 + startAngle / 2) * (endR+2))),
+                        new Point((int)(x + Math.Cos(endAngle) * (endR+2)), (int)(y + Math.Sin(endAngle) * (endR+2))),
                         new Point((int)(x + Math.Cos(endAngle) * startR), (int)(y + Math.Sin(endAngle) * startR))
                     });
                 }
@@ -222,8 +319,8 @@ namespace Planet_Game_4
                 {
                     g.FillPolygon(new SolidBrush(c), new Point[] {
                         new Point((int)(x + Math.Cos(startAngle) * startR), (int)(y + Math.Sin(startAngle) * startR)),
-                        new Point((int)(x + Math.Cos(startAngle) * endR), (int)(y + Math.Sin(startAngle) * endR)),
-                        new Point((int)(x + Math.Cos(endAngle) * endR), (int)(y + Math.Sin(endAngle) * endR)),
+                        new Point((int)(x + Math.Cos(startAngle) * (endR+2)), (int)(y + Math.Sin(startAngle) * (endR+2))),
+                        new Point((int)(x + Math.Cos(endAngle) * (endR+2)), (int)(y + Math.Sin(endAngle) * (endR+2))),
                         new Point((int)(x + Math.Cos(endAngle) * startR), (int)(y + Math.Sin(endAngle) * startR))
                     });
                 }
@@ -238,18 +335,18 @@ namespace Planet_Game_4
                 //head1.render(g, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, lerp, true, lerpTo);
                     if (type == tile_type.center)
                     {
-                        head1.render(g, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        head2.render(g, x, y, halfR, endR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
+                        head1.render(g, parent, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        head2.render(g, parent, x, y, halfR, endR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
 
-                        tail1.render(g, x, y, startR, halfR, startAngle, endAngle, req - 1, req, true, average);
+                        tail1.render(g, parent, x, y, startR, halfR, startAngle, endAngle, req - 1, req, true, average);
                     }
                     else
                     {
-                        head1.render(g, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        head2.render(g, x, y, halfR, endR, (startAngle + endAngle) / 2, startAngle + angleMovement * 2, req - 1, req, true, average);
+                        head1.render(g, parent, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        head2.render(g, parent, x, y, halfR, endR, (startAngle + endAngle) / 2, startAngle + angleMovement * 2, req - 1, req, true, average);
 
-                        tail1.render(g, x, y, startR, halfR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        tail2.render(g, x, y, startR, halfR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
+                        tail1.render(g, parent, x, y, startR, halfR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        tail2.render(g, parent, x, y, startR, halfR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
                     }
 
                 //head2.render(g, x, y, halfR, endR, Form1.lerp(startAngle, endAngle, 0.5), startAngle + angleMovement * 2, req - 1, lerp, true, lerpTo);
