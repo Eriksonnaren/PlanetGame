@@ -29,13 +29,13 @@ namespace Planet_Game_4
             // Generate that orbit
             O.Generate(0,0,O.Parent.radius*7,0,true);
             // Add a new body with that orbit.
-            bodies.Add(new SpaceBody(O,bodies[1].radius/2,5,SpaceBody.Body_type.rock, Math.Pow(10, 22)));
+            bodies.Add(new SpaceBody(O,bodies[1].radius/2,5,SpaceBody.Body_type.rock, Math.Pow(10, 22), RingSystem.RingType.Rock));
             // Make o a new orbit once again
             O = new Orbit(bodies[2]);
             // Generate o, again
             O.Generate(0, 0, O.Parent.radius * 5, 3, true);
             // Add a body with that orbit
-            bodies.Add(new SpaceBody(O, bodies[2].radius / 2, 5, SpaceBody.Body_type.rock, Math.Pow(10, 21)));
+            bodies.Add(new SpaceBody(O, bodies[2].radius / 2, 5, SpaceBody.Body_type.rock, Math.Pow(10, 21),RingSystem.RingType.Ice));
             // Refresh the rings
             bodies[2].rings.refresh(RingSystem.RingType.Rock);
             bodies[3].rings.refresh(RingSystem.RingType.Ice);
@@ -113,7 +113,7 @@ namespace Planet_Game_4
             O.Generate(Form1.rnd.NextDouble() * (0 / Math.Sqrt(id + 1)), Form1.rnd.NextDouble() * Math.PI * 2, Dist, Form1.rnd.NextDouble() * Math.PI * 2,true);
             
             // Make a planet with that orbit
-            SpaceBody Planet = new SpaceBody(O, Size, 5, SpaceBody.Body_type.rock, 5*Math.Pow(10,22));
+            SpaceBody Planet = new SpaceBody(O, Size, 5, SpaceBody.Body_type.rock, 5*Math.Pow(10,22), RingSystem.RingType.Lava);
             
             // Return the planet
             return Planet;

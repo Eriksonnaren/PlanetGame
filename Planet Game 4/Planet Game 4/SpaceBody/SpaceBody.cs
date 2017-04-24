@@ -44,7 +44,7 @@ namespace Planet_Game_4
         ///<summary>
         /// The velocity of the body. If the body has an orbit, this is not used
         ///</summary>
-        public Vector velocity;
+        public Vector velocity;//TODO: get this from orbit
 
         
         ///<summary>
@@ -65,7 +65,7 @@ namespace Planet_Game_4
         ///</summary>
         public double rotationSpeed = 0.001;
         ///<summary>
-        /// ERIK: beskriv vad denna variabel gör exakt. Vet ej hur den funkar riktigt
+        /// Time to rotate once
         ///</summary>
         public double dayTime;
         ///<summary>
@@ -95,7 +95,7 @@ namespace Planet_Game_4
         ///<summary>
         /// Set the body up by only giving an orbit. It sure is strange with Erik stuff
         ///</summary>
-        public SpaceBody(Orbit orbit, double radius, int layers, Body_type type,double Mass)
+        public SpaceBody(Orbit orbit, double radius, int layers, Body_type type,double Mass,RingSystem.RingType RingType)
         {
             if(type!=Body_type.sun)
             Shadow = new Shadow(this);
@@ -107,15 +107,15 @@ namespace Planet_Game_4
             
             // Set the shape
             setShape(layers, type);
-            rings = new RingSystem(this,RingSystem.RingType.Lava,15,100,radius*1.5,radius*2);
             
-            // Initiate the rings. TODO: Make this a boolean to pass into the constructor
-            rings = new RingSystem(this,RingSystem.RingType.Lava,15,200,radius*1.5,radius*2);
+            // Initiate the rings.
+            if(RingType!=RingSystem.RingType.Empty)
+                rings = new RingSystem(this,RingType,15,200,radius*1.5,radius*2);
             
-            // Update the orbit
+            // Initiate the orbit values by updating it
             orbit.update(0);
             
-            // position = orbit.getPos(); --- Try that there, just to make sure that the position is not null
+            position = orbit.getPos();// --- Try that there, just to make sure that the position is not null
         }
 
         
@@ -155,6 +155,7 @@ namespace Planet_Game_4
             {
                 rings.update(Form1.ui.gameSpeed);
             }
+            // update shadow, sun has no shadow
             if(Shadow!=null)
             {
                 Shadow.update();

@@ -159,6 +159,9 @@ namespace Planet_Game_4
         {
             return new Vector(X * V.X - Y * V.Y, Y * V.X + X * V.Y);
         }
+        /// <summary>
+        /// Rotates the vector in the reverse direction
+        /// </summary>
         public Vector RotRev(Vector V)
         {
             return new Vector(X * V.X + Y * V.Y, Y * V.X - X * V.Y);

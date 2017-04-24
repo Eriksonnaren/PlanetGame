@@ -12,6 +12,7 @@ namespace Planet_Game_4
         public SpaceBody Parent;
         public enum RingType
         {
+            Empty,
             Ice,
             Rock,
             Lava

@@ -38,6 +38,7 @@ namespace Planet_Game_4
         }
         public bool intersect(Vector V)
         {
+
             return false;
         }
         public void show(Graphics g,Form1 form,theGame game)
