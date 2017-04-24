@@ -29,8 +29,8 @@ namespace Planet_Game_4
 
         public Vector camPos = new Vector(0, 0);
         public Vector camOrigin = new Vector(400, 300);
-        Vector camRotation;
-        Vector negCamRotation;
+        public Vector camRotation;
+        public Vector negCamRotation;
 
         // The universe that you are playing inside. Isn't that cool?
         public universe universe;
@@ -80,10 +80,8 @@ namespace Planet_Game_4
             foreach (SpaceBody P in universe.bodies)
             {
                 P.update();
-                if (P.orbit != null)
-                {
-                    P.position = P.orbit.getPos();
-                }
+                
+                
             }
             
             setRotation(camRot);
@@ -124,6 +122,10 @@ namespace Planet_Game_4
                 for (int i = universe.bodies.Count - 1; i >= 0; i--)
                 {
                     universe.bodies[i].showBody(graphics, parent, this);
+                }
+                for (int i = universe.bodies.Count - 1; i >= 0; i--)
+                {
+                    universe.bodies[i].showShadow(graphics, parent, this);
                 }
             }
         }

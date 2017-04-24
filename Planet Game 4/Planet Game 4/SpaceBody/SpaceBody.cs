@@ -20,7 +20,7 @@ namespace Planet_Game_4
         }
 
         public Body_type type;
-
+        public Shadow Shadow;
         public Orbit orbit;
         public Vector position;
         public Vector velocity;
@@ -35,6 +35,8 @@ namespace Planet_Game_4
 
         public SpaceBody(Vector pos, double radius, int layers, Body_type type,double Mass)
         {
+            if (type != Body_type.sun)
+                Shadow = new Shadow(this);
             position = pos;
             this.type = type;
             this.radius = radius;
@@ -44,12 +46,14 @@ namespace Planet_Game_4
         }
         public SpaceBody(Orbit orbit, double radius, int layers, Body_type type,double Mass)
         {
+            if(type!=Body_type.sun)
+            Shadow = new Shadow(this);
             this.orbit = orbit;
             this.type = type;
             this.radius = radius;
             mass = Mass;
             setShape(layers, type);
-            rings = new RingSystem(this,RingSystem.RingType.Lava,15,200,radius*1.5,radius*2);
+            rings = new RingSystem(this,RingSystem.RingType.Lava,15,100,radius*1.5,radius*2);
             orbit.update(0);
         }
 
@@ -75,11 +79,14 @@ namespace Planet_Game_4
             {
                 orbit.update(Form1.ui.gameSpeed);
                 position = orbit.getPos();
-                
             }
             if(rings !=null)
             {
                 rings.update(Form1.ui.gameSpeed);
+            }
+            if(Shadow!=null)
+            {
+                Shadow.update();
             }
         }
         public void showOrbit(Graphics g,theGame parent)
@@ -106,6 +113,11 @@ namespace Planet_Game_4
             }
 
         }
-
+        public void showShadow(Graphics g, Form1 form, theGame parent)
+        {
+            if (Shadow != null)
+                Shadow.show(g,form,parent);
+            
+        }
     }
 }

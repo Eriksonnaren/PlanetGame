@@ -130,7 +130,7 @@ namespace Planet_Game_4
             this.ParentBody = ParentBody;
             double GM = ParentBody.mass * theGame.Gravity;
             OrbitSpeed = 1/ Math.Sqrt(Radius * Radius * Radius / GM);
-            Angle = Form1.rnd.NextDouble();
+            Angle = -Form1.rnd.NextDouble();
             Pieces = new RingPiece[RingAmount];
             PosInside = new Vector[RingAmount + 1];
             PosOutside = new Vector[RingAmount + 1];
@@ -143,16 +143,7 @@ namespace Planet_Game_4
         public void update(double dt)
         {
             Angle -= OrbitSpeed*dt;
-            for (int i = 0; i < RingAmount; i++)
-            {
-                double Angle = this.Angle+2 * Math.PI * i / RingAmount;
-                double Rad = Radius - Thickness;
-                PosInside[i] = Form1.ui.worldToPixel(new Vector(Rad * Math.Cos(Angle), Rad * Math.Sin(Angle))+ParentBody.position);
-                Rad = Radius + Thickness;
-                PosOutside[i] = Form1.ui.worldToPixel(new Vector(Rad * Math.Cos(Angle), Rad * Math.Sin(Angle)) + ParentBody.position);
-            }
-            PosInside[RingAmount] = PosInside[0];
-            PosOutside[RingAmount] = PosOutside[0];
+            Angle = Angle % (Math.PI*2);
         }
         public void refresh(Color Color)
         {
@@ -166,14 +157,29 @@ namespace Planet_Game_4
         {
             for (int i = 0; i < RingAmount; i++)
             {
+                double Angle = this.Angle + 2 * Math.PI * i / RingAmount;
+                double Rad = Radius - Thickness;
+                PosInside[i] = Form1.ui.worldToPixel(new Vector(Rad * Math.Cos(Angle), Rad * Math.Sin(Angle)) + ParentBody.position);
+                Rad = Radius + Thickness;
+                PosOutside[i] = Form1.ui.worldToPixel(new Vector(Rad * Math.Cos(Angle), Rad * Math.Sin(Angle)) + ParentBody.position);
+            }
+            PosInside[RingAmount] = PosInside[0];
+            PosOutside[RingAmount] = PosOutside[0];
+            for (int i = 0; i < RingAmount; i++)
+            {
                 PointF[] P = new PointF[] {
                 PosInside[i+1].toPoint(),
                 PosInside[i].toPoint(),
                 PosOutside[i].toPoint(),
                 PosOutside[i + 1].toPoint(),
                 };
-                g.FillPolygon(new SolidBrush(Pieces[i].Color),P);
+                g.FillPolygon(new SolidBrush(Pieces[i].Color), P);
             }
+        }
+
+        float toDeg(double Rad)
+        {
+            return (float)(180 * Rad / Math.PI);
         }
         int newC(int C)
         {

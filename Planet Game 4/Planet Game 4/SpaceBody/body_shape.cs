@@ -35,7 +35,7 @@ namespace Planet_Game_4
             {
                 angle += angleChange;
 
-                root[i].render(g, x, y, 0, radius, angle, angle + angleChange, Math.Log(levels, 2));
+                root[i].render(g, x, y, 0, radius-2, angle, angle + angleChange, Math.Log(levels, 2));
             }
 
         }

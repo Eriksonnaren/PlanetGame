@@ -14,7 +14,7 @@ namespace Planet_Game_4
 
         public Vector()
         {
-         
+            X = Y = 0;
         }
 
         public Vector(double X,double Y)
@@ -80,7 +80,11 @@ namespace Planet_Game_4
         }
         public Vector Rot(Vector V)
         {
-            return new Vector(X*V.X - Y * V.Y, Y * V.X + X * V.Y);
+            return new Vector(X * V.X - Y * V.Y, Y * V.X + X * V.Y);
+        }
+        public Vector RotRev(Vector V)
+        {
+            return new Vector(X * V.X + Y * V.Y, Y * V.X - X * V.Y);
         }
         public Vector lerp(Vector V,double t)
         {
