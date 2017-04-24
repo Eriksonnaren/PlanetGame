@@ -31,7 +31,6 @@ namespace Planet_Game_4
             End = 0;
             Top = Parent.radius;
             Bottom = -Parent.radius;
-            
         }
         public void refresh()
         {
