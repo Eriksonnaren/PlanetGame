@@ -127,11 +127,13 @@ namespace Planet_Game_4
             // TODO: Make this a switch statement
             if (type == Body_type.sun)
             {
-                shape = new body_shape(200, 200, 0, 55, 55, 0, false);
+                HSLColor c = new HSLColor(255, 255, 0);
+                shape = new body_shape((int)c.Hue, (int)c.Saturation, (int)c.Luminosity, 0, 20, 20, false);
             }
             else
             {
-                shape = new body_shape(200, 200, 200, 20, 20, 20, true);
+                HSLColor c = new HSLColor(200, 200, 200);
+                shape = new body_shape((int)c.Hue, (int)c.Saturation, (int)c.Luminosity, 0, 20, 20, false);
             }
         }
 
