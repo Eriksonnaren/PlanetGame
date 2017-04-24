@@ -80,10 +80,11 @@ namespace Planet_Game_4
             foreach (SpaceBody P in universe.bodies)
             {
                 P.update();
-                
-                
             }
-            
+            foreach (SpaceBody P in universe.bodies)
+            {
+                P.update2();
+            }
             setRotation(camRot);
             //camPos.X += 1;
             //camOrigin.X += 1;
