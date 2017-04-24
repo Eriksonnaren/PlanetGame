@@ -164,5 +164,13 @@ namespace Planet_Game_4
         {
             return V.X >= -offset && V.X < ui.Size.Width+offset && V.Y >= -offset && V.Y < ui.Size.Height+offset;
         }
+
+        /// <summary>
+        /// Returns a color that is made up of the rgb values of the inputs specified
+        /// </summary>
+        public static Color getColor(int r, int g, int b)
+        {
+            return Color.FromArgb((int)constrain(r, 0, 255), (int)constrain(g, 0, 255), (int)constrain(b, 0, 255));
+        }
     }
 }
