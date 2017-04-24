@@ -28,18 +28,77 @@ namespace Planet_Game_4
             }
             Angle = (Parent.position - Sun.position).Norm();
             Start = Parent.position;
-            End = 0;
             Top = Parent.radius;
             Bottom = -Parent.radius;
         }
-        public void refresh()
+        public void CheckPlanets(List<SpaceBody> System)
         {
-
+            Vector MinDist = null;
+            SpaceBody Closest=null;
+            for (int i = 0; i < System.Count; i++)
+            {
+                SpaceBody S = System[i];
+                if(S!=Parent)
+                {
+                    Vector Dist = intersectPlanet(S);
+                    if(Dist!=null)
+                    {
+                        if(MinDist==null||Dist.X<MinDist.X)
+                        {
+                            MinDist = Dist;
+                            Closest = S;
+                        }
+                    }
+                }
+            }
+            if (Closest != null)
+            {
+                End = MinDist.X;
+                Closest.Shadow.refresh(MinDist.Y,this);
+            }
+            else
+                End = 0;
+        }
+        public Vector intersectPlanet(SpaceBody S)
+        {
+            double Dist = S.radius;
+            Vector V = S.position;
+            V -= Parent.position;
+            V = V.RotRev(Angle);
+            V += Parent.position;
+            bool intersect = (V.X > Parent.position.X && V.Y - Parent.position.Y < Top + Dist && V.Y - Parent.position.Y > Bottom - Dist);
+            if (intersect)
+            {
+                return V - Parent.position;
+            }
+            else
+                return null;
+        }
+        public void refresh(double D,Shadow parent)
+        {
+            Top = Math.Max(Top, parent.Top-D);
+            Bottom = Math.Min(Bottom, parent.Bottom-D);
         }
         public bool intersect(Vector V)
         {
-
-            return false;
+            V-= Parent.position;
+            V=V.RotRev(Angle);
+            V += Parent.position;
+            if(End>0)
+                return V.X > Parent.position.X && V.X < Parent.position.X + End && V.Y - Parent.position.Y < Top && V.Y-Parent.position.Y > Bottom;
+            else
+                return V.X > Parent.position.X&& V.Y - Parent.position.Y < Top && V.Y - Parent.position.Y > Bottom;
+        }
+        
+        public bool intersect(Vector V,double Dist)
+        {
+            V -= Parent.position;
+            V = V.RotRev(Angle);
+            V += Parent.position;
+            if(End>0)
+                return (V.X > Parent.position.X && V.X < Parent.position.X + End && V.Y - Parent.position.Y < Top+Dist && V.Y - Parent.position.Y > Bottom-Dist);
+            else
+                return (V.X > Parent.position.X && V.Y - Parent.position.Y < Top + Dist && V.Y - Parent.position.Y > Bottom - Dist);
         }
         public void show(Graphics g,Form1 form,theGame game)
         {
@@ -51,6 +110,8 @@ namespace Planet_Game_4
             
             double Dist = Math.Max(form.Width, form.Height);
             double maxDist = C2.X + Dist;
+            if (End > 0)
+                maxDist = Math.Min(maxDist, End * game.zoom + Pos.X);
             double minDist = Math.Max(C2.X - Dist,Pos.X);
             double T = Top * game.zoom + Pos.Y;
             double B = Bottom * game.zoom + Pos.Y;

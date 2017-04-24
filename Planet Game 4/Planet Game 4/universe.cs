@@ -22,23 +22,12 @@ namespace Planet_Game_4
             // Generate the bodies
             bodies = Generate(new Vector(0,0),1,250000000,Math.Pow(10,26));
             
-            // ERIK: Comment this better. I don't know exactly what it does, so I can't
-            
             // Make an orbit of some sort.
             Orbit O = new Orbit(bodies[1]);
             // Generate that orbit
-            O.Generate(0,0,O.Parent.radius*7,0,true);
+            O.Generate(0,0,O.Parent.radius*4,0.25,true);
             // Add a new body with that orbit.
-            bodies.Add(new SpaceBody(O,bodies[1].radius/2,5,SpaceBody.Body_type.rock, Math.Pow(10, 22), RingSystem.RingType.Rock));
-            // Make o a new orbit once again
-            O = new Orbit(bodies[2]);
-            // Generate o, again
-            O.Generate(0, 0, O.Parent.radius * 5, 3, true);
-            // Add a body with that orbit
-            bodies.Add(new SpaceBody(O, bodies[2].radius / 2, 5, SpaceBody.Body_type.rock, Math.Pow(10, 21),RingSystem.RingType.Ice));
-            // Refresh the rings
-            bodies[2].rings.refresh(RingSystem.RingType.Rock);
-            bodies[3].rings.refresh(RingSystem.RingType.Ice);
+            bodies.Add(new SpaceBody(O,bodies[1].radius/2,5,SpaceBody.Body_type.rock, Math.Pow(10, 22), RingSystem.RingType.Empty));
         }
 
         /// <summary>
@@ -110,7 +99,7 @@ namespace Planet_Game_4
             int MoonAmount = id;
             
             // Generate the orbit with a lot of wierd space-math
-            O.Generate(Form1.rnd.NextDouble() * (0 / Math.Sqrt(id + 1)), Form1.rnd.NextDouble() * Math.PI * 2, Dist, Form1.rnd.NextDouble() * Math.PI * 2,true);
+            O.Generate(Form1.rnd.NextDouble() * (0 / Math.Sqrt(id + 1)), Form1.rnd.NextDouble() * Math.PI * 0, Dist, Form1.rnd.NextDouble() * Math.PI * 0,true);
             
             // Make a planet with that orbit
             SpaceBody Planet = new SpaceBody(O, Size, 5, SpaceBody.Body_type.rock, 5*Math.Pow(10,22), RingSystem.RingType.Lava);

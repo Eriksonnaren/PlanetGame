@@ -161,6 +161,13 @@ namespace Planet_Game_4
                 Shadow.update();
             }
         }
+        public void update2()
+        {
+            if (Shadow != null)
+            {
+                Shadow.CheckPlanets(Form1.ui.universe.bodies);
+            }
+        }
         
         
         ///<summary>
