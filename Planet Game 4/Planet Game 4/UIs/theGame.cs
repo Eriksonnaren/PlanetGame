@@ -10,12 +10,15 @@ namespace Planet_Game_4
 {
     public class theGame : ui
     {
+        // Global variables that determine some properties in the game
         public static double Gravity = 6*Math.Pow(10,-11);
         public static double TileMinimumSize = 75;
 
         public Graphics graphics;
         public Form1 parent;
         public Size Size;
+        
+        // TODO: Fix up these variables so that they are grouped in a way that makes sense + comment them
         public double camRot = 0;
         public double zoom = 0.0001;
         public double toZoom;
@@ -39,6 +42,7 @@ namespace Planet_Game_4
         {
             Size = parent.Size;
             toZoom = zoom;
+            
             // You do need an object to display all the stuff to the screen, do you not?
             this.graphics = graphics;
             this.parent = parent;
@@ -55,10 +59,12 @@ namespace Planet_Game_4
         // Do physics and calculations
         public void update()
         {
+            // Do smooth zooming
             zoom += (toZoom-zoom)*0.3;
             double T=(zoom - startZoom)/ (toZoom - startZoom);
             camPos =startZoomPos.lerp(toZoomPos,T);
 
+            // Do mouse pressing detection
             if (Control.MouseButtons!=MouseButtons.None)//it is pressed
             {
                 if(mouseDown==MouseButtons.None)//it has been pressed this tick
@@ -77,14 +83,19 @@ namespace Planet_Game_4
                 }
             }
 
+            // Update all the space bodies
             foreach (SpaceBody P in universe.bodies)
             {
                 P.update();
             }
+            
+            // Update them again TODO: make a name for this update function that makes more sense
             foreach (SpaceBody P in universe.bodies)
             {
                 P.update2();
             }
+            
+            // Rotate the camera
             setRotation(camRot);
             //camPos.X += 1;
             //camOrigin.X += 1;
@@ -95,11 +106,15 @@ namespace Planet_Game_4
         /// </summary>
         public void setRotation(double rotation)
         {
+            // TODO: call camRot camRotation, and the vectors Vec at the end, like camRotationVec
             camRot = rotation;
             camRotation = getRotationVector(rotation);
             negCamRotation = getRotationVector(-rotation);
         }
 
+        ///<summary>
+        /// Gives you a 1 magnitude vector that has an angle of the rotation
+        ///</summary>
         public Vector getRotationVector(double rotation)
         {
             return new Vector(Math.Cos(rotation), Math.Sin(rotation));
@@ -112,6 +127,7 @@ namespace Planet_Game_4
             
             if (true)
             {
+                // TODO: Do wierd maths to make the orbits be over the shadows but under everything else, although everything else should be on top of the shadows
                 for (int i = universe.bodies.Count - 1; i >= 0; i--)
                 {
                     universe.bodies[i].showOrbit(graphics, this);
@@ -133,6 +149,7 @@ namespace Planet_Game_4
 
         public void resize()
         {
+            // Change the cameras origin to the center of the screen when the screen is resized
             camOrigin = new Vector(parent.PB.Width / 2.0, parent.PB.Height / 2.0);
         }
 
@@ -142,14 +159,14 @@ namespace Planet_Game_4
         {
             if (mouseDown == MouseButtons.Left)
             {
-              toZoomPos += (parent.MousePos - parent.MousePosPrev).Rot(negCamRotation)/zoom;
-
-
-            }else if(mouseDown == MouseButtons.Right)
+                toZoomPos += (parent.MousePos - parent.MousePosPrev).Rot(negCamRotation)/zoom;
+            }
+            else if(mouseDown == MouseButtons.Right)
             {
                 camRot += (parent.MousePos - camOrigin).Angle() - (parent.MousePosPrev - camOrigin).Angle();
             }
         }
+        
         public void mousePressed(MouseButtons Button)
         {
             
