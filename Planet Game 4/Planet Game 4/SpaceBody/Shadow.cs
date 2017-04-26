@@ -105,7 +105,7 @@ namespace Planet_Game_4
             Vector Pos = game.worldToPixel(Parent.position);
             Vector C = new Vector(form.Width / 2, form.Height / 2);
             Vector C2 = (C - Pos).RotRev(Angle).RotRev(game.camRotation) + Pos;
-            int Alpha = 200;
+            int Alpha = 180;
             Vector[] Corners = new Vector[4];
             
             double Dist = Math.Max(form.Width, form.Height);

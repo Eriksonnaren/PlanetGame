@@ -20,7 +20,7 @@ namespace Planet_Game_4
         public double zoom = 0.0001;
         public double toZoom;
         public double startZoom;
-        public double gameSpeed = 2;
+        public double gameSpeed = 5;
 
         public Vector toZoomPos = new Vector(0,0);
         public Vector startZoomPos = new Vector(0,0);
@@ -129,6 +129,7 @@ namespace Planet_Game_4
                     universe.bodies[i].showShadow(graphics, parent, this);
                 }
             }
+            
         }
 
         public void resize()

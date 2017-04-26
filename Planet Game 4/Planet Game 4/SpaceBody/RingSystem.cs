@@ -23,12 +23,30 @@ namespace Planet_Game_4
         public int LayerDiversity;
         bool visible = true;
         double OuterRadius;
+        Color Color;
+        public RingSystem(SpaceBody Parent, Color Color, int LayerAmount, int PieceAmount, double InnerRadius, double OuterRadius)
+        {
+            this.OuterRadius = OuterRadius;
+            this.Parent = Parent;
+            Diversity = 5;
+            LayerDiversity = 25;
+            this.Type = RingType.Empty;
+            double Thickness = (OuterRadius - InnerRadius) / 2;
+            Thickness /= LayerAmount;
+            this.Color = Color;
+            
+            for (int i = 0; i < LayerAmount; i++)
+            {
+                double Dist = InnerRadius + 2 * i * Thickness;
+                Layers.Add(new RingLayer(Dist, Color, Parent, this, Thickness * 1.1, PieceAmount));
+            }
+        }
         public RingSystem(SpaceBody Parent,RingType Type,int LayerAmount,int PieceAmount,double InnerRadius,double OuterRadius)
         {
             this.OuterRadius = OuterRadius;
             this.Parent = Parent;
             Diversity = 5;
-            LayerDiversity = 20;
+            LayerDiversity = 25;
             this.Type = Type;
             double Thickness = (OuterRadius-InnerRadius)/2;
             Thickness /= LayerAmount;
@@ -48,6 +66,7 @@ namespace Planet_Game_4
                     C = Color.Black;
                     break;
             }
+            Color = C;
             for (int i = 0; i < LayerAmount; i++)
             {
                 double Dist = InnerRadius + 2 * i * Thickness;

@@ -42,6 +42,7 @@ namespace Planet_Game_4
         double Period;
         double MeanMotion;
         double Latus;
+        double Radius;
 
         public Orbit(SpaceBody Parent)
         {
@@ -78,10 +79,20 @@ namespace Planet_Game_4
             Period = 2 * Math.PI * Math.Sqrt(SemiMajor * SemiMajor * SemiMajor / GM);
             MeanMotion = Math.Sqrt(GM / (SemiMajor * SemiMajor * SemiMajor));
         }
+        public Vector getVel()
+        {
+            double v = Math.Sqrt(GM*(2/Radius-1/SemiMajor));
+            Vector Angle = new Vector(SemiMajor * Math.Sin(True_Anomoly), -SemiMinor * Math.Cos(True_Anomoly));
+            return Angle.Norm()*v;
+        }
         public Vector getPos()
         {
-            double Rad = SemiMajor*(1 - Sq(Eccentricity))/(1+Eccentricity*Math.Cos(True_Anomoly));
+            double Rad = Radius;
             return (new Vector(Rad*Math.Cos(True_Anomoly), Rad*Math.Sin(True_Anomoly)).Rot(EccentrcityVector.Norm()))+Parent.position;
+        }
+        public double getRadius()
+        {
+            return SemiMajor * (1 - Sq(Eccentricity)) / (1 + Eccentricity * Math.Cos(True_Anomoly));
         }
         public Vector getPos(double Angle)
         {
@@ -97,6 +108,7 @@ namespace Planet_Game_4
             //Mean_Anomoly -= 0.01;
             Eccentric_Anomoly = getEccFromMean();
             True_Anomoly = getTrueFromEcc();
+            Radius = getRadius();
         }
         double getTrueFromEcc()
         {

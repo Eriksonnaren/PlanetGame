@@ -25,7 +25,7 @@ namespace Planet_Game_4
             // Make an orbit of some sort.
             Orbit O = new Orbit(bodies[1]);
             // Generate that orbit
-            O.Generate(0,0,O.Parent.radius*4,0.25,true);
+            O.Generate(0,0,O.Parent.radius*4,0.3,true);
             // Add a new body with that orbit.
             bodies.Add(new SpaceBody(O,bodies[1].radius/2,5,SpaceBody.Body_type.rock, Math.Pow(10, 22), RingSystem.RingType.Empty));
         }
@@ -102,7 +102,7 @@ namespace Planet_Game_4
             O.Generate(Form1.rnd.NextDouble() * (0 / Math.Sqrt(id + 1)), Form1.rnd.NextDouble() * Math.PI * 0, Dist, Form1.rnd.NextDouble() * Math.PI * 0,true);
             
             // Make a planet with that orbit
-            SpaceBody Planet = new SpaceBody(O, Size, 5, SpaceBody.Body_type.rock, 5*Math.Pow(10,22), RingSystem.RingType.Lava);
+            SpaceBody Planet = new SpaceBody(O, Size, 5, SpaceBody.Body_type.rock, 5*Math.Pow(10,22), RingSystem.RingType.Ice);
             
             // Return the planet
             return Planet;
