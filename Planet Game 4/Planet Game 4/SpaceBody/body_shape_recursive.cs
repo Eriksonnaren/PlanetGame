@@ -172,7 +172,7 @@ namespace Planet_Game_4
                 if (corners[4].Y > max.Y) { max.Y = corners[4].Y; }
                 //if (corners[5].Y > max.Y) { max.Y = corners[5].Y; }
 
-                if (!(min.X <= parent.parent.PB.Width && max.X >= 0 && min.Y <= parent.parent.PB.Height && max.Y >= 0))
+                if (!(min.X <= parent.worldDispMax.X && max.X >= parent.worldDispMin.X && min.Y <= parent.worldDispMax.Y && max.Y >= parent.worldDispMin.Y))
                 {
                     return;
                 }
@@ -292,7 +292,7 @@ namespace Planet_Game_4
                 if (corners[4].Y > max.Y) { max.Y = corners[4].Y; }
                 //if (corners[5].Y > max.Y) { max.Y = corners[5].Y; }
 
-                if (!(min.X <= parent.parent.PB.Width && max.X >= 0 && min.Y <= parent.parent.PB.Height && max.Y >= 0))
+                if (!(min.X <= parent.worldDispMax.X && max.X >= parent.worldDispMin.X && min.Y <= parent.worldDispMax.Y && max.Y >= parent.worldDispMin.Y))
                 {
                     return;
                 }

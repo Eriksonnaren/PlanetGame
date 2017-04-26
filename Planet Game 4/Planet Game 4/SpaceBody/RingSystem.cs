@@ -73,10 +73,10 @@ namespace Planet_Game_4
                 Layers.Add(new RingLayer(Dist,C,Parent,this,Thickness*1.1,PieceAmount));
             }
         }
-        public void update(double dt)
+        public void update(theGame parent, double dt)
         {
             
-            if (Form1.isInsideWindow(Form1.ui.worldToPixel(Parent.position),OuterRadius))
+            if (Form1.isInsideWindow(Form1.ui.worldToPixel(Parent.position),parent.worldDispMin,parent.worldDispMax,OuterRadius))
             {
                 visible = true;
                 foreach (RingLayer L in Layers)
