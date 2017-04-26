@@ -111,7 +111,7 @@ namespace Planet_Game_4
             // Initiate the rings.
             if(RingType!=RingSystem.RingType.Empty)
                 rings = new RingSystem(this,RingType,15,200,radius*1.5,radius*2);
-            
+            //rings = new RingSystem(this, Color.Magenta, 15, 200, radius * 1.5, radius * 2);
             // Initiate the orbit values by updating it
             orbit.update(0);
             
