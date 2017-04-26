@@ -43,7 +43,12 @@ namespace Planet_Game_4
         public void render(Graphics g, theGame parent, int x, int y, int radius, double rotation)
         {
 
-            render(g, parent, x, y, (int)Math.Max((radius / theGame.TileMinimumSize), 2), radius, rotation);
+            if(radius <= 2)
+            {
+                return;
+            }
+
+            render(g, parent, x, y, (int)Math.Max((radius / theGame.TileMinimumSize), 3), radius, rotation);
 
         }
 
