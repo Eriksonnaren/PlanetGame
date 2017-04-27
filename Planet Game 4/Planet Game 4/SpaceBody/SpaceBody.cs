@@ -140,7 +140,7 @@ namespace Planet_Game_4
         /// <summary>
         /// PLANET PHYSICS and other stuff too
         /// </summary>
-        public void update()
+        public void update(theGame parent)
         {
             // Rotate the body
             rotation += rotationSpeed* Form1.ui.gameSpeed;
@@ -155,7 +155,7 @@ namespace Planet_Game_4
             // If there are any rings, update those too
             if(rings != null)
             {
-                rings.update(Form1.ui.gameSpeed);
+                rings.update(parent, Form1.ui.gameSpeed);
             }
             // update shadow, sun has no shadow
             if(Shadow!=null)

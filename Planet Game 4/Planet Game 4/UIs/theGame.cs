@@ -17,23 +17,35 @@ namespace Planet_Game_4
         public Graphics graphics;
         public Form1 parent;
         public Size Size;
-        
-        // TODO: Fix up these variables so that they are grouped in a way that makes sense + comment them
+
+        // The min and max points of the world rendering 
+        // NOTE: Only for optimization purposes. It does not actually limit the rendering precisely to that area
+        public Vector worldDispMin = new Vector(100, 100);
+        public Vector worldDispMax = new Vector(600, 600);
+        public bool worldDispBox = true; // If this is true, display a box that shows where the world is rendered
+
+        // Camera variables
         public double camRot = 0;
+        public Vector camPos = new Vector(400, 400);
+        public Vector camOrigin = new Vector(400, 400);
+        public Vector camRotation;
+        public Vector negCamRotation;
+
+        // Zooming variables
         public double zoom = 0.0001;
         public double toZoom;
         public double startZoom;
-        public double gameSpeed = 5;
+        public Vector toZoomPos = new Vector(0, 0);
+        public Vector startZoomPos = new Vector(0, 0);
 
-        public Vector toZoomPos = new Vector(0,0);
-        public Vector startZoomPos = new Vector(0,0);
+        // The game speed
+        public double gameSpeed = 5;
+        
+        // Mouse variables
         public Vector MousePos1 = new Vector(0,0);
         public Vector MousePos2 = new Vector(0,0);
 
-        public Vector camPos = new Vector(0, 0);
-        public Vector camOrigin = new Vector(400, 300);
-        public Vector camRotation;
-        public Vector negCamRotation;
+        
 
         // The universe that you are playing inside. Isn't that cool?
         public universe universe;
@@ -86,7 +98,7 @@ namespace Planet_Game_4
             // Update all the space bodies
             foreach (SpaceBody P in universe.bodies)
             {
-                P.update();
+                P.update(this);
             }
             
             // Update them again TODO: make a name for this update function that makes more sense
@@ -144,6 +156,12 @@ namespace Planet_Game_4
                 {
                     universe.bodies[i].showShadow(graphics, parent, this);
                 }
+            }
+
+            // Show the world border if that boolean is set to true
+            if(worldDispBox)
+            {
+                graphics.DrawRectangle(new Pen(Color.White), (int)(worldDispMin.X), (int)(worldDispMin.Y), (int)(worldDispMax.X-worldDispMin.X), (int)(worldDispMax.Y - worldDispMin.Y));
             }
             
         }

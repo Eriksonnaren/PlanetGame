@@ -20,7 +20,7 @@ namespace Planet_Game_4
         public universe()
         {
             // Generate the bodies
-            bodies = Generate(new Vector(0,0),1,250000000,Math.Pow(10,26));
+            bodies = Generate(new Vector(0,0),10,250000000,Math.Pow(10,26));
             
             // Make an orbit of some sort.
             Orbit O = new Orbit(bodies[1]);

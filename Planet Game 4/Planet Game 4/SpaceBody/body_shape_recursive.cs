@@ -139,7 +139,7 @@ namespace Planet_Game_4
                     //new Vector(x + Math.Cos(endAngle) * endR, y + Math.Sin(endAngle) * endR),
                     new Vector(x + Math.Cos(startAngle) * startR, y + Math.Sin(startAngle) * startR),
                     new Vector(x + Math.Cos(startAngle) * (endR+2), y + Math.Sin(startAngle) * (endR+2)),
-                    new Vector(x + Math.Cos(startAngle/2+endAngle/2) * (endR+2), y + Math.Sin(startAngle/2+endAngle/2) * (endR+2)),
+                    new Vector(x + Math.Cos(startAngle/2+endAngle/2) * endR * 1.5, y + Math.Sin(startAngle/2+endAngle/2) * endR * 1.5),
                     new Vector(x + Math.Cos(endAngle) * (endR+2), y + Math.Sin(endAngle) * (endR+2)),
                     new Vector(x + Math.Cos(endAngle) * startR, y + Math.Sin(endAngle) * startR)
                 };
@@ -172,7 +172,7 @@ namespace Planet_Game_4
                 if (corners[4].Y > max.Y) { max.Y = corners[4].Y; }
                 //if (corners[5].Y > max.Y) { max.Y = corners[5].Y; }
 
-                if (!(min.X <= parent.parent.PB.Width && max.X >= 0 && min.Y <= parent.parent.PB.Height && max.Y >= 0))
+                if (!(min.X <= parent.worldDispMax.X && max.X >= parent.worldDispMin.X && min.Y <= parent.worldDispMax.Y && max.Y >= parent.worldDispMin.Y))
                 {
                     return;
                 }
@@ -259,7 +259,7 @@ namespace Planet_Game_4
                     //new Vector(x + Math.Cos(endAngle) * endR, y + Math.Sin(endAngle) * endR),
                     new Vector(x + Math.Cos(startAngle) * startR, y + Math.Sin(startAngle) * startR),
                     new Vector(x + Math.Cos(startAngle) * endR, y + Math.Sin(startAngle) * endR),
-                    new Vector(x + Math.Cos(startAngle/2+endAngle/2) * endR, y + Math.Sin(startAngle/2+endAngle/2) * endR),
+                    new Vector(x + Math.Cos(startAngle/2+endAngle/2) * endR * 1.5, y + Math.Sin(startAngle/2+endAngle/2) * endR * 1.5),
                     new Vector(x + Math.Cos(endAngle) * endR, y + Math.Sin(endAngle) * endR),
                     new Vector(x + Math.Cos(endAngle) * startR, y + Math.Sin(endAngle) * startR)
                 };
@@ -292,7 +292,7 @@ namespace Planet_Game_4
                 if (corners[4].Y > max.Y) { max.Y = corners[4].Y; }
                 //if (corners[5].Y > max.Y) { max.Y = corners[5].Y; }
 
-                if (!(min.X <= parent.parent.PB.Width && max.X >= 0 && min.Y <= parent.parent.PB.Height && max.Y >= 0))
+                if (!(min.X <= parent.worldDispMax.X && max.X >= parent.worldDispMin.X && min.Y <= parent.worldDispMax.Y && max.Y >= parent.worldDispMin.Y))
                 {
                     return;
                 }

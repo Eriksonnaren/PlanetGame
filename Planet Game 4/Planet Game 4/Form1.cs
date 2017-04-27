@@ -160,9 +160,9 @@ namespace Planet_Game_4
         /// <summary>
         /// Returns true if the vector is inside the window
         /// </summary>
-        public static bool isInsideWindow(Vector V,double offset)
+        public static bool isInsideWindow(Vector V,Vector min,Vector max,double offset)
         {
-            return V.X >= -offset && V.X < ui.Size.Width+offset && V.Y >= -offset && V.Y < ui.Size.Height+offset;
+            return V.X >= min.X-offset && V.X < max.X+offset && V.Y >= min.Y-offset && V.Y < max.Y+offset;
         }
 
         /// <summary>
