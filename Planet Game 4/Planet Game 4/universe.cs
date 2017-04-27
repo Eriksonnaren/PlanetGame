@@ -103,6 +103,7 @@ namespace Planet_Game_4
             
             // Make a planet with that orbit
             SpaceBody Planet = new SpaceBody(O, Size, 5, SpaceBody.Body_type.rock, 5*Math.Pow(10,22), RingSystem.RingType.Ice);
+            Planet.rings = new RingSystem(Planet,System.Drawing.Color.DarkRed,15,200,Planet.radius*2, Planet.radius * 2.5);
             
             // Return the planet
             return Planet;
