@@ -13,7 +13,8 @@ namespace Planet_Game_4
         /// <summary>
         /// Points from parent to apoapsis
         /// </summary>
-        Vector EccentrcityVector;
+        Vector EccentricityVector;
+        Vector EccentricityVectorNorm;
         Vector Center;
         double FocalDist;
         double Eccentricity;
@@ -53,28 +54,30 @@ namespace Planet_Game_4
         {
             double VelSq = Vel.MagSq();
             double Rad = Pos.Mag();
-            EccentrcityVector = Pos * (VelSq/GM-1/Rad) - Vel * (Vel.Dot(Pos)/GM);
-            Eccentricity = EccentrcityVector.Mag();
+            EccentricityVector = Pos * (VelSq/GM-1/Rad) - Vel * (Vel.Dot(Pos)/GM);
+            Eccentricity = EccentricityVector.Mag();
             Energy = VelSq / 2 - GM / Rad;
             SemiMajor = -GM / (2 * Energy);
             SemiMinor = SemiMajor * Math.Sqrt(1-Sq(Eccentricity));
             Latus = SemiMajor * (1 - Sq(Eccentricity));
             FocalDist = Math.Sqrt(Sq(SemiMajor)-Sq(SemiMinor));
-            Center = EccentrcityVector.setMag(FocalDist);
+            Center = EccentricityVector.setMag(FocalDist);
             True_Anomoly = Pos.Angle();
             Period = 2 * Math.PI * Math.Sqrt(SemiMajor*SemiMajor*SemiMajor/GM);
             MeanMotion = Math.Sqrt(GM/(SemiMajor * SemiMajor * SemiMajor));
+            EccentricityVectorNorm = EccentricityVector.Norm();
         }
         public void Generate(double Eccentricity,double OrbitAngle,double SemiMajor,double PlanetAngle,bool Prograde)
         {
             this.Prograde = Prograde;
             this.Eccentricity = Eccentricity;
-            EccentrcityVector = new Vector(Eccentricity*Math.Cos(OrbitAngle), Eccentricity * Math.Sin(OrbitAngle));
+            EccentricityVector = new Vector(Eccentricity*Math.Cos(OrbitAngle), Eccentricity * Math.Sin(OrbitAngle));
             this.SemiMajor = SemiMajor;
             SemiMinor = SemiMajor * Math.Sqrt(1 - Sq(Eccentricity));
             Latus = SemiMajor * (1 - Sq(Eccentricity));
             FocalDist = Math.Sqrt(Sq(SemiMajor) - Sq(SemiMinor));
-            Center = EccentrcityVector.setMag(FocalDist);
+            Center = EccentricityVector.setMag(FocalDist);
+            EccentricityVectorNorm = EccentricityVector.Norm();
             Mean_Anomoly = PlanetAngle;
             Period = 2 * Math.PI * Math.Sqrt(SemiMajor * SemiMajor * SemiMajor / GM);
             MeanMotion = Math.Sqrt(GM / (SemiMajor * SemiMajor * SemiMajor));
@@ -88,7 +91,7 @@ namespace Planet_Game_4
         public Vector getPos()
         {
             double Rad = Radius;
-            return (new Vector(Rad*Math.Cos(True_Anomoly), Rad*Math.Sin(True_Anomoly)).Rot(EccentrcityVector.Norm()))+Parent.position;
+            return (new Vector(Rad*Math.Cos(True_Anomoly), Rad*Math.Sin(True_Anomoly)).Rot(EccentricityVectorNorm))+Parent.position;
         }
         public double getRadius()
         {
@@ -98,7 +101,7 @@ namespace Planet_Game_4
         {
             Angle += True_Anomoly;
             double Rad = SemiMajor * (1 - Sq(Eccentricity)) / (1 + Eccentricity * Math.Cos(Angle));
-            return (new Vector(Rad * Math.Cos(Angle), Rad * Math.Sin(Angle)).Rot(EccentrcityVector.Norm())) + Parent.position;
+            return (new Vector(Rad * Math.Cos(Angle), Rad * Math.Sin(Angle)).Rot(EccentricityVectorNorm)) + Parent.position;
         }
         public void update(double dt)
         {
