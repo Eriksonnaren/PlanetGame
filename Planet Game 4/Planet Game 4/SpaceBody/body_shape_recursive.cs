@@ -128,7 +128,7 @@ namespace Planet_Game_4
             return max;
         }
 
-        public void render(Graphics g, theGame parent, int x, int y, double startR, double endR, double startAngle, double endAngle, bool doTip, double req)
+        public void render(Graphics g, windowSection section, int x, int y, double startR, double endR, double startAngle, double endAngle, bool doTip, double req)
         {
 
             // Make sure that this part is inside the screen. Otherwise don't render it
@@ -172,7 +172,7 @@ namespace Planet_Game_4
                 if (corners[4].Y > max.Y) { max.Y = corners[4].Y; }
                 //if (corners[5].Y > max.Y) { max.Y = corners[5].Y; }
 
-                if (!(min.X <= parent.worldDispMax.X && max.X >= parent.worldDispMin.X && min.Y <= parent.worldDispMax.Y && max.Y >= parent.worldDispMin.Y))
+                if (!(min.X <= section.max.X && max.X >= section.min.X && min.Y <= section.max.Y && max.Y >= section.min.Y))
                 {
                     return;
                 }
@@ -214,42 +214,42 @@ namespace Planet_Game_4
                 {
                     if (type == tile_type.center)
                     {
-                        head1.render(g, parent, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        head2.render(g, parent, x, y, halfR, endR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
+                        head1.render(g, section, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        head2.render(g, section, x, y, halfR, endR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
 
-                        tail1.render(g, parent, x, y, startR, halfR, startAngle, endAngle, req - 1, req, true, average);
+                        tail1.render(g, section, x, y, startR, halfR, startAngle, endAngle, req - 1, req, true, average);
                     }
                     else
                     {
-                        head1.render(g, parent, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        head2.render(g, parent, x, y, halfR, endR, (startAngle + endAngle) / 2, startAngle + angleMovement * 2, req - 1, req, true, average);
+                        head1.render(g, section, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        head2.render(g, section, x, y, halfR, endR, (startAngle + endAngle) / 2, startAngle + angleMovement * 2, req - 1, req, true, average);
 
-                        tail1.render(g, parent, x, y, startR, halfR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        tail2.render(g, parent, x, y, startR, halfR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
+                        tail1.render(g, section, x, y, startR, halfR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        tail2.render(g, section, x, y, startR, halfR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
                     }
                 }
                 else {
                     if (type == tile_type.center)
                     {
-                        head1.render(g, parent, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        head2.render(g, parent, x, y, halfR, endR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
+                        head1.render(g, section, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        head2.render(g, section, x, y, halfR, endR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
 
-                        tail1.render(g, parent, x, y, startR, halfR, startAngle, endAngle, req - 1, req, true, average);
+                        tail1.render(g, section, x, y, startR, halfR, startAngle, endAngle, req - 1, req, true, average);
                     }
                     else
                     {
-                        head1.render(g, parent, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        head2.render(g, parent, x, y, halfR, endR, (startAngle + endAngle) / 2, startAngle + angleMovement * 2, req - 1, req, true, average);
+                        head1.render(g, section, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        head2.render(g, section, x, y, halfR, endR, (startAngle + endAngle) / 2, startAngle + angleMovement * 2, req - 1, req, true, average);
 
-                        tail1.render(g, parent, x, y, startR, halfR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        tail2.render(g, parent, x, y, startR, halfR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
+                        tail1.render(g, section, x, y, startR, halfR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        tail2.render(g, section, x, y, startR, halfR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
                     }
                 }
                 
             }
         }
 
-        public void render(Graphics g, theGame parent, int x, int y, double startR, double endR, double startAngle, double endAngle, double req, double lerp, bool doTip, HSLColor lerpTo)
+        public void render(Graphics g, windowSection section, int x, int y, double startR, double endR, double startAngle, double endAngle, double req, double lerp, bool doTip, HSLColor lerpTo)
         {
             // Make sure that this part is inside the screen. Otherwise don't render it
             if (true)
@@ -292,7 +292,7 @@ namespace Planet_Game_4
                 if (corners[4].Y > max.Y) { max.Y = corners[4].Y; }
                 //if (corners[5].Y > max.Y) { max.Y = corners[5].Y; }
 
-                if (!(min.X <= parent.worldDispMax.X && max.X >= parent.worldDispMin.X && min.Y <= parent.worldDispMax.Y && max.Y >= parent.worldDispMin.Y))
+                if (!(min.X <= section.max.X && max.X >= section.min.X && min.Y <= section.max.Y && max.Y >= section.min.Y))
                 {
                     return;
                 }
@@ -335,18 +335,18 @@ namespace Planet_Game_4
                 //head1.render(g, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, lerp, true, lerpTo);
                     if (type == tile_type.center)
                     {
-                        head1.render(g, parent, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        head2.render(g, parent, x, y, halfR, endR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
+                        head1.render(g, section, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        head2.render(g, section, x, y, halfR, endR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
 
-                        tail1.render(g, parent, x, y, startR, halfR, startAngle, endAngle, req - 1, req, true, average);
+                        tail1.render(g, section, x, y, startR, halfR, startAngle, endAngle, req - 1, req, true, average);
                     }
                     else
                     {
-                        head1.render(g, parent, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        head2.render(g, parent, x, y, halfR, endR, (startAngle + endAngle) / 2, startAngle + angleMovement * 2, req - 1, req, true, average);
+                        head1.render(g, section, x, y, halfR, endR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        head2.render(g, section, x, y, halfR, endR, (startAngle + endAngle) / 2, startAngle + angleMovement * 2, req - 1, req, true, average);
 
-                        tail1.render(g, parent, x, y, startR, halfR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
-                        tail2.render(g, parent, x, y, startR, halfR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
+                        tail1.render(g, section, x, y, startR, halfR, startAngle, startAngle + angleMovement, req - 1, req, true, average);
+                        tail2.render(g, section, x, y, startR, halfR, startAngle + angleMovement, endAngle, req - 1, req, true, average);
                     }
 
                 //head2.render(g, x, y, halfR, endR, Form1.lerp(startAngle, endAngle, 0.5), startAngle + angleMovement * 2, req - 1, lerp, true, lerpTo);

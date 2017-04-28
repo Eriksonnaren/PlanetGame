@@ -76,7 +76,7 @@ namespace Planet_Game_4
         public void update(theGame parent, double dt)
         {
             
-            if (Form1.isInsideWindow(Form1.ui.worldToPixel(Parent.position),parent.worldDispMin,parent.worldDispMax,OuterRadius))
+            if (Form1.isInsideWindow(Form1.ui.worldToPixel(Parent.position),parent.worldDisplay.min,parent.worldDisplay.max,OuterRadius))
             {
                 visible = true;
                 foreach (RingLayer L in Layers)

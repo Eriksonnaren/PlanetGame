@@ -147,7 +147,7 @@ namespace Planet_Game_4
             {
                 double Angle = 2*Math.PI*i / OrbitLines;
                 Vector V = Form1.ui.worldToPixel(getPos(Angle));
-                canSee[i] = Form1.isInsideWindow(V,parent.worldDispMin,parent.worldDispMax,0);
+                canSee[i] = Form1.isInsideWindow(V,parent.worldDisplay.min,parent.worldDisplay.max,0);
                 Points[i] = V.toPoint();
             }
             Points[OrbitLines] = Points[0];

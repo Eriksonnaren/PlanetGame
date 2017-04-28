@@ -12,6 +12,9 @@ namespace Planet_Game_4
         // Updates the interface, like physics or something
         void update();
 
+        // Animate the menu
+        void animate(double speed);
+
         // Displays the menu
         void show();
 
