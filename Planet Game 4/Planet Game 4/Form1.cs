@@ -79,6 +79,7 @@ namespace Planet_Game_4
         // A tick of the game
         private void T_Tick(object sender, EventArgs e)//main loop
         {
+            
             // Set the mouse position and the previous mouse position
             MousePosPrev = MousePos;
             MousePos = new Vector(PointToClient(MousePosition));
@@ -86,7 +87,7 @@ namespace Planet_Game_4
             // Update and show the ui
             ui.update();
             ui.show();
-
+            
             // Render the graphics to the screen
             BG.Render();
         }

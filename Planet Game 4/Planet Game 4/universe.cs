@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Planet_Game_4
 {
@@ -20,8 +21,9 @@ namespace Planet_Game_4
         public universe()
         {
             // Generate the bodies
-            bodies = Generate(new Vector(0,0),10,250000000,Math.Pow(10,26));
-            
+            bodies = Generate(new Vector(0,0),1,250000000,Math.Pow(10,26));
+
+            bodies[1].rings = new RingSystem(bodies[1],Color.SkyBlue,20,200,bodies[1].radius*1.5, bodies[1].radius * 2);
             // Make an orbit of some sort.
             Orbit O = new Orbit(bodies[1]);
             // Generate that orbit
@@ -102,8 +104,8 @@ namespace Planet_Game_4
             O.Generate(Form1.rnd.NextDouble() * (0 / Math.Sqrt(id + 1)), Form1.rnd.NextDouble() * Math.PI * 0, Dist, Form1.rnd.NextDouble() * Math.PI * 0,true);
             
             // Make a planet with that orbit
-            SpaceBody Planet = new SpaceBody(O, Size, 5, SpaceBody.Body_type.rock, 5*Math.Pow(10,22), RingSystem.RingType.Ice);
-            Planet.rings = new RingSystem(Planet,System.Drawing.Color.DarkRed,15,200,Planet.radius*2, Planet.radius * 2.5);
+            SpaceBody Planet = new SpaceBody(O, Size, 5, SpaceBody.Body_type.rock, 5*Math.Pow(10,22), RingSystem.RingType.Empty);
+            //Planet.rings = new RingSystem(Planet, RingSystem.RingType.Rock,15,200,Planet.radius*2, Planet.radius * 2.5);
             
             // Return the planet
             return Planet;

@@ -20,8 +20,8 @@ namespace Planet_Game_4
 
         // The min and max points of the world rendering 
         // NOTE: Only for optimization purposes. It does not actually limit the rendering precisely to that area
-        public Vector worldDispMin = new Vector(100, 100);
-        public Vector worldDispMax = new Vector(600, 600);
+        public Vector worldDispMin = new Vector(00, 00);
+        public Vector worldDispMax = new Vector(0, 0);
         public bool worldDispBox = true; // If this is true, display a box that shows where the world is rendered
 
         // Camera variables
@@ -52,6 +52,8 @@ namespace Planet_Game_4
 
         public theGame(Graphics graphics, Form1 parent)
         {
+            if (worldDispMax.X==0&& worldDispMax.Y == 0)
+                worldDispMax = new Vector(parent.Width, parent.Height);
             Size = parent.Size;
             toZoom = zoom;
             

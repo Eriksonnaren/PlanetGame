@@ -17,39 +17,39 @@ namespace Planet_Game_4
             Rock,
             Lava
         }
-        public RingType Type;
+        public RingType Type=RingType.Empty;
         List<RingLayer> Layers=new List<RingLayer>();
-        public int Diversity;
-        public int LayerDiversity;
+        public int Diversity=30;
+        public int LayerDiversity=80;
+        int LayerAmount;
+        int PieceAmount;
         bool visible = true;
         double OuterRadius;
+        double Thickness;
+        double InnerRadius;
         Color Color;
+        Noise LayerNoise=new Noise(4,2,0.5,0);
         public RingSystem(SpaceBody Parent, Color Color, int LayerAmount, int PieceAmount, double InnerRadius, double OuterRadius)
         {
+            this.LayerAmount = LayerAmount;
             this.OuterRadius = OuterRadius;
+            this.InnerRadius = InnerRadius;
+            this.PieceAmount = PieceAmount;
             this.Parent = Parent;
-            Diversity = 5;
-            LayerDiversity = 25;
-            this.Type = RingType.Empty;
             double Thickness = (OuterRadius - InnerRadius) / 2;
-            Thickness /= LayerAmount;
+            this.Thickness = Thickness/LayerAmount;
             this.Color = Color;
-            
-            for (int i = 0; i < LayerAmount; i++)
-            {
-                double Dist = InnerRadius + 2 * i * Thickness;
-                Layers.Add(new RingLayer(Dist, Color, Parent, this, Thickness * 1.1, PieceAmount));
-            }
+            generate();
         }
         public RingSystem(SpaceBody Parent,RingType Type,int LayerAmount,int PieceAmount,double InnerRadius,double OuterRadius)
         {
+            this.LayerAmount = LayerAmount;
             this.OuterRadius = OuterRadius;
+            this.InnerRadius = InnerRadius;
+            this.PieceAmount = PieceAmount;
             this.Parent = Parent;
-            Diversity = 5;
-            LayerDiversity = 25;
-            this.Type = Type;
-            double Thickness = (OuterRadius-InnerRadius)/2;
-            Thickness /= LayerAmount;
+            double Thickness = (OuterRadius - InnerRadius) / 2;
+            this.Thickness =Thickness / LayerAmount;
             Color C;
             switch (Type)
             {
@@ -67,21 +67,23 @@ namespace Planet_Game_4
                     break;
             }
             Color = C;
+            generate();
+        }
+        public void generate()
+        {
             for (int i = 0; i < LayerAmount; i++)
             {
                 double Dist = InnerRadius + 2 * i * Thickness;
-                Layers.Add(new RingLayer(Dist,C,Parent,this,Thickness*1.1,PieceAmount));
+                Layers.Add(new RingLayer(Dist, Color, Parent, this, Thickness * 1.1, PieceAmount,(int)(LayerDiversity*LayerNoise.Get(i/(float)LayerAmount))));
             }
         }
         public void update(theGame parent, double dt)
         {
-            
             if (Form1.isInsideWindow(Form1.ui.worldToPixel(Parent.position),parent.worldDispMin,parent.worldDispMax,OuterRadius))
             {
                 visible = true;
                 foreach (RingLayer L in Layers)
                 {
-                    
                     L.update(dt);
                 }
             }
@@ -140,10 +142,11 @@ namespace Planet_Game_4
         double Thickness;
         public Color Color;
         int ColorOffset;
-        public RingLayer(double Radius, Color Color, SpaceBody ParentBody, RingSystem ParentSystem, double Thickness,int PieceAmount)
+        Noise PieceNoise = new Noise(20,4,0.5,0);
+        public RingLayer(double Radius, Color Color, SpaceBody ParentBody, RingSystem ParentSystem, double Thickness,int PieceAmount,int ColorOffset)
         {
             RingAmount = PieceAmount;
-            ColorOffset = Form1.rnd.Next(-ParentSystem.LayerDiversity, ParentSystem.LayerDiversity);
+            this.ColorOffset = ColorOffset;
             this.Color = Color.FromArgb(newC(Color.A), newC(Color.R), newC(Color.G), newC(Color.B));
             this.Thickness = Thickness;
             this.Radius = Radius;
@@ -156,7 +159,7 @@ namespace Planet_Game_4
             PosOutside = new Vector[RingAmount + 1];
             for (int i = 0; i < RingAmount; i++)
             {
-                Pieces[i] = new RingPiece(this.Color,ParentSystem.Diversity);
+                Pieces[i] = new RingPiece(this.Color,(int)(ParentSystem.Diversity*PieceNoise.Get(i/(double)RingAmount)));
             }
         }
         
@@ -210,9 +213,9 @@ namespace Planet_Game_4
     {
         public Color Color;
         public int ColorOffset;
-        public RingPiece(Color Color,int Div)
+        public RingPiece(Color Color,int ColorOffset)
         {
-            ColorOffset = Form1.rnd.Next(-Div,Div);
+            this.ColorOffset = ColorOffset;
             this.Color=Color.FromArgb(newC(Color.A), newC(Color.R), newC(Color.G), newC(Color.B));
         }
         public void refresh(Color Color)

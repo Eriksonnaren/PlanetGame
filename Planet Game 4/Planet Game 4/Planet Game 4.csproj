@@ -64,6 +64,7 @@
     <Compile Include="SpaceBody\RingSystem.cs" />
     <Compile Include="SpaceBody\Shadow.cs" />
     <Compile Include="SpaceBody\SpaceBody.cs" />
+    <Compile Include="Noise.cs" />
     <Compile Include="UIs\theGame.cs" />
     <Compile Include="UIs\ui.cs" />
     <Compile Include="universe.cs" />
