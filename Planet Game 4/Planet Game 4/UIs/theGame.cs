@@ -20,9 +20,15 @@ namespace Planet_Game_4
 
         // The min and max points of the world rendering 
         // NOTE: Only for optimization purposes. It does not actually limit the rendering precisely to that area
-        public Vector worldDispMin = new Vector(00, 00);
-        public Vector worldDispMax = new Vector(0, 0);
-        public bool worldDispBox = true; // If this is true, display a box that shows where the world is rendered
+
+        public windowSection worldDisplay;
+
+        // The coordinates for where the info box should be displayed
+        public windowSection infoBoxDisplay;
+        public infoObject prevInfoBox = null;
+        public infoObject infoBoxAbout = null;
+        public double infoBoxWidth = 0.175;
+        public double infoBoxExtension = 0;
 
         // Camera variables
         public double camRot = 0;
@@ -52,8 +58,10 @@ namespace Planet_Game_4
 
         public theGame(Graphics graphics, Form1 parent)
         {
-            if (worldDispMax.X==0&& worldDispMax.Y == 0)
-                worldDispMax = new Vector(parent.Width, parent.Height);
+
+            worldDisplay = new windowSection(new Vector(0, 0), new Vector(parent.Width - parent.Width * infoBoxWidth, parent.Height));
+            infoBoxDisplay = new windowSection(new Vector(parent.Width - parent.Width * infoBoxWidth, 0), new Vector(parent.Width, parent.Height));
+
             Size = parent.Size;
             toZoom = zoom;
             
@@ -134,13 +142,42 @@ namespace Planet_Game_4
             return new Vector(Math.Cos(rotation), Math.Sin(rotation));
         }
 
+        public void animate(double speed)
+        {
+            // Do animations
+            {
+                // Animate the infoBar
+                if (infoBoxAbout != null)
+                {
+                    infoBoxExtension += speed / 4.0;
+                }
+                else
+                {
+                    infoBoxExtension -= speed / 4.0;
+                }
+
+                infoBoxExtension = Form1.constrain(infoBoxExtension, 0, 1);
+
+                // Update the properties of the infoBox
+                infoBoxDisplay.min.X = parent.Width - parent.Width * Form1.lerp(0, infoBoxWidth, infoBoxExtension);
+                infoBoxDisplay.max.X = infoBoxDisplay.min.X + parent.Width * infoBoxWidth;
+
+                // Set the max of the worldBox
+                worldDisplay.max.X = parent.Width - parent.Width * Form1.lerp(0, infoBoxWidth, infoBoxExtension);
+            }
+        }
+
         // Do visual calculations and display all the things
         public void show()
         {
+            
             graphics.Clear(Color.Black);
             
+            // Show the universe
             if (true)
             {
+                
+
                 // TODO: Do wierd maths to make the orbits be over the shadows but under everything else, although everything else should be on top of the shadows
                 for (int i = universe.bodies.Count - 1; i >= 0; i--)
                 {
@@ -160,18 +197,44 @@ namespace Planet_Game_4
                 }
             }
 
-            // Show the world border if that boolean is set to true
-            if(worldDispBox)
+
+            // Show the infoBox
+            if(infoBoxDisplay.min.X < parent.Width)
             {
-                graphics.DrawRectangle(new Pen(Color.White), (int)(worldDispMin.X), (int)(worldDispMin.Y), (int)(worldDispMax.X-worldDispMin.X), (int)(worldDispMax.Y - worldDispMin.Y));
+                if (infoBoxAbout != null)
+                {
+                    graphics.FillRectangle(new SolidBrush(Color.LightGray), (int)(infoBoxDisplay.min.X), (int)(infoBoxDisplay.min.Y), (int)(infoBoxDisplay.size.X), (int)(infoBoxDisplay.size.Y));
+
+                    Vector size = infoBoxDisplay.size;
+                    int intSize = (int)Math.Min(size.X, size.Y) - 20;
+                    infoBoxAbout.show(graphics, (int)infoBoxDisplay.min.X + 10, (int)infoBoxDisplay.min.Y + 10, intSize, intSize);
+                }else if(prevInfoBox != null)
+                {
+                    graphics.FillRectangle(new SolidBrush(Color.LightGray), (int)(infoBoxDisplay.min.X), (int)(infoBoxDisplay.min.Y), (int)(infoBoxDisplay.size.X), (int)(infoBoxDisplay.size.Y));
+
+                    Vector size = infoBoxDisplay.size;
+                    int intSize = (int)Math.Min(size.X, size.Y) - 20;
+                    prevInfoBox.show(graphics, (int)infoBoxDisplay.min.X + 10, (int)infoBoxDisplay.min.Y + 10, intSize, intSize);
+                }
             }
             
+        }
+
+        public bool onWorldRender(int x, int y)
+        {
+            return x >= infoBoxDisplay.min.X && y >= infoBoxDisplay.min.Y && x <= infoBoxDisplay.max.X && y <= infoBoxDisplay.max.Y;
         }
 
         public void resize()
         {
             // Change the cameras origin to the center of the screen when the screen is resized
             camOrigin = new Vector(parent.PB.Width / 2.0, parent.PB.Height / 2.0);
+        }
+
+        public void setInfoBox(infoObject info)
+        {
+            prevInfoBox = infoBoxAbout;
+            infoBoxAbout = info;
         }
 
         //mouse Stuff:
@@ -190,7 +253,22 @@ namespace Planet_Game_4
         
         public void mousePressed(MouseButtons Button)
         {
-            
+            if(false)
+            {
+
+            }
+            else
+            {
+                for (int i = universe.bodies.Count - 1; i >= 0; i--)
+                {
+                    if(universe.bodies[i].mouseOn(parent.MousePos))
+                    {
+                        infoObject newSelected = universe.bodies[i] == infoBoxAbout ? null : universe.bodies[i];
+                        setInfoBox(newSelected);
+                        break;
+                    }
+                }
+            }
         }
 
         public void mouseReleased(MouseButtons Button)

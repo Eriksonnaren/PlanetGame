@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Planet_Game_4
 {
-    public class SpaceBody
+    public class SpaceBody : infoObject
     {
 
         ///<summary>
@@ -46,6 +46,10 @@ namespace Planet_Game_4
         ///</summary>
         public Vector velocity;//TODO: get this from orbit
 
+        ///<summary>
+        /// The parent
+        /// </summary>
+        theGame parent;
         
         ///<summary>
         /// The planets radius. Pretty self explanatory
@@ -183,6 +187,8 @@ namespace Planet_Game_4
                 // Show the orbit
                 orbit.Show(g, parent, new Pen(Color.Blue, 2), true);
             }
+
+            this.parent = parent;
         }
         
         ///<summary>
@@ -211,10 +217,37 @@ namespace Planet_Game_4
             if (pixelPos.X >= -radius * parent.zoom && pixelPos.X <= form.PB.Width + radius * parent.zoom && pixelPos.Y >= -radius * parent.zoom && pixelPos.Y <= form.PB.Height + radius * parent.zoom)
             {
                 // Render the body
-                shape.render(g, parent, (int)pixelPos.X, (int)pixelPos.Y, (int)(radius * parent.zoom), rotation - parent.camRot);
+                shape.render(g, new windowSection(parent.worldDisplay.min, parent.worldDisplay.max), (int)pixelPos.X, (int)pixelPos.Y, (int)(radius * parent.zoom), rotation - parent.camRot);
             }
 
+            this.parent = parent;
+
         }
+
+        public bool mouseOn(Vector mouse)
+        {
+            Vector pixelPos = parent.worldToPixel(position);
+            double magSqr = (mouse - pixelPos).MagSq();
+            return magSqr < radius * radius * parent.zoom * parent.zoom;
+        }
+
+        // A function that is used when the body is going to display itself on the sidebar
+        public void show(Graphics g, int x, int y, int sx, int sy)
+        {
+            // Render the body
+            shape.render(g, new windowSection(new Vector(x, y), new Vector(x+sx, y+sy)), x+sx/2, y+sy/2, 3, (int)(Math.Min(sx, sy) / 2.2), rotation);
+        }
+
+        public String getName()
+        {
+            return "Space Body";
+        }
+
+        public String[] getInterestingInfo()
+        {
+            return new String[0];
+        }
+
         public void showShadow(Graphics g, Form1 form, theGame parent)
         {
             if (Shadow != null)

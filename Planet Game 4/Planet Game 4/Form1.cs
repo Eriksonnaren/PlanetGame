@@ -86,6 +86,7 @@ namespace Planet_Game_4
 
             // Update and show the ui
             ui.update();
+            ui.animate(1);
             ui.show();
             
             // Render the graphics to the screen
