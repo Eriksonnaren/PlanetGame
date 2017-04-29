@@ -71,6 +71,8 @@
     <Compile Include="universe.cs" />
     <Compile Include="Vector.cs" />
     <Compile Include="windowSection.cs" />
+    <Compile Include="window\universeCam.cs" />
+    <Compile Include="window\window.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

@@ -42,6 +42,9 @@ namespace Planet_Game_4
         /// </summary>
         Timer T = new Timer();
 
+        window w = new universeCam(new windowSection(new Vector(0, 0), new Vector(500, 500)), null);
+
+
         /// <summary>
         /// Global random number generator
         /// </summary>
@@ -85,9 +88,16 @@ namespace Planet_Game_4
             MousePos = new Vector(PointToClient(MousePosition));
 
             // Update and show the ui
-            ui.update();
-            ui.animate(1);
-            ui.show();
+            //ui.update();
+            //ui.animate(1);
+            //ui.show();
+
+            
+            BG.Graphics.Clear(Color.Blue);
+
+            w.render();
+            
+            BG.Graphics.DrawImage(w.I, w.section.min);
             
             // Render the graphics to the screen
             BG.Render();
@@ -133,7 +143,9 @@ namespace Planet_Game_4
                 // Set the ui graphics object to the new graphics object
                 ui.graphics = BG.Graphics;
             }
-            
+
+            w.resize(new Vector(PB.Width/2, PB.Height/2));
+
         }
 
         /// <summary>
