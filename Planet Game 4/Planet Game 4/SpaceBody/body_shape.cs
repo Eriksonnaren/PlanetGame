@@ -23,7 +23,7 @@ namespace Planet_Game_4
 
             for(int i = 0; i < root.Length; i++)
             {
-                root[i] = new body_shape_recursive(new HSLColor((double)r, g, b), rv, gv, bv, realAverage, body_shape_recursive.tile_type.center, recursions);
+                root[i] = new body_shape_recursive(new HSLColor((double)r, g, b), rv, gv, bv, body_shape_recursive.tile_type.center, recursions);
                 //root[i].calculateAverages();
             }
 
