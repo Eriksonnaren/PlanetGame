@@ -42,6 +42,8 @@ namespace Planet_Game_4
         /// </summary>
         Timer T = new Timer();
 
+        public static universe universe;
+
         /// <summary>
         /// Global random number generator
         /// </summary>
@@ -133,7 +135,7 @@ namespace Planet_Game_4
                 // Set the ui graphics object to the new graphics object
                 ui.graphics = BG.Graphics;
             }
-            
+
         }
 
         /// <summary>

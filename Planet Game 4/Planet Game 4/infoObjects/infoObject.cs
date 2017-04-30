@@ -11,7 +11,7 @@ namespace Planet_Game_4
     {
 
         bool mouseOn(Vector mouse);
-        void show(Graphics g, int x, int y, int sx, int sy);
+        void show(Graphics g, universeCam cam);
 
         String getName();
         String[] getInterestingInfo();

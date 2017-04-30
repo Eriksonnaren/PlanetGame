@@ -135,7 +135,7 @@ namespace Planet_Game_4
         {
             return Eccentric_Anomoly - Eccentricity * Math.Sin(Eccentric_Anomoly);
         }
-        public void Show(Graphics G, theGame parent, Pen Pen,bool Fade)
+        public void Show(Graphics G, universeCam parent, Pen Pen,bool Fade)
         {
             // If you do not need to show the orbit, don't show it!
             if(Periapsis * parent.zoom > parent.camOrigin.Mag() / 2)
@@ -149,8 +149,8 @@ namespace Planet_Game_4
             for (int i = 0; i < OrbitLines; i++)
             {
                 double Angle = 2*Math.PI*i / OrbitLines;
-                Vector V = Form1.ui.worldToPixel(getPos(Angle));
-                canSee[i] = Form1.isInsideWindow(V,parent.worldDisplay.min,parent.worldDisplay.max,0);
+                Vector V = parent.worldToPixel(getPos(Angle));
+                canSee[i] = Form1.isInsideWindow(V,parent.section.min,parent.section.max,0);
                 Points[i] = V.toPoint();
             }
             Points[OrbitLines] = Points[0];

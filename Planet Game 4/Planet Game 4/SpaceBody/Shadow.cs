@@ -100,21 +100,21 @@ namespace Planet_Game_4
             else
                 return (V.X > Parent.position.X && V.Y - Parent.position.Y < Top + Dist && V.Y - Parent.position.Y > Bottom - Dist);
         }
-        public void show(Graphics g,Form1 form,theGame game)
+        public void show(Graphics g,universeCam parent)
         {
-            Vector Pos = game.worldToPixel(Parent.position);
-            Vector C = new Vector(form.Width / 2, form.Height / 2);
-            Vector C2 = (C - Pos).RotRev(Angle).RotRev(game.camRotation) + Pos;
+            Vector Pos = parent.worldToPixel(Parent.position);
+            Vector C = new Vector(parent.section.size.X / 2, parent.section.size.Y / 2);
+            Vector C2 = (C - Pos).RotRev(Angle).RotRev(parent.camRotation) + Pos;
             int Alpha = 180;
             Vector[] Corners = new Vector[4];
             
-            double Dist = Math.Max(form.Width, form.Height);
+            double Dist = Math.Max(parent.section.size.X, parent.section.size.Y);
             double maxDist = C2.X + Dist;
             if (End > 0)
-                maxDist = Math.Min(maxDist, End * game.zoom + Pos.X);
+                maxDist = Math.Min(maxDist, End * parent.zoom + Pos.X);
             double minDist = Math.Max(C2.X - Dist,Pos.X);
-            double T = Top * game.zoom + Pos.Y;
-            double B = Bottom * game.zoom + Pos.Y;
+            double T = Top * parent.zoom + Pos.Y;
+            double B = Bottom * parent.zoom + Pos.Y;
             if (minDist < maxDist)//&&(Math.Abs(T - C.Y) <Dist||Math.Abs(B - C.Y)<Dist))
             {
                 Corners[0] = new Vector(minDist, T);
@@ -126,7 +126,7 @@ namespace Planet_Game_4
                 {
                     Vector V = Corners[i];
                     V=V - Pos;
-                    V=V.Rot(Angle).Rot(game.camRotation);
+                    V=V.Rot(Angle).Rot(parent.camRotation);
                     V = V + Pos;
 
                     Points[i] = (V).toPoint();

@@ -151,7 +151,15 @@ namespace Planet_Game_4
         {
             return Math.Atan2(Y,X);
         }
-        
+
+        ///<summary>
+        /// Gives you a 1 magnitude vector that has an angle of the rotation
+        ///</summary>
+        public static Vector getRotationVector(double rotation)
+        {
+            return new Vector(Math.Cos(rotation), Math.Sin(rotation));
+        }
+
         /// <summary>
         /// Rotates the vector (The input is a vector with the x being cos(angle) and the y being sin(angle))
         /// </summary>

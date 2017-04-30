@@ -91,7 +91,7 @@ namespace Planet_Game_4
             // Make sure that this part is inside the screen. Otherwise don't render it
             if (true)
             {
-                if (inWindow(section, x, y, startAngle, endAngle, startR, endR))
+                if (!inWindow(section, x, y, startAngle, endAngle, startR, endR))
                 {
                     return;
                 }
@@ -112,7 +112,7 @@ namespace Planet_Game_4
         public void render(Graphics g, windowSection section, int x, int y, double startR, double endR, double startAngle, double endAngle, double req, double lerp, bool doTip, HSLColor lerpTo)
         {
             // Make sure that this part is inside the screen. Otherwise don't render it
-            if (inWindow(section, x, y, startAngle, endAngle, startR, endR))
+            if (!inWindow(section, x, y, startAngle, endAngle, startR, endR))
             {
                 return;
             }
@@ -271,7 +271,7 @@ namespace Planet_Game_4
             if (corners[4].Y > max.Y) { max.Y = corners[4].Y; }
             //if (corners[5].Y > max.Y) { max.Y = corners[5].Y; }
 
-            return (!(min.X <= section.max.X && max.X >= section.min.X && min.Y <= section.max.Y && max.Y >= section.min.Y));
+            return ((min.X <= section.size.X && max.X >= 0 && min.Y <= section.size.Y && max.Y >= 0));
 
         }
     }
