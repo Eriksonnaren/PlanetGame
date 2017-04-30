@@ -166,7 +166,7 @@ namespace Planet_Game_4
                 worldDisplay.max.X = parent.Width - parent.Width * Form1.lerp(0, infoBoxWidth, infoBoxExtension);
             }
         }
-
+        Engine1 E = new Engine1();
         // Do visual calculations and display all the things
         public void show()
         {
@@ -177,8 +177,6 @@ namespace Planet_Game_4
             if (true)
             {
                 
-
-                // TODO: Do wierd maths to make the orbits be over the shadows but under everything else, although everything else should be on top of the shadows
                 for (int i = universe.bodies.Count - 1; i >= 0; i--)
                 {
                     universe.bodies[i].showOrbit(graphics, this);
@@ -197,21 +195,18 @@ namespace Planet_Game_4
                 }
             }
 
-
             // Show the infoBox
-            if(infoBoxDisplay.min.X < parent.Width)
+            if (infoBoxDisplay.min.X < parent.Width)
             {
                 if (infoBoxAbout != null)
                 {
                     graphics.FillRectangle(new SolidBrush(Color.LightGray), (int)(infoBoxDisplay.min.X), (int)(infoBoxDisplay.min.Y), (int)(infoBoxDisplay.size.X), (int)(infoBoxDisplay.size.Y));
-
                     Vector size = infoBoxDisplay.size;
                     int intSize = (int)Math.Min(size.X, size.Y) - 20;
                     infoBoxAbout.show(graphics, (int)infoBoxDisplay.min.X + 10, (int)infoBoxDisplay.min.Y + 10, intSize, intSize);
                 }else if(prevInfoBox != null)
                 {
                     graphics.FillRectangle(new SolidBrush(Color.LightGray), (int)(infoBoxDisplay.min.X), (int)(infoBoxDisplay.min.Y), (int)(infoBoxDisplay.size.X), (int)(infoBoxDisplay.size.Y));
-
                     Vector size = infoBoxDisplay.size;
                     int intSize = (int)Math.Min(size.X, size.Y) - 20;
                     prevInfoBox.show(graphics, (int)infoBoxDisplay.min.X + 10, (int)infoBoxDisplay.min.Y + 10, intSize, intSize);
