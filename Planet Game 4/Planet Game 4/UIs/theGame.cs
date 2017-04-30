@@ -149,7 +149,7 @@ namespace Planet_Game_4
                 worldDisplay.resize(new Vector(parent.PB.Width - parent.PB.Width * Form1.lerp(0, infoBoxWidth, infoBoxExtension), worldDisplay.section.size.Y));
             }
         }
-
+        Engine1 E = new Engine1();
         // Do visual calculations and display all the things
         public void show()
         {
@@ -164,9 +164,8 @@ namespace Planet_Game_4
                 graphics.DrawImage(worldDisplay.I, worldDisplay.section.min);
             }
 
-
             // Show the infoBox
-            if(infoBoxDisplay.min.X < parent.Width)
+            if (infoBoxDisplay.min.X < parent.Width)
             {
                 if(infoCam == null)
                 {

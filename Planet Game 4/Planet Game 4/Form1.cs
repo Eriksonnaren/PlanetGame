@@ -53,7 +53,7 @@ namespace Planet_Game_4
         {
             InitializeComponent();
         }
-
+        
         private void Form1_Load(object sender, EventArgs e)
         {
             
@@ -159,7 +159,7 @@ namespace Planet_Game_4
         /// <summary>
         /// Returns A squared
         /// </summary>
-        public static double Sq(double A){ return A * A; } // TODO: Call this function Square or Sqr, not Sq
+        public static double Sq(double A){ return A * A; } 
         
         /// <summary>
         /// Returns true if the vector is inside the window
