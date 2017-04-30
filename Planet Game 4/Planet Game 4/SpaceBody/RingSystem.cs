@@ -24,9 +24,9 @@ namespace Planet_Game_4
         int LayerAmount;
         int PieceAmount;
         bool visible = true;
-        double OuterRadius;
+        public double OuterRadius;
         double Thickness;
-        double InnerRadius;
+        public double InnerRadius;
         Color Color;
         Noise LayerNoise=new Noise(4,2,0.5,0);
         public RingSystem(SpaceBody Parent, Color Color, int LayerAmount, int PieceAmount, double InnerRadius, double OuterRadius)
@@ -77,10 +77,10 @@ namespace Planet_Game_4
                 Layers.Add(new RingLayer(Dist, Color, Parent, this, Thickness * 1.1, PieceAmount,(int)(LayerDiversity*LayerNoise.Get(i/(float)LayerAmount))));
             }
         }
-        public void update(theGame parent, double dt)
+        public void update(universeCam parent, double dt)
         {
             
-            if (Form1.isInsideWindow(Form1.ui.worldToPixel(Parent.position),parent.worldDisplay.min,parent.worldDisplay.max,OuterRadius))
+            if (Form1.isInsideWindow(parent.worldToPixel(Parent.position),parent.section.min,parent.section.max,OuterRadius))
 
             {
                 visible = true;
@@ -120,12 +120,12 @@ namespace Planet_Game_4
                 L.refresh(C);
             }
         }
-        public void show(Graphics g)
+        public void show(Graphics g, universeCam parent)
         {
             if(visible)
             foreach (RingLayer L in Layers)
             {
-                L.show(g);
+                L.show(g, parent);
             }
         }
     }
@@ -178,15 +178,15 @@ namespace Planet_Game_4
                 Pieces[i].refresh(this.Color);
             }
         }
-        public void show(Graphics g)
+        public void show(Graphics g, universeCam parent)
         {
             for (int i = 0; i < RingAmount; i++)
             {
                 double Angle = this.Angle + 2 * Math.PI * i / RingAmount;
                 double Rad = Radius - Thickness;
-                PosInside[i] = Form1.ui.worldToPixel(new Vector(Rad * Math.Cos(Angle), Rad * Math.Sin(Angle)) + ParentBody.position);
+                PosInside[i] = parent.worldToPixel(new Vector(Rad * Math.Cos(Angle), Rad * Math.Sin(Angle)) + ParentBody.position);
                 Rad = Radius + Thickness;
-                PosOutside[i] = Form1.ui.worldToPixel(new Vector(Rad * Math.Cos(Angle), Rad * Math.Sin(Angle)) + ParentBody.position);
+                PosOutside[i] = parent.worldToPixel(new Vector(Rad * Math.Cos(Angle), Rad * Math.Sin(Angle)) + ParentBody.position);
             }
             PosInside[RingAmount] = PosInside[0];
             PosOutside[RingAmount] = PosOutside[0];

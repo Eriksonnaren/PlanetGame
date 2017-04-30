@@ -21,7 +21,7 @@ namespace Planet_Game_4
         // The min and max points of the world rendering 
         // NOTE: Only for optimization purposes. It does not actually limit the rendering precisely to that area
 
-        public windowSection worldDisplay;
+        public universeCam worldDisplay;
 
         // The coordinates for where the info box should be displayed
         public windowSection infoBoxDisplay;
@@ -29,62 +29,51 @@ namespace Planet_Game_4
         public infoObject infoBoxAbout = null;
         public double infoBoxWidth = 0.175;
         public double infoBoxExtension = 0;
-
-        // Camera variables
-        public double camRot = 0;
-        public Vector camPos = new Vector(400, 400);
-        public Vector camOrigin = new Vector(400, 400);
-        public Vector camRotation;
-        public Vector negCamRotation;
+        public universeCam infoCam = null;
 
         // Zooming variables
-        public double zoom = 0.0001;
         public double toZoom;
         public double startZoom;
         public Vector toZoomPos = new Vector(0, 0);
         public Vector startZoomPos = new Vector(0, 0);
 
         // The game speed
-        public double gameSpeed = 5;
+        public double gameSpeed = 10;
         
         // Mouse variables
         public Vector MousePos1 = new Vector(0,0);
         public Vector MousePos2 = new Vector(0,0);
 
-        
-
-        // The universe that you are playing inside. Isn't that cool?
-        public universe universe;
-
         public theGame(Graphics graphics, Form1 parent)
         {
 
-            worldDisplay = new windowSection(new Vector(0, 0), new Vector(parent.Width - parent.Width * infoBoxWidth, parent.Height));
+            worldDisplay = new universeCam(new windowSection(new Vector(0, 0), new Vector(parent.Width - parent.Width * infoBoxWidth, parent.Height)));
+
+            Form1.universe = new universe(worldDisplay);
+            
             infoBoxDisplay = new windowSection(new Vector(parent.Width - parent.Width * infoBoxWidth, 0), new Vector(parent.Width, parent.Height));
 
             Size = parent.Size;
-            toZoom = zoom;
+            toZoom = worldDisplay.zoom;
             
             // You do need an object to display all the stuff to the screen, do you not?
             this.graphics = graphics;
             this.parent = parent;
             parent.MouseWheel += mouseWheel;
-            camOrigin = new Vector(parent.PB.Width / 2.0, parent.PB.Height / 2.0);
-
-            universe = new universe();
+            worldDisplay.camOrigin = new Vector(parent.PB.Width / 2.0, parent.PB.Height / 2.0);
 
             // Make sure that the camera rotation is not null
             setRotation(0);
-            toZoomPos=camPos = -universe.bodies[1].orbit.getPos();
+            toZoomPos = worldDisplay.camPos = -Form1.universe.bodies[1].orbit.getPos();
         }
 
         // Do physics and calculations
         public void update()
         {
             // Do smooth zooming
-            zoom += (toZoom-zoom)*0.3;
-            double T=(zoom - startZoom)/ (toZoom - startZoom);
-            camPos =startZoomPos.lerp(toZoomPos,T);
+            worldDisplay.zoom += (toZoom- worldDisplay.zoom)*0.3;
+            double T=(worldDisplay.zoom - startZoom)/ (toZoom - startZoom);
+            worldDisplay.camPos =startZoomPos.lerp(toZoomPos,T);
 
             // Do mouse pressing detection
             if (Control.MouseButtons!=MouseButtons.None)//it is pressed
@@ -106,19 +95,19 @@ namespace Planet_Game_4
             }
 
             // Update all the space bodies
-            foreach (SpaceBody P in universe.bodies)
+            foreach (SpaceBody P in Form1.universe.bodies)
             {
-                P.update(this);
+                P.update(worldDisplay);
             }
             
             // Update them again TODO: make a name for this update function that makes more sense
-            foreach (SpaceBody P in universe.bodies)
+            foreach (SpaceBody P in Form1.universe.bodies)
             {
                 P.update2();
             }
             
             // Rotate the camera
-            setRotation(camRot);
+            setRotation(worldDisplay.camRot);
             //camPos.X += 1;
             //camOrigin.X += 1;
 
@@ -129,18 +118,12 @@ namespace Planet_Game_4
         public void setRotation(double rotation)
         {
             // TODO: call camRot camRotation, and the vectors Vec at the end, like camRotationVec
-            camRot = rotation;
-            camRotation = getRotationVector(rotation);
-            negCamRotation = getRotationVector(-rotation);
+            worldDisplay.camRot = rotation;
+            worldDisplay.camRotation = Vector.getRotationVector(rotation);
+            worldDisplay.negCamRotation = Vector.getRotationVector(-rotation);
         }
 
-        ///<summary>
-        /// Gives you a 1 magnitude vector that has an angle of the rotation
-        ///</summary>
-        public Vector getRotationVector(double rotation)
-        {
-            return new Vector(Math.Cos(rotation), Math.Sin(rotation));
-        }
+        
 
         public void animate(double speed)
         {
@@ -159,11 +142,11 @@ namespace Planet_Game_4
                 infoBoxExtension = Form1.constrain(infoBoxExtension, 0, 1);
 
                 // Update the properties of the infoBox
-                infoBoxDisplay.min.X = parent.Width - parent.Width * Form1.lerp(0, infoBoxWidth, infoBoxExtension);
-                infoBoxDisplay.max.X = infoBoxDisplay.min.X + parent.Width * infoBoxWidth;
+                infoBoxDisplay.min.X = parent.PB.Width - parent.PB.Width * Form1.lerp(0, infoBoxWidth, infoBoxExtension);
+                infoBoxDisplay.max.X = infoBoxDisplay.min.X + parent.PB.Width * infoBoxWidth;
 
                 // Set the max of the worldBox
-                worldDisplay.max.X = parent.Width - parent.Width * Form1.lerp(0, infoBoxWidth, infoBoxExtension);
+                worldDisplay.resize(new Vector(parent.PB.Width - parent.PB.Width * Form1.lerp(0, infoBoxWidth, infoBoxExtension), worldDisplay.section.size.Y));
             }
         }
 
@@ -176,45 +159,37 @@ namespace Planet_Game_4
             // Show the universe
             if (true)
             {
-                
+                worldDisplay.render();
 
-                // TODO: Do wierd maths to make the orbits be over the shadows but under everything else, although everything else should be on top of the shadows
-                for (int i = universe.bodies.Count - 1; i >= 0; i--)
-                {
-                    universe.bodies[i].showOrbit(graphics, this);
-                }
-                for (int i = universe.bodies.Count - 1; i >= 0; i--)
-                {
-                    universe.bodies[i].showRings(graphics);
-                }
-                for (int i = universe.bodies.Count - 1; i >= 0; i--)
-                {
-                    universe.bodies[i].showBody(graphics, parent, this);
-                }
-                for (int i = universe.bodies.Count - 1; i >= 0; i--)
-                {
-                    universe.bodies[i].showShadow(graphics, parent, this);
-                }
+                graphics.DrawImage(worldDisplay.I, worldDisplay.section.min);
             }
 
 
             // Show the infoBox
             if(infoBoxDisplay.min.X < parent.Width)
             {
+                if(infoCam == null)
+                {
+                    infoCam = new universeCam(new windowSection(new Vector(100, 100), new Vector(300, 300)));
+                }
+
+                Vector size = infoBoxDisplay.size;
+                int intSize = (int)Math.Min(size.X, size.Y) - 10;
+
+                infoCam.section.min = new Vector(infoBoxDisplay.min.X + 10, infoBoxDisplay.min.Y + 10);
+                infoCam.resize(new Vector(intSize-10,intSize-10));
+
                 if (infoBoxAbout != null)
                 {
                     graphics.FillRectangle(new SolidBrush(Color.LightGray), (int)(infoBoxDisplay.min.X), (int)(infoBoxDisplay.min.Y), (int)(infoBoxDisplay.size.X), (int)(infoBoxDisplay.size.Y));
-
-                    Vector size = infoBoxDisplay.size;
-                    int intSize = (int)Math.Min(size.X, size.Y) - 20;
-                    infoBoxAbout.show(graphics, (int)infoBoxDisplay.min.X + 10, (int)infoBoxDisplay.min.Y + 10, intSize, intSize);
+                    
+                    infoBoxAbout.show(graphics, infoCam);
                 }else if(prevInfoBox != null)
                 {
                     graphics.FillRectangle(new SolidBrush(Color.LightGray), (int)(infoBoxDisplay.min.X), (int)(infoBoxDisplay.min.Y), (int)(infoBoxDisplay.size.X), (int)(infoBoxDisplay.size.Y));
 
-                    Vector size = infoBoxDisplay.size;
-                    int intSize = (int)Math.Min(size.X, size.Y) - 20;
-                    prevInfoBox.show(graphics, (int)infoBoxDisplay.min.X + 10, (int)infoBoxDisplay.min.Y + 10, intSize, intSize);
+                    
+                    prevInfoBox.show(graphics, infoCam);
                 }
             }
             
@@ -228,7 +203,7 @@ namespace Planet_Game_4
         public void resize()
         {
             // Change the cameras origin to the center of the screen when the screen is resized
-            camOrigin = new Vector(parent.PB.Width / 2.0, parent.PB.Height / 2.0);
+            worldDisplay.camOrigin = new Vector(parent.PB.Width / 2.0, parent.PB.Height / 2.0);
         }
 
         public void setInfoBox(infoObject info)
@@ -243,11 +218,11 @@ namespace Planet_Game_4
         {
             if (mouseDown == MouseButtons.Left)
             {
-                toZoomPos += (parent.MousePos - parent.MousePosPrev).Rot(negCamRotation)/zoom;
+                toZoomPos += (parent.MousePos - parent.MousePosPrev).Rot(worldDisplay.negCamRotation)/ worldDisplay.zoom;
             }
             else if(mouseDown == MouseButtons.Right)
             {
-                camRot += (parent.MousePos - camOrigin).Angle() - (parent.MousePosPrev - camOrigin).Angle();
+                worldDisplay.camRot += (parent.MousePos - worldDisplay.camOrigin).Angle() - (parent.MousePosPrev - worldDisplay.camOrigin).Angle();
             }
         }
         
@@ -259,11 +234,11 @@ namespace Planet_Game_4
             }
             else
             {
-                for (int i = universe.bodies.Count - 1; i >= 0; i--)
+                for (int i = Form1.universe.bodies.Count - 1; i >= 0; i--)
                 {
-                    if(universe.bodies[i].mouseOn(parent.MousePos))
+                    if(Form1.universe.bodies[i].mouseOn(parent.MousePos))
                     {
-                        infoObject newSelected = universe.bodies[i] == infoBoxAbout ? null : universe.bodies[i];
+                        infoObject newSelected = Form1.universe.bodies[i] == infoBoxAbout ? null : Form1.universe.bodies[i];
                         setInfoBox(newSelected);
                         break;
                     }
@@ -278,7 +253,7 @@ namespace Planet_Game_4
 
         public void mouseWheel(object sender,MouseEventArgs e)
         {
-            Vector OldPos = pixelToWorld(parent.MousePos,toZoom);
+            Vector OldPos = worldDisplay.pixelToWorld(parent.MousePos,toZoom);
             MousePos1 = OldPos;
             double zoomAmount=1.5;
             
@@ -293,11 +268,11 @@ namespace Planet_Game_4
             {
                 return;
             }
-            startZoom = zoom;
-            startZoomPos = camPos;
-            Vector NewPos = pixelToWorld(parent.MousePos,toZoom);
+            startZoom = worldDisplay.zoom;
+            startZoomPos = worldDisplay.camPos;
+            Vector NewPos = worldDisplay.pixelToWorld(parent.MousePos,toZoom);
             MousePos2 = NewPos;
-            toZoomPos =camPos+ NewPos - OldPos;
+            toZoomPos = worldDisplay.camPos + NewPos - OldPos;
         }
 
         // end mouseStuff
@@ -308,21 +283,6 @@ namespace Planet_Game_4
 
         public void keyReleased(char key) { }
 
-        public Vector worldToPixel(Vector w)
-        {
-            return (w + camPos).Rot(camRotation) * zoom + camOrigin;
-        }
-        public Vector worldToPixel(Vector w,double zoom)
-        {
-            return (w + camPos).Rot(camRotation) * zoom + camOrigin;
-        }
-        public Vector pixelToWorld(Vector p)
-        {
-            return ((p - camOrigin) / zoom).Rot(negCamRotation) - camPos;
-        }
-        public Vector pixelToWorld(Vector p,double zoom)
-        {
-            return ((p - camOrigin) / zoom).Rot(negCamRotation) - camPos;
-        }
+        
     }
 }

@@ -45,11 +45,6 @@ namespace Planet_Game_4
         /// The velocity of the body. If the body has an orbit, this is not used
         ///</summary>
         public Vector velocity;//TODO: get this from orbit
-
-        ///<summary>
-        /// The parent
-        /// </summary>
-        theGame parent;
         
         ///<summary>
         /// The planets radius. Pretty self explanatory
@@ -81,8 +76,13 @@ namespace Planet_Game_4
         ///</summary>
         public RingSystem rings;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        public universeCam infoGatheringStation;
+
         // Just a bunch of constructors. So self explanatory I'm not gonna comment them.
-        public SpaceBody(Vector pos, double radius, int layers, Body_type type,double Mass)
+        public SpaceBody(Vector pos, double radius, int layers, Body_type type,double Mass, universeCam infoGather)
         {
             if (type != Body_type.sun)
                 Shadow = new Shadow(this);
@@ -94,12 +94,14 @@ namespace Planet_Game_4
 
             // Set the shape
             setShape(layers, type);
+
+            infoGatheringStation = infoGather;
         }
         
         ///<summary>
         /// Set the body up by only giving an orbit. It sure is strange with Erik stuff
         ///</summary>
-        public SpaceBody(Orbit orbit, double radius, int layers, Body_type type,double Mass,RingSystem.RingType RingType)
+        public SpaceBody(Orbit orbit, double radius, int layers, Body_type type,double Mass,RingSystem.RingType RingType, universeCam infoGather)
         {
             if(type!=Body_type.sun)
             Shadow = new Shadow(this);
@@ -120,6 +122,8 @@ namespace Planet_Game_4
             orbit.update(0);
             
             position = orbit.getPos();// --- Try that there, just to make sure that the position is not null
+
+            infoGatheringStation = infoGather;
         }
 
         
@@ -144,7 +148,7 @@ namespace Planet_Game_4
         /// <summary>
         /// PLANET PHYSICS and other stuff too
         /// </summary>
-        public void update(theGame parent)
+        public void update(universeCam parent)
         {
             // Rotate the body
             rotation += rotationSpeed* Form1.ui.gameSpeed;
@@ -171,7 +175,7 @@ namespace Planet_Game_4
         {
             if (Shadow != null)
             {
-                Shadow.CheckPlanets(Form1.ui.universe.bodies);
+                Shadow.CheckPlanets(Form1.universe.bodies);
             }
         }
         
@@ -179,7 +183,7 @@ namespace Planet_Game_4
         ///<summary>
         /// Shows the orbit, if there is an orbit
         ///</summary>
-        public void showOrbit(Graphics g,theGame parent)
+        public void showOrbit(Graphics g, universeCam parent)
         {
             // Make sure that the orbit exists
             if (orbit != null)
@@ -187,20 +191,18 @@ namespace Planet_Game_4
                 // Show the orbit
                 orbit.Show(g, parent, new Pen(Color.Blue, 2), true);
             }
-
-            this.parent = parent;
         }
         
         ///<summary>
         /// Shows the rings, if there are any rings, that is
         ///</summary>
-        public void showRings(Graphics g)
+        public void showRings(Graphics g, universeCam parent)
         {
             // Make sure that the rings exist
             if (rings != null)
             {
                 // Show the rings
-                rings.show(g);
+                rings.show(g, parent);
             }
         }
         
@@ -208,34 +210,45 @@ namespace Planet_Game_4
         ///<summary>
         /// Shows the body
         ///</summary>
-        public void showBody(Graphics g, Form1 form, theGame parent)
+        public void showBody(Graphics g, universeCam parent)
         {
             // Calculate where the planet should be rendered by moving from world to pixel coordinates.
             Vector pixelPos = parent.worldToPixel(position);
 
             // Make sure that the planet is actually inside the screen so that you don't render it when it's outside the screen
-            if (pixelPos.X >= -radius * parent.zoom && pixelPos.X <= form.PB.Width + radius * parent.zoom && pixelPos.Y >= -radius * parent.zoom && pixelPos.Y <= form.PB.Height + radius * parent.zoom)
+            if (pixelPos.X >= -radius * parent.zoom && pixelPos.X <= parent.section.size.X + radius * parent.zoom && pixelPos.Y >= -radius * parent.zoom && pixelPos.Y <= parent.section.size.Y + radius * parent.zoom)
             {
                 // Render the body
-                shape.render(g, new windowSection(parent.worldDisplay.min, parent.worldDisplay.max), (int)pixelPos.X, (int)pixelPos.Y, (int)(radius * parent.zoom), rotation - parent.camRot);
+                shape.render(g, new windowSection(parent.section.min, parent.section.max), (int)pixelPos.X, (int)pixelPos.Y, (int)(radius * parent.zoom), rotation - parent.camRot);
             }
-
-            this.parent = parent;
 
         }
 
         public bool mouseOn(Vector mouse)
         {
-            Vector pixelPos = parent.worldToPixel(position);
+            Vector pixelPos = infoGatheringStation.worldToPixel(position) + infoGatheringStation.section.min;
             double magSqr = (mouse - pixelPos).MagSq();
-            return magSqr < radius * radius * parent.zoom * parent.zoom;
+            return magSqr < radius * radius * infoGatheringStation.zoom * infoGatheringStation.zoom;
         }
 
         // A function that is used when the body is going to display itself on the sidebar
-        public void show(Graphics g, int x, int y, int sx, int sy)
+        public void show(Graphics g, universeCam cam)
         {
-            // Render the body
-            shape.render(g, new windowSection(new Vector(x, y), new Vector(x+sx, y+sy)), x+sx/2, y+sy/2, 3, (int)(Math.Min(sx, sy) / 2.2), rotation);
+            cam.camOrigin = cam.section.size / 2.0;
+            cam.camPos = -position;
+
+            double r = radius * 1.2;
+            
+            if(rings != null)
+            {
+                r = rings.OuterRadius * 1.2;
+            }
+            
+            double targZoom = 1/r * Math.Min(cam.section.size.X, cam.section.size.Y) / 2;
+            cam.zoom = targZoom;
+
+            cam.render();
+            g.DrawImage(cam.I, cam.section.min);
         }
 
         public String getName()
@@ -248,10 +261,10 @@ namespace Planet_Game_4
             return new String[0];
         }
 
-        public void showShadow(Graphics g, Form1 form, theGame parent)
+        public void showShadow(Graphics g, universeCam parent)
         {
             if (Shadow != null)
-                Shadow.show(g,form,parent);
+                Shadow.show(g,parent);
             
         }
     }
