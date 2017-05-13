@@ -15,11 +15,15 @@ namespace Planet_Game_4
         /// </summary>
         public List<SpaceBody> bodies;
 
+        theGame game;
+
         /// <summary>
         /// The universe will generate without any specific seed
         /// </summary>
-        public universe(universeCam infoParent)
+        public universe(universeCam infoParent, theGame game)
         {
+            this.game = game;
+
             // Generate the bodies
             bodies = Generate(infoParent, new Vector(0,0),1,250000000,Math.Pow(10,26));
 
@@ -29,7 +33,7 @@ namespace Planet_Game_4
             // Generate that orbit
             O.Generate(0,0,O.Parent.radius*4,0.3,true);
             // Add a new body with that orbit.
-            bodies.Add(new SpaceBody(O,bodies[1].radius/2,5,SpaceBody.Body_type.rock, Math.Pow(10, 22), RingSystem.RingType.Empty, infoParent));
+            bodies.Add(new SpaceBody(game, O,bodies[1].radius/2,5,SpaceBody.Body_type.rock, Math.Pow(10, 22), RingSystem.RingType.Empty, infoParent));
         }
 
         /// <summary>
@@ -56,7 +60,7 @@ namespace Planet_Game_4
         public List<SpaceBody> Generate(universeCam infoParent, Vector Pos,int PlanetAmount,double SunSize,double SunMass)
         {
             // Make a sun
-            SpaceBody Sun = new SpaceBody(Pos, SunSize, 10, SpaceBody.Body_type.sun,SunMass,infoParent);
+            SpaceBody Sun = new SpaceBody(game, Pos, SunSize, 10, SpaceBody.Body_type.sun,SunMass,infoParent);
             
             // Get an initial distance from the sun to use
             double Dist = 10 * Math.Pow(10, 9);
@@ -112,7 +116,7 @@ namespace Planet_Game_4
             O.Generate(Form1.rnd.NextDouble() * (0 / Math.Sqrt(id + 1)), Form1.rnd.NextDouble() * Math.PI * 0, Dist, Form1.rnd.NextDouble() * Math.PI * 0,true);
             
             // Make a planet with that orbit
-            SpaceBody Planet = new SpaceBody(O, Size, 5, SpaceBody.Body_type.rock, 5*Math.Pow(10,22), RingSystem.RingType.Empty, infoCam);
+            SpaceBody Planet = new SpaceBody(game, O, Size, 5, SpaceBody.Body_type.rock, 5*Math.Pow(10,22), RingSystem.RingType.Empty, infoCam);
             //Planet.rings = new RingSystem(Planet, RingSystem.RingType.Rock,15,200,Planet.radius*2, Planet.radius * 2.5);
             
             // Return the planet

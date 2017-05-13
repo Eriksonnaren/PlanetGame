@@ -48,6 +48,8 @@
     <Compile Include="Engine1.cs" />
     <Compile Include="EngineType.cs" />
     <Compile Include="Grid.cs" />
+    <Compile Include="GUI elements\Button.cs" />
+    <Compile Include="GUI elements\GUI_element.cs" />
     <Compile Include="hslColor.cs" />
     <Compile Include="infoObjects\infoObject.cs" />
     <Compile Include="Part.cs" />
@@ -70,6 +72,7 @@
     <Compile Include="SpaceBody\Shadow.cs" />
     <Compile Include="SpaceBody\SpaceBody.cs" />
     <Compile Include="Noise.cs" />
+    <Compile Include="UIs\GUI_Element_Test.cs" />
     <Compile Include="UIs\theGame.cs" />
     <Compile Include="UIs\ui.cs" />
     <Compile Include="universe.cs" />

@@ -14,7 +14,7 @@ namespace Planet_Game_4
         public static double Gravity = 6*Math.Pow(10,-11);
         public static double TileMinimumSize = 75;
 
-        public Graphics graphics;
+        public Graphics Graphics { get; set; }
         public Form1 parent;
         public Size Size;
 
@@ -49,7 +49,7 @@ namespace Planet_Game_4
 
             worldDisplay = new universeCam(new windowSection(new Vector(0, 0), new Vector(parent.Width - parent.Width * infoBoxWidth, parent.Height)));
 
-            Form1.universe = new universe(worldDisplay);
+            Form1.universe = new universe(worldDisplay, this);
             
             infoBoxDisplay = new windowSection(new Vector(parent.Width - parent.Width * infoBoxWidth, 0), new Vector(parent.Width, parent.Height));
 
@@ -57,7 +57,7 @@ namespace Planet_Game_4
             toZoom = worldDisplay.zoom;
             
             // You do need an object to display all the stuff to the screen, do you not?
-            this.graphics = graphics;
+            this.Graphics = graphics;
             this.parent = parent;
             parent.MouseWheel += mouseWheel;
             worldDisplay.camOrigin = new Vector(parent.PB.Width / 2.0, parent.PB.Height / 2.0);
@@ -75,25 +75,6 @@ namespace Planet_Game_4
             double T=(worldDisplay.zoom - startZoom)/ (toZoom - startZoom);
             worldDisplay.camPos =startZoomPos.lerp(toZoomPos,T);
 
-            // Do mouse pressing detection
-            if (Control.MouseButtons!=MouseButtons.None)//it is pressed
-            {
-                if(mouseDown==MouseButtons.None)//it has been pressed this tick
-                {
-                    mouseDown = Control.MouseButtons;
-                    mousePressed(mouseDown);
-                }
-                mouseHold(mouseDown);
-            }
-            else//it is not pressed
-            {
-                if (mouseDown != MouseButtons.None)//it has been released this tick
-                {
-                    mouseReleased(mouseDown);
-                    mouseDown = Control.MouseButtons;
-                }
-            }
-
             // Update all the space bodies
             foreach (SpaceBody P in Form1.universe.bodies)
             {
@@ -108,8 +89,6 @@ namespace Planet_Game_4
             
             // Rotate the camera
             setRotation(worldDisplay.camRot);
-            //camPos.X += 1;
-            //camOrigin.X += 1;
 
         }
         /// <summary>
@@ -154,14 +133,14 @@ namespace Planet_Game_4
         public void show()
         {
             
-            graphics.Clear(Color.Black);
+            Graphics.Clear(Color.Black);
             
             // Show the universe
             if (true)
             {
                 worldDisplay.render();
 
-                graphics.DrawImage(worldDisplay.I, worldDisplay.section.min);
+                Graphics.DrawImage(worldDisplay.I, worldDisplay.section.min);
             }
 
             // Show the infoBox
@@ -180,15 +159,15 @@ namespace Planet_Game_4
 
                 if (infoBoxAbout != null)
                 {
-                    graphics.FillRectangle(new SolidBrush(Color.LightGray), (int)(infoBoxDisplay.min.X), (int)(infoBoxDisplay.min.Y), (int)(infoBoxDisplay.size.X), (int)(infoBoxDisplay.size.Y));
+                    Graphics.FillRectangle(new SolidBrush(Color.LightGray), (int)(infoBoxDisplay.min.X), (int)(infoBoxDisplay.min.Y), (int)(infoBoxDisplay.size.X), (int)(infoBoxDisplay.size.Y));
                     
-                    infoBoxAbout.show(graphics, infoCam);
+                    infoBoxAbout.show(Graphics, infoCam);
                 }else if(prevInfoBox != null)
                 {
-                    graphics.FillRectangle(new SolidBrush(Color.LightGray), (int)(infoBoxDisplay.min.X), (int)(infoBoxDisplay.min.Y), (int)(infoBoxDisplay.size.X), (int)(infoBoxDisplay.size.Y));
+                    Graphics.FillRectangle(new SolidBrush(Color.LightGray), (int)(infoBoxDisplay.min.X), (int)(infoBoxDisplay.min.Y), (int)(infoBoxDisplay.size.X), (int)(infoBoxDisplay.size.Y));
 
                     
-                    prevInfoBox.show(graphics, infoCam);
+                    prevInfoBox.show(Graphics, infoCam);
                 }
             }
             

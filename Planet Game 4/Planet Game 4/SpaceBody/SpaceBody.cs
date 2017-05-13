@@ -81,9 +81,13 @@ namespace Planet_Game_4
         /// </summary>
         public universeCam infoGatheringStation;
 
+        public theGame game;
+
         // Just a bunch of constructors. So self explanatory I'm not gonna comment them.
-        public SpaceBody(Vector pos, double radius, int layers, Body_type type,double Mass, universeCam infoGather)
+        public SpaceBody(theGame game, Vector pos, double radius, int layers, Body_type type,double Mass, universeCam infoGather)
         {
+            this.game = game;
+
             if (type != Body_type.sun)
                 Shadow = new Shadow(this);
             // Set some of the variables to the paramaters put into the constructor
@@ -101,9 +105,11 @@ namespace Planet_Game_4
         ///<summary>
         /// Set the body up by only giving an orbit. It sure is strange with Erik stuff
         ///</summary>
-        public SpaceBody(Orbit orbit, double radius, int layers, Body_type type,double Mass,RingSystem.RingType RingType, universeCam infoGather)
+        public SpaceBody(theGame game, Orbit orbit, double radius, int layers, Body_type type,double Mass,RingSystem.RingType RingType, universeCam infoGather)
         {
-            if(type!=Body_type.sun)
+            this.game = game;
+
+            if (type!=Body_type.sun)
             Shadow = new Shadow(this);
             // Set some of the variables to the paramaters put into the constructor
             this.orbit = orbit;
@@ -151,19 +157,19 @@ namespace Planet_Game_4
         public void update(universeCam parent)
         {
             // Rotate the body
-            rotation += rotationSpeed* Form1.ui.gameSpeed;
+            rotation += rotationSpeed* game.gameSpeed;
             
             // If there is an orbit, then update the orbit and set the position to what the orbit says it should be
             if (orbit != null)
             {
-                orbit.update(Form1.ui.gameSpeed);
+                orbit.update(game.gameSpeed);
                 position = orbit.getPos();
             }
             
             // If there are any rings, update those too
             if(rings != null)
             {
-                rings.update(parent, Form1.ui.gameSpeed);
+                rings.update(parent, game.gameSpeed);
             }
             // update shadow, sun has no shadow
             if(Shadow!=null)

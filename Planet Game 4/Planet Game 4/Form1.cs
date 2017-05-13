@@ -25,7 +25,7 @@ namespace Planet_Game_4
         /// <summary>
         /// The ui currently displayed on the form
         /// </summary>
-        static public theGame ui; // TODO: Gör om theGame till ui typ
+        static public ui ui;
 
         /// <summary>
         /// The current position of the mouse
@@ -70,6 +70,7 @@ namespace Planet_Game_4
             rnd = new Random();
 
             // Initiate the ui
+            //ui = new GUI_Element_Test(BG.Graphics, this);
             ui = new theGame(BG.Graphics, this);
 
             //start the timer
@@ -85,6 +86,25 @@ namespace Planet_Game_4
             // Set the mouse position and the previous mouse position
             MousePosPrev = MousePos;
             MousePos = new Vector(PointToClient(MousePosition));
+
+            // Do mouse pressing detection
+            if (Control.MouseButtons != MouseButtons.None)//it is pressed
+            {
+                if (ui.mouseDown == MouseButtons.None)//it has been pressed this tick
+                {
+                    ui.mouseDown = Control.MouseButtons;
+                    ui.mousePressed(ui.mouseDown);
+                }
+                ui.mouseHold(ui.mouseDown);
+            }
+            else//it is not pressed
+            {
+                if (ui.mouseDown != MouseButtons.None)//it has been released this tick
+                {
+                    ui.mouseReleased(ui.mouseDown);
+                    ui.mouseDown = Control.MouseButtons;
+                }
+            }
 
             // Update and show the ui
             ui.update();
@@ -133,7 +153,7 @@ namespace Planet_Game_4
                 ui.resize();
                 
                 // Set the ui graphics object to the new graphics object
-                ui.graphics = BG.Graphics;
+                ui.Graphics = BG.Graphics;
             }
 
         }
