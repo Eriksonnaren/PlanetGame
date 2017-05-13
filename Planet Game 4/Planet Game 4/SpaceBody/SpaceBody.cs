@@ -80,6 +80,8 @@ namespace Planet_Game_4
         /// 
         /// </summary>
         public universeCam infoGatheringStation;
+        public static double infoZoom = 0.0001;
+        public static bool selectedBefore = false;
 
         public theGame game;
 
@@ -251,7 +253,18 @@ namespace Planet_Game_4
             }
             
             double targZoom = 1/r * Math.Min(cam.section.size.X, cam.section.size.Y) / 2;
-            cam.zoom = targZoom;
+
+            if(SpaceBody.selectedBefore)
+            {
+                SpaceBody.infoZoom = Form1.lerp(SpaceBody.infoZoom, targZoom, 0.4);
+            }
+            else
+            {
+                SpaceBody.infoZoom = targZoom;
+                SpaceBody.selectedBefore = true;
+            }
+            
+            cam.zoom = SpaceBody.infoZoom;
 
             cam.render();
             g.DrawImage(cam.I, cam.section.min);

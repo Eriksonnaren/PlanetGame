@@ -48,7 +48,7 @@ namespace Planet_Game_4
         public void render(Graphics g, windowSection section, int x, int y, int radius, double rotation)
         {
 
-            if(radius <= 2)
+            if(radius <= 0.4)
             {
                 return;
             }

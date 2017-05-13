@@ -31,6 +31,9 @@ namespace Planet_Game_4
         public double infoBoxExtension = 0;
         public universeCam infoCam = null;
 
+        // The info box's gui elements
+        public List<GUI_element> infoBoxElements;
+
         // Zooming variables
         public double toZoom;
         public double startZoom;
@@ -50,8 +53,12 @@ namespace Planet_Game_4
             worldDisplay = new universeCam(new windowSection(new Vector(0, 0), new Vector(parent.Width - parent.Width * infoBoxWidth, parent.Height)));
 
             Form1.universe = new universe(worldDisplay, this);
-            
+
+            // Initiate all the infoBox things
             infoBoxDisplay = new windowSection(new Vector(parent.Width - parent.Width * infoBoxWidth, 0), new Vector(parent.Width, parent.Height));
+            infoBoxElements = new List<GUI_element>();
+
+            // Initate all the buttons on the infoObject
 
             Size = parent.Size;
             toZoom = worldDisplay.zoom;
@@ -165,10 +172,12 @@ namespace Planet_Game_4
                 }else if(prevInfoBox != null)
                 {
                     Graphics.FillRectangle(new SolidBrush(Color.LightGray), (int)(infoBoxDisplay.min.X), (int)(infoBoxDisplay.min.Y), (int)(infoBoxDisplay.size.X), (int)(infoBoxDisplay.size.Y));
-
                     
                     prevInfoBox.show(Graphics, infoCam);
                 }
+
+
+
             }
             
         }
@@ -216,6 +225,11 @@ namespace Planet_Game_4
                 {
                     if(Form1.universe.bodies[i].mouseOn(parent.MousePos))
                     {
+                        if(infoBoxAbout == null)
+                        {
+                            SpaceBody.selectedBefore = false;
+                        }
+
                         infoObject newSelected = Form1.universe.bodies[i] == infoBoxAbout ? null : Form1.universe.bodies[i];
                         setInfoBox(newSelected);
                         break;

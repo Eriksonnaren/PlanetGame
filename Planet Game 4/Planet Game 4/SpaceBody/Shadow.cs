@@ -28,8 +28,8 @@ namespace Planet_Game_4
             }
             Angle = (Parent.position - Sun.position).Norm();
             Start = Parent.position;
-            Top = Parent.radius;
-            Bottom = -Parent.radius;
+            Top = Parent.radius * body_shape_recursive.endRScale;
+            Bottom = -Parent.radius * body_shape_recursive.endRScale;
         }
         public void CheckPlanets(List<SpaceBody> System)
         {
@@ -61,7 +61,7 @@ namespace Planet_Game_4
         }
         public Vector intersectPlanet(SpaceBody S)
         {
-            double Dist = S.radius;
+            double Dist = S.radius*body_shape_recursive.endRScale;
             Vector V = S.position;
             V -= Parent.position;
             V = V.RotRev(Angle);

@@ -16,6 +16,8 @@ namespace Planet_Game_4
         public body_shape_recursive tail1 = null;
         public body_shape_recursive tail2 = null;
 
+        public static double endRScale = 1.01;
+
         public enum tile_type
         {
             quadrupel,
@@ -214,9 +216,9 @@ namespace Planet_Game_4
             {
                 g.FillPolygon(new SolidBrush(c), new Point[] {
                         new Point((int)(x + Math.Cos(startAngle) * startR), (int)(y + Math.Sin(startAngle) * startR)),
-                        new Point((int)(x + Math.Cos(startAngle) * (endR+2)), (int)(y + Math.Sin(startAngle) * (endR+2))),
-                        new Point((int)(x + Math.Cos(endAngle / 2 + startAngle / 2) * (endR+2)), (int)(y + Math.Sin(endAngle / 2 + startAngle / 2) * (endR+2))),
-                        new Point((int)(x + Math.Cos(endAngle) * (endR+2)), (int)(y + Math.Sin(endAngle) * (endR+2))),
+                        new Point((int)(x + Math.Cos(startAngle) * (endR*endRScale)), (int)(y + Math.Sin(startAngle) * (endR*endRScale))),
+                        new Point((int)(x + Math.Cos(endAngle / 2 + startAngle / 2) * (endR*endRScale)), (int)(y + Math.Sin(endAngle / 2 + startAngle / 2) * (endR*endRScale))),
+                        new Point((int)(x + Math.Cos(endAngle) * (endR*endRScale)), (int)(y + Math.Sin(endAngle) * (endR*endRScale))),
                         new Point((int)(x + Math.Cos(endAngle) * startR), (int)(y + Math.Sin(endAngle) * startR))
                     });
             }
@@ -224,8 +226,8 @@ namespace Planet_Game_4
             {
                 g.FillPolygon(new SolidBrush(c), new Point[] {
                         new Point((int)(x + Math.Cos(startAngle) * startR), (int)(y + Math.Sin(startAngle) * startR)),
-                        new Point((int)(x + Math.Cos(startAngle) * (endR+2)), (int)(y + Math.Sin(startAngle) * (endR+2))),
-                        new Point((int)(x + Math.Cos(endAngle) * (endR+2)), (int)(y + Math.Sin(endAngle) * (endR+2))),
+                        new Point((int)(x + Math.Cos(startAngle) * (endR*endRScale)), (int)(y + Math.Sin(startAngle) * (endR*endRScale))),
+                        new Point((int)(x + Math.Cos(endAngle) * (endR*endRScale)), (int)(y + Math.Sin(endAngle) * (endR*endRScale))),
                         new Point((int)(x + Math.Cos(endAngle) * startR), (int)(y + Math.Sin(endAngle) * startR))
                     });
             }

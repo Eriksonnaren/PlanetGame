@@ -13,6 +13,8 @@ namespace Planet_Game_4
         EventHandler onClick;
         EventHandler onRelease;
 
+        public string Text { get; set; }
+
         public Button(EventHandler onClick)
         {
             this.onClick = onClick;
